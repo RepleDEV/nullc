@@ -86,20 +86,23 @@ interface MainLinkProps {
     to: Router.To;
     icon: React.ReactNode;
     className?: string;
+    onClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
 }
 class MainLink extends Component<MainLinkProps, {}> {
     render(): React.ReactNode {
-        const { to, icon, className, children } = this.props;
+        const { to, icon, className, onClick, children } = this.props;
 
         return (
-            <div className={ `outer-link-container ${className || ""}` }>
-                <div className="icon-container">
-                    {icon}
+            <Link to={ to } className="link" onClick={onClick}>
+                <div className={ `outer-link-container ${className || ""}` }>
+                    <div className="icon-container">
+                        {icon}
+                    </div>
+                    <div className="link-container">
+                        <span>{children}</span>
+                    </div>
                 </div>
-                <div className="link-container">
-                    <Link to="/thanks" className="link">{this.props.children}</Link>
-                </div>
-            </div>
+            </Link>
         );
     }
 }
@@ -115,29 +118,8 @@ class Home extends Component<HomeProps, HomeStates> {
                 <div className="mainLinksOuterContainer">
                     <div className="mainLinksContainer" >
                         <MainLink to="/self" icon={<Circle />} >about me</MainLink>
-                        {/* TODO: PLEASE FIX THIS LINK ONLY WORKS ON TEXT NOT WITH ICON */}
-                        <div className="icon-container" style={{ display: "none" }}>
-                            <div className="inner-icon-container">
-                                <Circle />
-                            </div>
-                            <div className="inner-icon-container">
-                                <Heart />
-                            </div>
-                            <div className="inner-icon-container">
-                                <Mail />
-                            </div>
-                        </div>
-                        <div className="link-container" style={{ display: "none" }}>
-                            <div className="inner-link-container">
-                                <Link to="/self" className="link">about me</Link>
-                            </div>
-                            <div className="inner-link-container">
-                                <Link to="/thanks" className="link">special thanks</Link>
-                            </div>
-                            <div className="inner-link-container">
-                                <Link to="/mail" className="link disabledLink" onClick={disableLink}>mail</Link>
-                            </div>
-                        </div>
+                        <MainLink to="/thanks" icon={<Heart />}>special thanks</MainLink>
+                        <MainLink to="/mail" icon={<Mail />} className="disabledLink" onClick={disableLink}>Mail</MainLink>
                     </div>
                 </div>
             </div>

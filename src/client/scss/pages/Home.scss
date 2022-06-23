@@ -38,42 +38,42 @@
         position: relative;
 
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
 
         border-left: 4px solid globals.$color-text-primary;
         box-sizing: border-box;
     }
-    .mainLinksContainer > div {
-        height: 100%;
 
-        display: grid;
-        grid-template-rows: repeat(3, 1fr);
+    .outer-link-container { 
+        display: flex;
+        flex-direction: row;
+    }
 
-        .inner-link-container,
-        .inner-icon-container {
-            display: flex;
-            align-items: center;
-        }
+    .outer-link-container > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-        .inner-icon-container {
-            width: 53px;
-            justify-content: center;
-        }
+    .icon-container {
+        width: 53px;
+    }
 
-        .inner-icon-container > svg {
-            display: block;
-        }
+    .icon-container > svg {
+        display: block;
+    }
 
-        .link {
-            color: globals.$color-text-primary;
+    .link {
+        color: globals.$color-text-primary;
 
-            font-family: "Jost", sans-serif;
-            font-weight: 400;
+        font-family: "Jost", sans-serif;
+        font-weight: 400;
 
-            font-size: 29px;
+        font-size: 29px;
 
-            text-decoration: none;
-            text-transform: lowercase;
-        }
+        text-decoration: none;
+        text-transform: lowercase;
+
+        flex: 1;
     }
 }
