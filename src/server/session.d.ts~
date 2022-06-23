@@ -1,0 +1,7 @@
+interface SessionObject {
+    loggedIn: boolean;
+    loginMethod: "user" | "twitter" | null;
+    twitterToken: "string" | null;
+}
+
+export { SessionObject };

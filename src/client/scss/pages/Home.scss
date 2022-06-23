@@ -1,0 +1,79 @@
+@use "../globals.scss";
+
+.page.Home {
+    .background-container {
+        width: 100%;
+        height: max-content;
+    
+        display: flex;
+        flex-wrap: wrap;
+    
+        position: absolute;
+        top: 50%;
+    
+        transform: translateY(-50%);
+    }
+    
+    .cell {
+        background-color: #fefdfd;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .mainLinksOuterContainer {
+        height: 100%;
+        width: 380px;
+
+        margin-left: 218px;
+
+        display: flex;
+        align-items: center;
+    }
+    .mainLinksContainer {
+        height: 140px;
+        margin-left: 38px;
+
+        position: relative;
+
+        display: flex;
+        flex-direction: row;
+
+        border-left: 4px solid globals.$color-text-primary;
+        box-sizing: border-box;
+    }
+    .mainLinksContainer > div {
+        height: 100%;
+
+        display: grid;
+        grid-template-rows: repeat(3, 1fr);
+
+        .inner-link-container,
+        .inner-icon-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .inner-icon-container {
+            width: 53px;
+            justify-content: center;
+        }
+
+        .inner-icon-container > svg {
+            display: block;
+        }
+
+        .link {
+            color: globals.$color-text-primary;
+
+            font-family: "Jost", sans-serif;
+            font-weight: 400;
+
+            font-size: 29px;
+
+            text-decoration: none;
+            text-transform: lowercase;
+        }
+    }
+}

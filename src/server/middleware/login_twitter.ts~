@@ -1,0 +1,98 @@
+import { Request, Response, NextFunction } from "express";
+import * as crypto from "crypto";
+
+/**
+ * OAuth2.0 Scopes
+ * @see https://developer.twitter.com/en/docs/authentication/oauth-2-0/authorization-code
+ */
+type AuthURLScopes =
+    /**
+     * All the Tweets you can view, including Tweets from protected accounts.
+     */
+    "tweet.read" |
+    /**
+     * Tweet and Retweet for you.
+     */
+    "tweet.write" |
+    /**
+     * Hide and unhide replies to your Tweets.
+     */
+    "tweet.moderate.write" |
+    /**
+     * Any account you can view, including protected accounts.
+     */
+    "users.read" |
+    /**
+     * People who follow you and people who you follow.
+     */
+    "follows.read" |
+    /**
+     * Follow and unfollow people for you.
+     */
+    "follows.write" |
+    /**
+     * Stay connected to your account until you revoke access.
+     */
+    "offline.access"
+    ;
+interface AuthURLOptions {
+    redirect_uri: string;
+    scope: AuthURLScopes[];
+    state: string;
+}
+class AuthURL {
+    clientId: string;
+    constructor(clientId: string) {
+        this.clientId = clientId;
+    }
+    generate(options: AuthURLOptions) {
+        let url = "https://twitter.com/i/oauth2/authorize?";
+        url += "response_type=code&";
+        url += `client_id=${this.clientId}&`;
+        url += `redirect_uri=${options.redirect_uri}&`;
+        url += `scope=${options.scope.join("%20")}&`;
+        url += `state=${options.state}&`;
+        url += `code_challenge=${AuthURL.generateCodeChallenge()}&`;
+        url += "code_challenge_method=S256";
+
+        url = encodeURI(url);
+
+        return url;
+    }
+    static generateCodeChallenge(length=56, sha256=true): string {
+        const CHARACTER_LIST= "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~";
+        const CHARLEN = CHARACTER_LIST.length;
+    
+        let res = "";
+
+        for (let i = 0;i < length;i++) {
+            const randInt = crypto.randomInt(CHARLEN);
+
+            res += CHARACTER_LIST[randInt];
+        }
+
+        if (sha256) {
+            const hash = crypto.createHash("sha256").update(res).digest("base64");
+
+            res = hash;
+            // + to -
+            res = res.replace(/\+/g, "-");
+            // / to _
+            res = res.replace(/\//g, "_");
+            // Trim trailing =
+            res = res.replace(/=+$/, "");
+        }
+
+        return res;
+    }
+}
+
+function login_twitter(req: Request, res: Response, next: NextFunction) {
+    const csrf_token = req.headers["x-xsrf-token"] as string;
+
+    const authUrl = new AuthURL();
+
+    next();
+}
+
+export default login_twitter;

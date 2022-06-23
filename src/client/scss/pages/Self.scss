@@ -1,0 +1,76 @@
+@use "../globals.scss";
+
+.page.Self {
+    box-sizing: border-box;
+    padding: 0 211px;
+    padding-top: 115px;
+
+    display: flex;
+    flex-direction: column;
+
+    font-family: "Jost", sans-serif;
+    color: globals.$color-text-primary;
+
+    .row-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        // This might not be the best solution
+        // to make all children to stick to right
+        // please find a better solution
+        .right {
+            display: flex;
+            align-items: center;
+            
+            margin-left: auto;
+        }
+    }
+
+    .text-container {
+        font-size: 27px;
+
+        .light {
+            font-weight: 300;
+        }
+
+        .medium {
+            font-weight: 500;
+        }
+    }
+
+    .main-info {
+        margin-top: 43px;
+
+        .left {
+            display: flex;
+            flex-direction: column;
+
+            .name {
+                font-size: 102px;
+                font-weight: 400;
+
+                margin: 0;
+            }
+
+            .bullet-row-container {
+                display: flex;
+                flex-direction: row;
+
+                align-items: center;
+                
+                .line-container {
+                    width: 21px;
+                    height: 4px;
+
+                    background-color: globals.$color-accent-primary;
+
+                    margin: 0px calc((55px - 21px) / 2)
+                }
+            }
+            .bullet-row-container:not(:last-child) {
+                margin-bottom: 2px;
+            }
+        }
+    }
+}
