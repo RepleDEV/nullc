@@ -24,3 +24,17 @@ body {
 
 	opacity: 0.4;
 }
+
+// Custom scrollbar
+::-webkit-scrollbar {
+	width: 4px;
+}
+
+::-webkit-scrollbar-track {
+	background-color: rgba(0, 0, 0, 0);
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: globals.$color-accent-primary;
+	border-radius: 12px;
+}
