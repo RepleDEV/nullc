@@ -16,14 +16,56 @@
         flex-direction: row;
         align-items: center;
 
+        .bullet-row-container {
+            display: flex;
+            flex-direction: row;
+
+            align-items: center;
+            
+            .dot-container {
+                width: 8px;
+                height: 8px;
+
+                border-radius: 100%;
+
+                background-color: globals.$color-accent-primary;
+
+                margin: 0px calc((55px - 8px) / 2);
+            }
+
+            .line-container {
+                width: 21px;
+                height: 4px;
+
+                background-color: globals.$color-accent-primary;
+
+                // Maybe get rid of this calc??? and just use a fucking container for crying out loud
+                margin: 0px calc((55px - 21px) / 2);
+            }
+        }
+        .bullet-row-container:not(:last-child) {
+            margin-bottom: 2px;
+        }
+
         // This might not be the best solution
-        // to make all children to stick to right
+        // to make all children to stick to the right
         // please find a better solution
         .right {
             display: flex;
-            align-items: center;
+            flex-direction: column;
+
+            text-align: right;
             
             margin-left: auto;
+
+            .bullet-row-container {
+                flex-direction: row-reverse;
+            }
+        }
+
+        .left {
+            display: flex;
+            flex-direction: column;
         }
     }
 
@@ -31,46 +73,39 @@
         font-size: 27px;
 
         .light {
-            font-weight: 300;
+            font-weight: globals.$font-weight__light;
         }
 
         .medium {
-            font-weight: 500;
+            font-weight: globals.$font-weight__medium;
         }
     }
 
     .main-info {
         margin-top: 43px;
 
-        .left {
-            display: flex;
-            flex-direction: column;
+        .name {
+            font-size: 102px;
+            font-weight: globals.$font-weight__regular;
 
-            .name {
-                font-size: 102px;
-                font-weight: 400;
+            margin: 0;
+        }
 
-                margin: 0;
-            }
+        .right {
+            align-items: center;
+        }
+    }
 
-            .bullet-row-container {
-                display: flex;
-                flex-direction: row;
+    .likes-dislikes {
+        margin-top: 100px;
 
-                align-items: center;
-                
-                .line-container {
-                    width: 21px;
-                    height: 4px;
+        .subheading {
+            font-size: 40px;
+            font-weight: globals.$font-weight__medium;
+        }
 
-                    background-color: globals.$color-accent-primary;
-
-                    margin: 0px calc((55px - 21px) / 2)
-                }
-            }
-            .bullet-row-container:not(:last-child) {
-                margin-bottom: 2px;
-            }
+        .right {
+            height: 100%;
         }
     }
 }

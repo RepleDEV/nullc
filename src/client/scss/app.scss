@@ -5,6 +5,8 @@ body {
 
 	background-color: globals.$color-main;
 	text-rendering: optimizeLegibility;
+
+	overflow-x: hidden;
 }
 
 .page {
