@@ -1,17 +1,18 @@
 {
   "name": "barebones-react-typescript-express",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha",
   "description": "",
   "main": "dist/server.js",
   "scripts": {
+    "build": "webpack",
     "watch:build": "webpack -w",
     "watch:server": "nodemon dist/server.js",
     "dev": "npm-run-all --parallel watch:*",
     "start": "node dist/server.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Ragazzo \"null\" Chaesa",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.26.0",
     "body-parser": "^1.19.2",
@@ -47,5 +48,8 @@
     "express-session": "^1.17.2",
     "nodemon": "^2.0.12",
     "npm-run-all": "^4.1.5"
+  },
+  "engines": {
+    "node": "16.x"
   }
 }
