@@ -31,8 +31,6 @@ router.post("/api/auth/twitter", login_twitter, (req, res, next) => {
 
 // React router workaround
 router.use((req, res) => {
-    const session = req.session as session.Session & SessionObject;
-    
     if (req.accepts("html")) {
         res.status(200).sendFile(path.resolve("public", "index.html"));
         return;

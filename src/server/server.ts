@@ -4,6 +4,7 @@ import * as bodyParser from "body-parser";
 import * as session from "express-session";
 import * as csrf from "csurf";
 import * as dotenv from "dotenv";
+import * as path from "path";
 dotenv.config();
 
 import envTypes from '../../.env';
@@ -12,6 +13,7 @@ import router from './routes';
 import apiRouter from "./api";
 
 import { SessionObject } from './session';
+import { refreshMootsList, refreshMutual } from './scripts/moots';
 
 const app = express();
 
@@ -70,4 +72,9 @@ app.use((err, req, res, next) => {
 app.use(router);
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Server listening on port: ${port}`));
+
+(async () => {
+    await refreshMootsList();
+
+    app.listen(port, () => console.log(`Server listening on port: ${port}`));
+})();
