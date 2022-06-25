@@ -44,25 +44,25 @@ app.use((req, res, next) => {
 
     // Initialize session
     
-    const sessionProperties = {
-        "loggedIn": false,
-        "loginMethod": null,
-        "twitterCodeVerifier": null,
-        "twitterCode": null,
-        "twitterBearerToken": null,
-        "twitterUserInfo": null,
-    };
+    // const sessionProperties: Record<string, any> = {
+    //     "loggedIn": false,
+    //     "loginMethod": null,
+    //     "twitterCodeVerifier": null,
+    //     "twitterCode": null,
+    //     "twitterBearerToken": null,
+    //     "twitterUserInfo": null,
+    // };
     
-    for (const sessionKey in sessionProperties) {
-        const defaultValue = sessionProperties[sessionKey];
+    // for (const sessionKey in sessionProperties) {
+    //     const defaultValue = sessionProperties[sessionKey];
 
-        if (!req.session[sessionKey])
-            req.session[sessionKey] = defaultValue;
-    }
+    //     if (!req.session[sessionKey])
+    //         req.session[sessionKey] = defaultValue;
+    // }
 
     next();
 });
-app.use((err, req, res, next) => {
+app.use((err: Record<string, any>, req: express.Request, res: express.Response, next: express.NextFunction) => {
     console.log(err);
     if (err.code !== "EBADCSRFTOKEN") return next(err);
     

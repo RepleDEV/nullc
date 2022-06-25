@@ -1,7 +1,7 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 
-const devMode = process.env.NODE_ENV == "development";
+const devMode = process.env.NODE_ENV != "production";
 
 const serverConfig = {
 	mode: devMode ? "development" : "production",
