@@ -179,7 +179,7 @@ That sums up my own thoughts better than my own words could. That being said, he
 &nbsp;
 
 ```js
-const nodeExternals = require('webpack-node-externals');
+const nodeExternals = require("webpack-node-externals");
 ```
 
 When bundling with Webpack for the backend - you usually _don't want_ to bundle its `node_modules` dependencies. This library creates an externals function that ignores node_modules when bundling in Webpack. So this is used as a "plugin" in the config here: `externals: [nodeExternals()]` in the `serverConfig` object. Basically it's making sure we're not trying to build external stuff by accident that doesn't need to be.

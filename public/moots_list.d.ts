@@ -1,8 +1,8 @@
 declare interface MutualInfo {
-    id: string;
-    username: string;
-    header: string;
-    icon: string;
+	id: string;
+	username: string;
+	header: string;
+	icon: string;
 }
 
 declare type MootsList = MutualInfo[];

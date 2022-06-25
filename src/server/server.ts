@@ -1,4 +1,4 @@
-import * as express from 'express';
+import * as express from "express";
 import * as cookieParser from "cookie-parser";
 import * as bodyParser from "body-parser";
 import * as session from "express-session";
@@ -7,29 +7,32 @@ import * as dotenv from "dotenv";
 import * as path from "path";
 dotenv.config();
 
-import envTypes from '../../.env';
+import envTypes from "../../.env";
 
-import router from './routes';
+import router from "./routes";
 import apiRouter from "./api";
 
-import { SessionObject } from './session';
-import { refreshMootsList, refreshMutual } from './scripts/moots';
+import { SessionObject } from "./session";
+import { refreshMootsList, refreshMutual } from "./scripts/moots";
 
 const app = express();
 
-app.use(session({
-    // TODO: remove default value, add types to .env.d.ts for SESSION_SECRET
-    secret: (process.env as NodeJS.ProcessEnv & envTypes).SESSION_SECRET || "keyboard cat",
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        secure: process.env.NODE_ENV === "production",
-
-    },
-}));
+app.use(
+	session({
+		// TODO: remove default value, add types to .env.d.ts for SESSION_SECRET
+		secret:
+			(process.env as NodeJS.ProcessEnv & envTypes).SESSION_SECRET ||
+			"keyboard cat",
+		resave: false,
+		saveUninitialized: true,
+		cookie: {
+			secure: process.env.NODE_ENV === "production",
+		},
+	})
+);
 
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static("public"));
 
 app.use("/api", apiRouter);
 
@@ -39,42 +42,49 @@ const csrfProtection = csrf({ cookie: true });
 app.use(csrfProtection);
 // TODO: Get types to WORK with express-session
 app.use((req, res, next) => {
-    res.cookie("XSRF-TOKEN", req.csrfToken());
-    // res.locals.csrfToken = req.csrfToken();
+	res.cookie("XSRF-TOKEN", req.csrfToken());
+	// res.locals.csrfToken = req.csrfToken();
 
-    // Initialize session
-    
-    // const sessionProperties: Record<string, any> = {
-    //     "loggedIn": false,
-    //     "loginMethod": null,
-    //     "twitterCodeVerifier": null,
-    //     "twitterCode": null,
-    //     "twitterBearerToken": null,
-    //     "twitterUserInfo": null,
-    // };
-    
-    // for (const sessionKey in sessionProperties) {
-    //     const defaultValue = sessionProperties[sessionKey];
+	// Initialize session
 
-    //     if (!req.session[sessionKey])
-    //         req.session[sessionKey] = defaultValue;
-    // }
+	// const sessionProperties: Record<string, any> = {
+	//     "loggedIn": false,
+	//     "loginMethod": null,
+	//     "twitterCodeVerifier": null,
+	//     "twitterCode": null,
+	//     "twitterBearerToken": null,
+	//     "twitterUserInfo": null,
+	// };
 
-    next();
+	// for (const sessionKey in sessionProperties) {
+	//     const defaultValue = sessionProperties[sessionKey];
+
+	//     if (!req.session[sessionKey])
+	//         req.session[sessionKey] = defaultValue;
+	// }
+
+	next();
 });
-app.use((err: Record<string, any>, req: express.Request, res: express.Response, next: express.NextFunction) => {
-    console.log(err);
-    if (err.code !== "EBADCSRFTOKEN") return next(err);
-    
-    res.status(403);
-    res.send("BAD CSRF TOKEN");
-});
+app.use(
+	(
+		err: Record<string, any>,
+		req: express.Request,
+		res: express.Response,
+		next: express.NextFunction
+	) => {
+		console.log(err);
+		if (err.code !== "EBADCSRFTOKEN") return next(err);
+
+		res.status(403);
+		res.send("BAD CSRF TOKEN");
+	}
+);
 app.use(router);
 
 const port = process.env.PORT || 3000;
 
 (async () => {
-    await refreshMootsList();
+	await refreshMootsList();
 
-    app.listen(port, () => console.log(`Server listening on port: ${port}`));
+	app.listen(port, () => console.log(`Server listening on port: ${port}`));
 })();

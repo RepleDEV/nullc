@@ -1,79 +1,79 @@
 @use "../globals.scss";
 
 .page.Home {
-    .background-container {
-        width: 100%;
-        height: max-content;
-    
-        display: flex;
-        flex-wrap: wrap;
-    
-        position: absolute;
-        top: 50%;
-    
-        transform: translateY(-50%);
-    }
-    
-    .cell {
-        background-color: #fefdfd;
+	.background-container {
+		width: 100%;
+		height: max-content;
 
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
+		display: flex;
+		flex-wrap: wrap;
 
-    .mainLinksOuterContainer {
-        height: 100%;
-        width: 380px;
+		position: absolute;
+		top: 50%;
 
-        margin-left: 218px;
+		transform: translateY(-50%);
+	}
 
-        display: flex;
-        align-items: center;
-    }
-    .mainLinksContainer {
-        height: 140px;
-        margin-left: 38px;
+	.cell {
+		background-color: #fefdfd;
 
-        position: relative;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
 
-        display: flex;
-        flex-direction: column;
+	.mainLinksOuterContainer {
+		height: 100%;
+		width: 380px;
 
-        border-left: 4px solid globals.$color-text-primary;
-        box-sizing: border-box;
-    }
+		margin-left: 218px;
 
-    .outer-link-container { 
-        display: flex;
-        flex-direction: row;
-    }
+		display: flex;
+		align-items: center;
+	}
+	.mainLinksContainer {
+		height: 140px;
+		margin-left: 38px;
 
-    .outer-link-container > div {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+		position: relative;
 
-    .icon-container {
-        width: 53px;
-    }
+		display: flex;
+		flex-direction: column;
 
-    .icon-container > svg {
-        display: block;
-    }
+		border-left: 4px solid globals.$color-text-primary;
+		box-sizing: border-box;
+	}
 
-    .link {
-        color: globals.$color-text-primary;
+	.outer-link-container {
+		display: flex;
+		flex-direction: row;
+	}
 
-        font-family: "Jost", sans-serif;
-        font-weight: 400;
+	.outer-link-container > div {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 
-        font-size: 29px;
+	.icon-container {
+		width: 53px;
+	}
 
-        text-decoration: none;
-        text-transform: lowercase;
+	.icon-container > svg {
+		display: block;
+	}
 
-        flex: 1;
-    }
+	.link {
+		color: globals.$color-text-primary;
+
+		font-family: "Jost", sans-serif;
+		font-weight: 400;
+
+		font-size: 29px;
+
+		text-decoration: none;
+		text-transform: lowercase;
+
+		flex: 1;
+	}
 }

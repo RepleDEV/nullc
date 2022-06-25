@@ -1,50 +1,50 @@
 @use "globals.scss";
 
 .navbar {
-    position: absolute;
-    top: 0;
-    left: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
 
-    z-index: 100;
+	z-index: 100;
 
-    width: 100vw;
-    height: 62px;
+	width: 100vw;
+	height: 62px;
 
-    display: flex;
+	display: flex;
 }
 
 .navbar > .toolbar-container {
-    // STICK RIGHT
-    margin-left: auto;
-    box-sizing: border-box;
-    padding-right: 21px;
+	// STICK RIGHT
+	margin-left: auto;
+	box-sizing: border-box;
+	padding-right: 21px;
 
-    .login-container {
-        height: 100%;
+	.login-container {
+		height: 100%;
 
-        display: flex;
-        align-items: center;
-    }
-    .inner-login-container {
-        height: 28px;
+		display: flex;
+		align-items: center;
+	}
+	.inner-login-container {
+		height: 28px;
 
-        display: flex;
-        flex-direction: row;
+		display: flex;
+		flex-direction: row;
 
-        span > a {
-            font-family: "Jost", sans-serif;
-            font-size: 20px;
-            color: globals.$color-text-primary;
+		span > a {
+			font-family: "Jost", sans-serif;
+			font-size: 20px;
+			color: globals.$color-text-primary;
 
-            text-transform: lowercase;
-            text-decoration: none;
-        }
+			text-transform: lowercase;
+			text-decoration: none;
+		}
 
-        span.center-border {
-            margin: 0 14px;
-            width: 2px;
-            
-            background-color: globals.$color-accent-primary;
-        }
-    }
+		span.center-border {
+			margin: 0 14px;
+			width: 2px;
+
+			background-color: globals.$color-accent-primary;
+		}
+	}
 }

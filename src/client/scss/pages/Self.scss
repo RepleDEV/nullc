@@ -1,111 +1,111 @@
 @use "../globals.scss";
 
 .page.Self {
-    box-sizing: border-box;
-    padding: 0 211px;
-    padding-top: 115px;
+	box-sizing: border-box;
+	padding: 0 211px;
+	padding-top: 115px;
 
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 
-    font-family: "Jost", sans-serif;
-    color: globals.$color-text-primary;
+	font-family: "Jost", sans-serif;
+	color: globals.$color-text-primary;
 
-    .row-container {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
+	.row-container {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
 
-        .bullet-row-container {
-            display: flex;
-            flex-direction: row;
+		.bullet-row-container {
+			display: flex;
+			flex-direction: row;
 
-            align-items: center;
-            
-            .dot-container {
-                width: 8px;
-                height: 8px;
+			align-items: center;
 
-                border-radius: 100%;
+			.dot-container {
+				width: 8px;
+				height: 8px;
 
-                background-color: globals.$color-accent-primary;
+				border-radius: 100%;
 
-                margin: 0px calc((55px - 8px) / 2);
-            }
+				background-color: globals.$color-accent-primary;
 
-            .line-container {
-                width: 21px;
-                height: 4px;
+				margin: 0px calc((55px - 8px) / 2);
+			}
 
-                background-color: globals.$color-accent-primary;
+			.line-container {
+				width: 21px;
+				height: 4px;
 
-                // Maybe get rid of this calc??? and just use a fucking container for crying out loud
-                margin: 0px calc((55px - 21px) / 2);
-            }
-        }
-        .bullet-row-container:not(:last-child) {
-            margin-bottom: 2px;
-        }
+				background-color: globals.$color-accent-primary;
 
-        // This might not be the best solution
-        // to make all children to stick to the right
-        // please find a better solution
-        .right {
-            display: flex;
-            flex-direction: column;
+				// Maybe get rid of this calc??? and just use a fucking container for crying out loud
+				margin: 0px calc((55px - 21px) / 2);
+			}
+		}
+		.bullet-row-container:not(:last-child) {
+			margin-bottom: 2px;
+		}
 
-            text-align: right;
-            
-            margin-left: auto;
+		// This might not be the best solution
+		// to make all children to stick to the right
+		// please find a better solution
+		.right {
+			display: flex;
+			flex-direction: column;
 
-            .bullet-row-container {
-                flex-direction: row-reverse;
-            }
-        }
+			text-align: right;
 
-        .left {
-            display: flex;
-            flex-direction: column;
-        }
-    }
+			margin-left: auto;
 
-    .text-container {
-        font-size: 27px;
+			.bullet-row-container {
+				flex-direction: row-reverse;
+			}
+		}
 
-        .light {
-            font-weight: globals.$font-weight__light;
-        }
+		.left {
+			display: flex;
+			flex-direction: column;
+		}
+	}
 
-        .medium {
-            font-weight: globals.$font-weight__medium;
-        }
-    }
+	.text-container {
+		font-size: 27px;
 
-    .main-info {
-        margin-top: 43px;
+		.light {
+			font-weight: globals.$font-weight__light;
+		}
 
-        .name {
-            font-size: 102px;
-            font-weight: globals.$font-weight__regular;
+		.medium {
+			font-weight: globals.$font-weight__medium;
+		}
+	}
 
-            margin: 0;
-        }
+	.main-info {
+		margin-top: 43px;
 
-        .right {
-            align-items: center;
-        }
-    }
+		.name {
+			font-size: 102px;
+			font-weight: globals.$font-weight__regular;
 
-    .likes-dislikes {
-        margin-top: 100px;
+			margin: 0;
+		}
 
-        .subheading {
-            font-size: 40px;
-            font-weight: globals.$font-weight__medium;
-        }
+		.right {
+			align-items: center;
+		}
+	}
 
-        .right {
-            height: 100%;
-        }
-    }
+	.likes-dislikes {
+		margin-top: 100px;
+
+		.subheading {
+			font-size: 40px;
+			font-weight: globals.$font-weight__medium;
+		}
+
+		.right {
+			height: 100%;
+		}
+	}
 }

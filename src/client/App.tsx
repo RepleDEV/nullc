@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
@@ -9,12 +9,8 @@ import Self from "./pages/Self";
 import Thanks from "./pages/Thanks";
 import Login from "./pages/Login";
 
-interface AppProps {
-
-}
-interface AppStates {
-
-}
+interface AppProps {}
+interface AppStates {}
 class App extends Component<AppProps, AppStates> {
 	constructor(props: AppProps) {
 		super(props);
@@ -23,12 +19,12 @@ class App extends Component<AppProps, AppStates> {
 	render(): React.ReactNode {
 		return (
 			<>
-				<Navbar />	
+				<Navbar />
 				<main>
 					<Routes>
-						<Route path="/" element={<Home />}/>
-						<Route path="/self" element={<Self />}/>
-						<Route path="/thanks" element={<Thanks />}/>
+						<Route path="/" element={<Home />} />
+						<Route path="/self" element={<Self />} />
+						<Route path="/thanks" element={<Thanks />} />
 						{/* <Route path="/login" element={<Login loginSuccess={() => {
 
 						}}/>}/> */}

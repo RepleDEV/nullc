@@ -21,7 +21,7 @@
 //         // Except for the hash idk how complex the hash is
 //         const CHARACTER_LIST= "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~";
 //         const CHARLEN = CHARACTER_LIST.length;
-    
+
 //         let res = "";
 
 //         for (let i = 0;i < length;i++) {

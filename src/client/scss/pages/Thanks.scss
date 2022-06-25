@@ -1,130 +1,131 @@
 @use "../globals.scss";
 
 .page.Thanks {
-    box-sizing: border-box;
-    padding: 0 211px;
-    padding-top: 115px;
+	box-sizing: border-box;
+	padding: 0 211px;
+	padding-top: 115px;
 
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 
-    font-family: "Jost", sans-serif;
-    color: globals.$color-text-primary;
+	font-family: "Jost", sans-serif;
+	color: globals.$color-text-primary;
 
-    .page-return-container {
-        position: absolute;
-        z-index: 100;
-    }
+	.page-return-container {
+		position: absolute;
+		z-index: 100;
+	}
 
-    .row-container {
-        display: flex;
-        align-items: center;
-    }
-    
-    .thank-you-container {
-        svg {
-            width: auto;
-            height: 38px;
-        }
+	.row-container {
+		display: flex;
+		align-items: center;
+	}
 
-        span {
-            margin-top: 1rem;
-        }
+	.thank-you-container {
+		svg {
+			width: auto;
+			height: 38px;
+		}
 
-        flex-direction: column;
-    }
+		span {
+			margin-top: 1rem;
+		}
 
-    .moots-list {
-        margin-top: 104px;
+		flex-direction: column;
+	}
 
-        display: flex;
+	.moots-list {
+		margin-top: 104px;
 
-        flex-wrap: wrap;
-        gap: 59px;
-        justify-content: space-between;
-    }
+		display: flex;
 
-    .moots-cell {
-        width: 405;
-        height: 177;
+		flex-wrap: wrap;
+		gap: 59px;
+		justify-content: space-between;
+	}
 
-        position: relative;
+	.moots-cell {
+		width: 405;
+		height: 177;
 
-        display: flex;
-        flex-direction: column;
+		position: relative;
 
-        border-radius: 21px;
-        overflow: hidden;
+		display: flex;
+		flex-direction: column;
 
-        background-color: globals.$color-secondary;
+		border-radius: 21px;
+		overflow: hidden;
 
-        .icon-container {
-            width: 83px;
-            height: 83px;
+		background-color: globals.$color-secondary;
 
-            // Make it circular
-            border-radius: 50%;
-            overflow: hidden;
+		.icon-container {
+			width: 83px;
+			height: 83px;
 
-            position: absolute;
-            z-index: 50;
+			// Make it circular
+			border-radius: 50%;
+			overflow: hidden;
 
-            left: 25px;
-            top: 81px;
-        }
-        
-        .header-container, .icon-container {
-            box-shadow: 0 5px 8px 8px rgba(globals.$color-main, 0.2)
-        }
+			position: absolute;
+			z-index: 50;
 
-        .header-container {
-            height: 135px;
-        }
+			left: 25px;
+			top: 81px;
+		}
 
-        img {
-            height: 100%;
-            width: 100%;
-            object-fit: contain;
-        }
+		.header-container,
+		.icon-container {
+			box-shadow: 0 5px 8px 8px rgba(globals.$color-main, 0.2);
+		}
 
-        .username-container {
-            display: flex;
-            align-items: center;
+		.header-container {
+			height: 135px;
+		}
 
-            flex: 1;
+		img {
+			height: 100%;
+			width: 100%;
+			object-fit: contain;
+		}
 
-            padding-left: 113px;
-        }
+		.username-container {
+			display: flex;
+			align-items: center;
 
-        .username-tag {
-            font-size: 15px;
-        }
-    }
+			flex: 1;
 
-    .moots-cell.no-header {
-        flex-direction: row;
+			padding-left: 113px;
+		}
 
-        width: 300;
-        height: 105;
-       
-        align-items: center;
+		.username-tag {
+			font-size: 15px;
+		}
+	}
 
-        .header-container {
-            display: none;
-        }
+	.moots-cell.no-header {
+		flex-direction: row;
 
-        .icon-container {
-            position: static;
+		width: 300;
+		height: 105;
 
-            margin: 0 0.8rem;
-        }
+		align-items: center;
 
-        .username-container {
-            padding-left: 0;
-        }
-    }
+		.header-container {
+			display: none;
+		}
 
-    .row-container:last-child {
-        padding-bottom: 140px;
-    }
+		.icon-container {
+			position: static;
+
+			margin: 0 0.8rem;
+		}
+
+		.username-container {
+			padding-left: 0;
+		}
+	}
+
+	.row-container:last-child {
+		padding-bottom: 140px;
+	}
 }

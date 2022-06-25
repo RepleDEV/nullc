@@ -1,43 +1,40 @@
-
-
 /**
  * OAuth2.0 Scopes
  * @see https://developer.twitter.com/en/docs/authentication/oauth-2-0/authorization-code
  */
 type AuthURLScopes =
-    /**
-     * All the Tweets you can view, including Tweets from protected accounts.
-     */
-    "tweet.read" |
-    /**
-     * Tweet and Retweet for you.
-     */
-    "tweet.write" |
-    /**
-     * Hide and unhide replies to your Tweets.
-     */
-    "tweet.moderate.write" |
-    /**
-     * Any account you can view, including protected accounts.
-     */
-    "users.read" |
-    /**
-     * People who follow you and people who you follow.
-     */
-    "follows.read" |
-    /**
-     * Follow and unfollow people for you.
-     */
-    "follows.write" |
-    /**
-     * Stay connected to your account until you revoke access.
-     */
-    "offline.access"
-    ;
+	/**
+	 * All the Tweets you can view, including Tweets from protected accounts.
+	 */
+	| "tweet.read"
+	/**
+	 * Tweet and Retweet for you.
+	 */
+	| "tweet.write"
+	/**
+	 * Hide and unhide replies to your Tweets.
+	 */
+	| "tweet.moderate.write"
+	/**
+	 * Any account you can view, including protected accounts.
+	 */
+	| "users.read"
+	/**
+	 * People who follow you and people who you follow.
+	 */
+	| "follows.read"
+	/**
+	 * Follow and unfollow people for you.
+	 */
+	| "follows.write"
+	/**
+	 * Stay connected to your account until you revoke access.
+	 */
+	| "offline.access";
 interface AuthURLOptions {
-    redirect_uri: string;
-    scope: AuthURLScopes[];
-    state: string;
+	redirect_uri: string;
+	scope: AuthURLScopes[];
+	state: string;
 }
 // class AuthURL {
 //     clientId: string;
