@@ -1,0 +1,13 @@
+@use "../globals";
+
+.page.Mail {
+	box-sizing: border-box;
+	padding: 0 211px;
+	padding-top: 115px;
+
+	display: flex;
+	flex-direction: column;
+
+	font-family: "Jost", sans-serif;
+	color: globals.$color-text-primary;
+}

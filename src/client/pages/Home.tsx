@@ -129,11 +129,7 @@ class Home extends Component {
 						<MainLink to="/thanks" icon={<Heart />}>
 							special thanks
 						</MainLink>
-						<MainLink
-							to="/mail"
-							icon={<Mail />}
-							className="disabledLink"
-							onClick={disableLink}>
+						<MainLink to="/mail" icon={<Mail />}>
 							Mail
 						</MainLink>
 					</div>

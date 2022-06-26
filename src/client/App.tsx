@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Self from "./pages/Self";
 import Thanks from "./pages/Thanks";
+import Mail from "./pages/Mail";
 // import Login from "./pages/Login";
 
 class App extends Component {
@@ -23,6 +24,7 @@ class App extends Component {
 						<Route path="/" element={<Home />} />
 						<Route path="/self" element={<Self />} />
 						<Route path="/thanks" element={<Thanks />} />
+						<Route path="/mail" element={<Mail />} />
 						{/* <Route path="/login" element={<Login loginSuccess={() => {
 
 						}}/>}/> */}
