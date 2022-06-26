@@ -10,8 +10,6 @@ interface NeighborCell extends Cell {
 class NeighboringCells {
 	cells: NeighborCell[] = [];
 
-	constructor() {}
-
 	push(x: number, y: number): void {
 		for (let i = 0; i < this.cells.length; i++) {
 			const c = this.cells[i];

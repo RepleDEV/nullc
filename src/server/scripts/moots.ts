@@ -42,6 +42,7 @@ interface RefreshMootsListConfig {
 	refresh: ("all" | "header")[];
 	// Maybe select PFP size
 }
+// eslint-disable-next-line
 export async function refreshMootsList(config?: RefreshMootsListConfig) {
 	console.log("Refreshing Mutual List.");
 

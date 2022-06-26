@@ -12,7 +12,7 @@ interface MootsCellProps {
 	icon: string;
 	username: string;
 }
-class MootsCell extends Component<MootsCellProps, {}> {
+class MootsCell extends Component<MootsCellProps, Record<string, unknown>> {
 	render(): React.ReactNode {
 		const { header, icon, username } = this.props;
 		return (
@@ -35,8 +35,8 @@ class MootsCell extends Component<MootsCellProps, {}> {
 interface MootsListState {
 	mootsList: MutualInfo[];
 }
-class MootsList extends Component<{}, MootsListState> {
-	constructor(props: any) {
+class MootsList extends Component<Record<string, unknown>, MootsListState> {
+	constructor(props: Record<string, unknown>) {
 		super(props);
 
 		this.getMootsList = this.getMootsList.bind(this);

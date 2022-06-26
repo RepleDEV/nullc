@@ -5,9 +5,7 @@ import { disableLink } from "../modules/tools";
 
 import "../scss/Navbar";
 
-interface NavbarProps {}
-interface NavbarStates {}
-class Navbar extends Component<NavbarProps, NavbarStates> {
+class Navbar extends Component {
 	render(): React.ReactNode {
 		return (
 			<div className="navbar">
@@ -40,4 +38,3 @@ class Navbar extends Component<NavbarProps, NavbarStates> {
 }
 
 export default Navbar;
-export { NavbarProps, NavbarStates };

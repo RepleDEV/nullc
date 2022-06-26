@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get(
 	"/api/auth/twitter/callback",
-	(req, res, next) => {
+	(req) => {
 		const session = req.session as session.Session & SessionObject;
 		const code = req.query.code as string;
 
@@ -28,7 +28,7 @@ router.get(
 	}
 );
 
-router.post("/api/auth/twitter", login_twitter, (req, res, next) => {
+router.post("/api/auth/twitter", login_twitter, (req, res) => {
 	res.status(200);
 });
 

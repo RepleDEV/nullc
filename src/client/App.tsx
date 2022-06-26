@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 
@@ -7,12 +7,10 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Self from "./pages/Self";
 import Thanks from "./pages/Thanks";
-import Login from "./pages/Login";
+// import Login from "./pages/Login";
 
-interface AppProps {}
-interface AppStates {}
-class App extends Component<AppProps, AppStates> {
-	constructor(props: AppProps) {
+class App extends Component {
+	constructor(props: Record<string, unknown>) {
 		super(props);
 	}
 

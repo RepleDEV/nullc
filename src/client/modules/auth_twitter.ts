@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /**
  * OAuth2.0 Scopes
  * @see https://developer.twitter.com/en/docs/authentication/oauth-2-0/authorization-code

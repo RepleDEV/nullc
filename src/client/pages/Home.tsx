@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Router, { Link } from "react-router-dom";
-import _ from "lodash";
+
+import PropTypes from "prop-types";
 
 import GOL, { Cell } from "../scripts/gol";
 
@@ -12,13 +13,13 @@ import Mail from "../components/svg/Mail";
 import "../scss/pages/Home";
 import { disableLink } from "../modules/tools";
 
-interface HomeBackgroundProps {}
 interface HomeBackgroundStates {
 	cells: Cell[];
 	continueGeneration: boolean;
 }
+// eslint-disable-next-line
 class HomeBackground extends Component<
-	HomeBackgroundProps,
+	Record<string, unknown>,
 	HomeBackgroundStates
 > {
 	_gol_instance: GOL | null = null;
@@ -26,10 +27,10 @@ class HomeBackground extends Component<
 	_cellAmountX = 100;
 	_cellAmountY = 32;
 
-	constructor(props: HomeBackgroundProps) {
+	constructor(props: Record<string, unknown>) {
 		super(props);
 
-		this._handleNewGeneration = this._handleNewGeneration.bind(this);
+		// this._handleNewGeneration = this._handleNewGeneration.bind(this);
 
 		this.state = {
 			cells: [],
@@ -45,7 +46,7 @@ class HomeBackground extends Component<
 		//     cells.push({ x: randX, y: randY });
 		// }
 	}
-	_handleNewGeneration(t = 1000) {}
+	// _handleNewGeneration(t = 1000) {}
 	render(): React.ReactNode {
 		const { cells } = this.state;
 		const cellElms: JSX.Element[] = [];
@@ -95,8 +96,9 @@ interface MainLinkProps {
 	icon: React.ReactNode;
 	className?: string;
 	onClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
+	children: PropTypes.ReactNodeLike;
 }
-class MainLink extends Component<MainLinkProps, {}> {
+class MainLink extends Component<MainLinkProps, Record<string, unknown>> {
 	render(): React.ReactNode {
 		const { to, icon, className, onClick, children } = this.props;
 
@@ -113,9 +115,7 @@ class MainLink extends Component<MainLinkProps, {}> {
 	}
 }
 
-interface HomeProps {}
-interface HomeStates {}
-class Home extends Component<HomeProps, HomeStates> {
+class Home extends Component {
 	render(): React.ReactNode {
 		return (
 			<div className="page Home">
@@ -144,4 +144,3 @@ class Home extends Component<HomeProps, HomeStates> {
 }
 
 export default Home;
-export { HomeProps, HomeStates };

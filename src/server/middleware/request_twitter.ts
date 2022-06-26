@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import session from "express-session";
-import { SessionObject, TwitterUserInfo } from "../session";
+import { SessionObject } from "../session";
 import axios from "axios";
 import TwitterApi from "twitter-api-v2";
 
@@ -45,6 +45,7 @@ async function getToken(
 	return res.data;
 }
 
+// eslint-disable-next-line
 async function getUserInfo(access_token: string): Promise<void> {
 	const client = new TwitterApi(access_token).readOnly.v2;
 
@@ -54,7 +55,7 @@ async function getUserInfo(access_token: string): Promise<void> {
 
 	if (user.errors) throw { message: user.errors };
 
-	const { data } = user;
+	// const { data } = user;
 }
 
 async function request_twitter(
@@ -65,7 +66,7 @@ async function request_twitter(
 	const session = req.session as session.Session & SessionObject;
 
 	const { twitterCode, twitterCodeVerifier } = session;
-	if (twitterCode) {
+	if (twitterCode && twitterCodeVerifier) {
 		const token = await getToken(twitterCode, twitterCodeVerifier).catch(
 			(err) => {
 				console.log("Error lol");

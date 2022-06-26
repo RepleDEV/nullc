@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import PropTypes from "prop-types";
+
 import PageReturn from "../components/PageReturn";
 import Footer from "../components/Footer";
 
@@ -7,8 +9,9 @@ import "../scss/pages/Self.scss";
 
 interface BulletRowProps {
 	bulletStyle?: "line" | "dot";
+	children: PropTypes.ReactNodeLike;
 }
-class BulletRow extends Component<BulletRowProps, {}> {
+class BulletRow extends Component<BulletRowProps, Record<string, unknown>> {
 	render(): React.ReactNode {
 		const bulletStyle = this.props.bulletStyle || "line";
 
@@ -25,9 +28,7 @@ class BulletRow extends Component<BulletRowProps, {}> {
 	}
 }
 
-interface SelfProps {}
-interface SelfStates {}
-class Self extends Component<SelfProps, SelfStates> {
+class Self extends Component {
 	render(): React.ReactNode {
 		return (
 			<div className="page Self">
@@ -48,7 +49,7 @@ class Self extends Component<SelfProps, SelfStates> {
 					</div>
 					<div className="right">
 						<span className="text-container">
-							I'm null and I like programming
+							{"I'm null and I like programming"}
 						</span>
 					</div>
 				</div>
@@ -62,7 +63,7 @@ class Self extends Component<SelfProps, SelfStates> {
 						<BulletRow bulletStyle="dot">
 							coffee{" "}
 							<span className="light" style={{ fontSize: 24 }}>
-								(it's an addiction at this point)
+								{"(it's an addiction at this point)"}
 							</span>
 						</BulletRow>
 					</div>
@@ -78,4 +79,3 @@ class Self extends Component<SelfProps, SelfStates> {
 }
 
 export default Self;
-export { SelfProps, SelfStates };

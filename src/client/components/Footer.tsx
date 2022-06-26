@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import PropTypes from "prop-types";
+
 import DiscordLogo from "./svg/DiscordLogo";
 import GithubMark from "./svg/GithubMark";
 
@@ -8,8 +10,12 @@ import Router, { Link } from "react-router-dom";
 export interface LinkIconProps {
 	to: Router.To;
 	className?: string;
+	children: PropTypes.ReactNodeLike;
 }
-export class LinkIcon extends Component<LinkIconProps, {}> {
+export class LinkIcon extends Component<
+	LinkIconProps,
+	Record<string, unknown>
+> {
 	render(): React.ReactNode {
 		const { to, className, children } = this.props;
 
@@ -21,8 +27,7 @@ export class LinkIcon extends Component<LinkIconProps, {}> {
 	}
 }
 
-export interface FooterProps {}
-export default class Footer extends Component<FooterProps, {}> {
+export default class Footer extends Component {
 	render(): React.ReactNode {
 		return (
 			<div className="footer">
