@@ -45,6 +45,8 @@
 	}
 
 	.outer-link-container {
+		height: 100%;
+
 		display: flex;
 		flex-direction: row;
 	}
@@ -75,5 +77,23 @@
 		text-transform: lowercase;
 
 		flex: 1;
+	}
+}
+
+// Phones
+@media only screen and (max-width: 600px) {
+	.page.Home {
+		.mainLinksOuterContainer {
+			width: 100%;
+
+			margin-left: 0;
+			justify-content: center;
+		}
+
+		.mainLinksContainer {
+			height: 180px;
+
+			margin-left: 0;
+		}
 	}
 }

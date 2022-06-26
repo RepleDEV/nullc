@@ -29,3 +29,13 @@
 		width: fit-content;
 	}
 }
+
+@media only screen and (max-width: 600px) {
+	.footer {
+		justify-content: center;
+	}
+	.footer svg,
+	.footer img {
+		height: 34px;
+	}
+}

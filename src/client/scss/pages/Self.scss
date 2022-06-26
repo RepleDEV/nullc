@@ -109,3 +109,47 @@
 		}
 	}
 }
+
+@media only screen and (max-width: 600px) {
+	.page.Self {
+		padding: 0 8vw;
+		padding-top: 122px;
+
+		.row-container {
+			flex-direction: column;
+
+			align-items: baseline;
+
+			.bullet-row-container .dot-container {
+				margin-left: 0px;
+			}
+		}
+
+		.line-container {
+			margin-left: 0 !important;
+		}
+
+		.main-info {
+			margin-top: 26px;
+		}
+
+		.main-info .right {
+			padding: 45px 0;
+
+			text-align: left;
+		}
+
+		.likes-dislikes {
+			margin-top: 0px;
+
+			.right {
+				text-align: left;
+				margin-left: 0px;
+			}
+
+			.right .bullet-row-container {
+				flex-direction: row;
+			}
+		}
+	}
+}

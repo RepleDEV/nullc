@@ -14,6 +14,8 @@
 	.page-return-container {
 		position: absolute;
 		z-index: 100;
+
+		width: auto;
 	}
 
 	.row-container {
@@ -127,5 +129,18 @@
 
 	.row-container:last-child {
 		padding-bottom: 140px;
+	}
+}
+
+@media only screen and (max-width: 600px) {
+	.page.Thanks {
+		position: relative;
+
+		padding: 0 8vw;
+		padding-top: 122px;
+
+		.moots-list {
+			justify-content: center;
+		}
 	}
 }
