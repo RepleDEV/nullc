@@ -5,16 +5,16 @@ import * as session from "express-session";
 import * as csrf from "csurf";
 import * as dotenv from "dotenv";
 dotenv.config();
-
 import envTypes from "../../.env";
-
 import router from "./routes";
-import apiRouter from "./api";
-
 import { refreshMootsList } from "./scripts/moots";
 
 const app = express();
 
+// SERVE STATIC FILES
+app.use(express.static("public"));
+
+// SETUP SESSION
 app.use(
 	session({
 		// TODO: remove default value, add types to .env.d.ts for SESSION_SECRET
@@ -29,40 +29,16 @@ app.use(
 	})
 );
 
+// SETUP PARSERS
 app.use(express.json());
-app.use(express.static("public"));
-
-app.use("/api", apiRouter);
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// CSRF SETUP
 const csrfProtection = csrf({ cookie: true });
 app.use(csrfProtection);
-// TODO: Get types to WORK with express-session
-app.use((req, res, next) => {
-	res.cookie("XSRF-TOKEN", req.csrfToken());
-	// res.locals.csrfToken = req.csrfToken();
 
-	// Initialize session
-
-	// const sessionProperties: Record<string, any> = {
-	//     "loggedIn": false,
-	//     "loginMethod": null,
-	//     "twitterCodeVerifier": null,
-	//     "twitterCode": null,
-	//     "twitterBearerToken": null,
-	//     "twitterUserInfo": null,
-	// };
-
-	// for (const sessionKey in sessionProperties) {
-	//     const defaultValue = sessionProperties[sessionKey];
-
-	//     if (!req.session[sessionKey])
-	//         req.session[sessionKey] = defaultValue;
-	// }
-
-	next();
-});
+// HANDLE BAD CSRF TOKEN
 app.use(
 	(
 		err: Record<string, unknown>,
@@ -70,10 +46,10 @@ app.use(
 		res: express.Response,
 		next: express.NextFunction
 	) => {
-		console.log(err);
 		if (err.code !== "EBADCSRFTOKEN") return next(err);
 
 		res.status(403);
+		// TODO: CHANGE TO JSON
 		res.send("BAD CSRF TOKEN");
 	}
 );
