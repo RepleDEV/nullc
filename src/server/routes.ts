@@ -12,6 +12,8 @@ const env = process.env as (NodeJS.ProcessEnv & envTypes);
 const mailDB = new MailDB("nullluvsu", process.env.NODE_ENV === "production" ? (() => {
 	const auth = jawsGetAuth();
 
+	console.log(auth);
+
 	return {
 		host: auth.hostname,
 		port: +auth.port,
