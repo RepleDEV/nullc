@@ -8,9 +8,7 @@ const router = express.Router();
 
 const env = process.env as (NodeJS.ProcessEnv & envTypes);
 
-if (!env.DATABASE_HOST || !env.DATABASE_USERNAME || !env.DATABASE_PASSWORD)
-	throw "UNDEFINED / INCOMPLETE DATABASE AUTHORIZATION";
-
+// TODO: Make this easier to fix
 const mailDB = new MailDB("nullluvsu", process.env.NODE_ENV === "production" ? (() => {
 	const auth = jawsGetAuth();
 
@@ -20,11 +18,16 @@ const mailDB = new MailDB("nullluvsu", process.env.NODE_ENV === "production" ? (
 		user: auth.username,
 		password: auth.username,
 	};
-})() : {
-	host: env.DATABASE_HOST,
-	user: env.DATABASE_USERNAME,
-	password: env.DATABASE_PASSWORD,
-});
+})() : (() => { 
+	if (!env.DATABASE_HOST || !env.DATABASE_USERNAME || !env.DATABASE_PASSWORD)
+		throw "UNDEFINED / INCOMPLETE DATABASE AUTHORIZATION";
+
+	return {
+		host: env.DATABASE_HOST,
+		user: env.DATABASE_USERNAME,
+		password: env.DATABASE_PASSWORD,
+	};
+})());
 
 (async () => {
 	await mailDB.setup();
