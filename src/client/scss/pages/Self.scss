@@ -1,71 +1,56 @@
-@use "../globals.scss";
+@use "../globals";
 
 .page.Self {
-	box-sizing: border-box;
-	padding: 0 211px;
-	padding-top: 115px;
-
-	display: flex;
-	flex-direction: column;
-
-	font-family: "Jost", sans-serif;
-	color: globals.$color-text-primary;
-
 	.row-container {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
 
 		.bullet-row-container {
-			display: flex;
-			flex-direction: row;
+			@include globals.flex-row;
 
 			align-items: center;
-
-			.dot-container {
-				width: 8px;
-				height: 8px;
-
-				border-radius: 100%;
-
-				background-color: globals.$color-accent-primary;
-
-				margin: 0px calc((55px - 8px) / 2);
-			}
-
-			.line-container {
-				width: 21px;
-				height: 4px;
-
-				background-color: globals.$color-accent-primary;
-
-				// Maybe get rid of this calc??? and just use a fucking container for crying out loud
-				margin: 0px calc((55px - 21px) / 2);
-			}
 		}
+
+		.bullet-row-container .dot-container {
+			width: 8px;
+			height: 8px;
+
+			border-radius: 100%;
+
+			background-color: globals.$color-accent-primary;
+
+			margin: 0px calc((55px - 8px) / 2);
+		}
+
+		.bullet-row-container .line-container {
+			width: 21px;
+			height: 4px;
+
+			background-color: globals.$color-accent-primary;
+
+			// Maybe get rid of this calc??? and just use a fucking container for crying out loud
+			margin: 0px calc((55px - 21px) / 2);
+		}
+
 		.bullet-row-container:not(:last-child) {
 			margin-bottom: 2px;
+		}
+
+		.left, .right {
+			@include globals.flex-column;
 		}
 
 		// This might not be the best solution
 		// to make all children to stick to the right
 		// please find a better solution
 		.right {
-			display: flex;
-			flex-direction: column;
-
 			text-align: right;
-
 			margin-left: auto;
-
-			.bullet-row-container {
-				flex-direction: row-reverse;
-			}
 		}
 
-		.left {
-			display: flex;
-			flex-direction: column;
+		.right .bullet-row-container {
+			flex-direction: row-reverse;
 		}
 	}
 
@@ -108,16 +93,10 @@
 			height: 100%;
 		}
 	}
-}
 
-@media only screen and (max-width: 600px) {
-	.page.Self {
-		padding: 0 8vw;
-		padding-top: 122px;
-
+	@media only screen and (max-width: 600px) {
 		.row-container {
 			flex-direction: column;
-
 			align-items: baseline;
 
 			.bullet-row-container .dot-container {

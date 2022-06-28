@@ -78,11 +78,9 @@
 
 		flex: 1;
 	}
-}
 
-// Phones
-@media only screen and (max-width: 600px) {
-	.page.Home {
+	// Phones
+	@media only screen and (max-width: 600px) {
 		.mainLinksOuterContainer {
 			width: 100%;
 
