@@ -9,25 +9,23 @@ import envTypes from "../../.env";
 import router from "./routes";
 import { refreshMootsList } from "./scripts/moots";
 
+declare module "express-session" {
+	export interface SessionData {
+		code_verifier?: string;
+		access_token?: string;
+		logged_in?: boolean;
+		account_info?: {
+			username: string;
+			is_mutuals: boolean;
+		};
+		admin?: boolean;
+	}
+}
+
 const app = express();
 
 // SERVE STATIC FILES
 app.use(express.static("public"));
-
-// SETUP SESSION
-app.use(
-	session({
-		// TODO: remove default value, add types to .env.d.ts for SESSION_SECRET
-		secret:
-			(process.env as NodeJS.ProcessEnv & envTypes).SESSION_SECRET ||
-			"keyboard cat",
-		resave: false,
-		saveUninitialized: true,
-		cookie: {
-			secure: process.env.NODE_ENV === "production",
-		},
-	})
-);
 
 // SETUP PARSERS
 app.use(express.json());
@@ -40,6 +38,22 @@ app.use(csrfProtection, (req, res, next) => {
 	res.cookie('XSRF-TOKEN', req.csrfToken());
 	next();
 });
+
+// SETUP SESSION
+app.use(
+	session({
+		// TODO: remove default value, add types to .env.d.ts for SESSION_SECRET
+		secret:
+			(process.env as NodeJS.ProcessEnv & envTypes).SESSION_SECRET ||
+			"keyboard cat",
+		resave: false,
+		saveUninitialized: true,
+		cookie: {
+			secure: process.env.NODE_ENV === "production",
+			maxAge: 1000 * 60 * 60 * 6, // 6 hrs
+		},
+	})
+);
 
 // HANDLE BAD CSRF TOKEN
 app.use(

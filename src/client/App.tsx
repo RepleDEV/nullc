@@ -15,6 +15,11 @@ class App extends Component {
 		super(props);
 	}
 
+	componentDidMount() {
+		if (document.location.pathname == "/" && document.location.href.includes("login_callback=true"))
+			window.close();
+	}
+
 	render(): React.ReactNode {
 		return (
 			<>
