@@ -8,7 +8,7 @@ const router = express.Router();
 
 const env = process.env as (NodeJS.ProcessEnv & envTypes);
 
-// TODO: Make this easier to fix
+// TODO: Make this easier to READ NOT FIX U MORON
 const mailDB = new MailDB("nullluvsu", process.env.NODE_ENV === "production" ? (() => {
 	const auth = jawsGetAuth();
 
