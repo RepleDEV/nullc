@@ -10,7 +10,7 @@ class Mail extends Component {
             <div className="page Mail">
                 <PageReturn />
                 <Form to="/">
-                    <FormInput type="text" inputProps={
+                    <FormInput type="text" defaultValue="Anon" inputProps={
                         {
                             placeholder: "Anon",
                             name: "name",

@@ -5,6 +5,10 @@ declare interface envTypes {
 	TWITTER_BEARER_TOKEN?: string;
 
 	SESSION_SECRET?: string;
+
+	DATABASE_HOST?: string;
+	DATABASE_USERNAME?: string;
+	DATABASE_PASSWORD?: string;
 }
 
 export default envTypes;

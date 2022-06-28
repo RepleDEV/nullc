@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 import PropTypes from "prop-types";
 
@@ -46,6 +47,27 @@ class FormInput extends Component<FormInputProps, Record<string, unknown>> {
     }
 }
 
+class FormShowStatus extends Component<{
+    status: "submitting" | "submitted";
+}> {
+    render(): React.ReactNode {
+        let text = "";
+        const { status } = this.props;
+
+        if (status === "submitting")
+            text = "Submitting, please wait.";
+        else
+            text = "Submitted Mail. Thank you!";
+
+        return (
+            <div className={ `form-status form-${status}` }>
+                {/* TODO: Add loading animation */}
+                <span className="status-text">{ text }</span>
+            </div>
+        );
+    }
+}
+
 interface FormProps {
     to: string;
     children?: PropTypes.ReactNodeArray | PropTypes.ReactElementLike;
@@ -57,7 +79,7 @@ interface FormValueObject {
 interface FormState {
     formValues: ( FormValueObject | undefined )[];
     showInvalid: string[];
-    submitted: boolean;
+    submitState: "none" | "submitting" | "submitted";
 }
 class Form extends Component<FormProps, FormState> {
     constructor(props: FormProps) {
@@ -66,7 +88,7 @@ class Form extends Component<FormProps, FormState> {
         this.state = {
             formValues: [],
             showInvalid: [],
-            submitted: false,
+            submitState: "none",
         };
 
         this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);
@@ -79,7 +101,7 @@ class Form extends Component<FormProps, FormState> {
         this.setState({ showInvalid: [...this.state.showInvalid, formName] });
     }
     async submit(): Promise<void> {
-        const formData = {};
+        const formData: Record<string, string> = {};
 
         let invalidSubmit = false;
 
@@ -103,9 +125,20 @@ class Form extends Component<FormProps, FormState> {
         if (invalidSubmit)
             return;
 
-        const url = "/form"
+        this.setState({ submitState: "submitting" });
 
-        this.setState({ submitted: true });
+        const url = "/mail";
+        const res = await axios({
+            url,
+            method: "POST",
+            data: formData,
+            headers: {
+                "Accepts": "application/json",
+            },
+        });
+
+        if (!res.data.error)
+            this.setState({ submitState: "submitted" });
     }
     getFormValueFromFormName(formName: string): string | null {
         for (let i = 0;i < this.state.formValues.length;i++) {
@@ -142,6 +175,9 @@ class Form extends Component<FormProps, FormState> {
         return formName;
     }
     render(): React.ReactNode {
+        if (this.state.submitState !== "none")
+            return <FormShowStatus status={this.state.submitState}/>;
+
         return (
             <div className="form-container">
                 {

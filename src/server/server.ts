@@ -36,7 +36,10 @@ app.use(cookieParser());
 
 // CSRF SETUP
 const csrfProtection = csrf({ cookie: true });
-app.use(csrfProtection);
+app.use(csrfProtection, (req, res, next) => {
+	res.cookie('XSRF-TOKEN', req.csrfToken());
+	next();
+});
 
 // HANDLE BAD CSRF TOKEN
 app.use(
@@ -47,10 +50,10 @@ app.use(
 		next: express.NextFunction
 	) => {
 		if (err.code !== "EBADCSRFTOKEN") return next(err);
+		console.log(req.body, req.csrfToken());
 
 		res.status(403);
-		// TODO: CHANGE TO JSON
-		res.send("BAD CSRF TOKEN");
+		res.json({ error: "BAD CSRF TOKEN" });
 	}
 );
 app.use(router);
@@ -58,7 +61,7 @@ app.use(router);
 const port = process.env.PORT || 3000;
 
 (async () => {
-	await refreshMootsList();
+	// await refreshMootsList();
 
 	app.listen(port, () => console.log(`Server listening on port: ${port}`));
 })();

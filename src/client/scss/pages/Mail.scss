@@ -75,3 +75,15 @@
 .form-container .form-input:not(:first-child) {
 	margin-top: 24px;
 }
+
+.form-status {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	font-size: 1.4rem;
+	font-weight: globals.$font-weight__medium;
+	letter-spacing: 1.6px;
+
+	height: 220px;
+}
