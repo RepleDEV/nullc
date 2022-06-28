@@ -163,7 +163,7 @@ router.get("/account_info", (req, res) => {
 	if (req.session.logged_in !== true)
 		return res.status(403).json({ error: "Unauthorized" });
 	
-	const account_info = {
+	const account_info: Record<string, unknown> = {
 		username: req.session.account_info?.username,
 		is_mutuals: req.session.account_info?.is_mutuals,
 	};

@@ -46,7 +46,7 @@ app.use(
 		secret:
 			(process.env as NodeJS.ProcessEnv & envTypes).SESSION_SECRET ||
 			"keyboard cat",
-		resave: false,
+		resave: true,
 		saveUninitialized: true,
 		cookie: {
 			secure: process.env.NODE_ENV === "production",
