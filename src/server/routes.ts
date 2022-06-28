@@ -18,7 +18,7 @@ const mailDB = new MailDB("nullluvsu", process.env.NODE_ENV === "production" ? (
 		host: auth.hostname,
 		port: +auth.port,
 		user: auth.username,
-		password: auth.username,
+		password: auth.password,
 		database: auth.default_schema,
 	};
 })() : (() => { 
