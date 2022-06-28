@@ -116,9 +116,11 @@ export default class MailDB extends DataBase {
         this.tableName = "Mail";
     }
 
-    async setup() {
-        await super.createDatabase(this.databaseName);
-        await super.useDatabase(this.databaseName);
+    async setup(production = false) {
+        if (!production) {
+            await super.createDatabase(this.databaseName);
+            await super.useDatabase(this.databaseName);
+        }
         await super.createTable(this.tableName, [
             {
                 name: "ID",
