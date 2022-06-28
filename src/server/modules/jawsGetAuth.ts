@@ -1,6 +1,7 @@
 // I MAY BE GETTING THIS WRONG
 
 export default function jawsGetAuth() {
+    // Schema: mysql://username:password@hostname:port/default_schema
     const JAWSDB_MARIA_URL = process.env.JAWSDB_MARIA_URL as string;
 
     const split_url = JAWSDB_MARIA_URL.substring("mysql://".length).split("/");

@@ -17,6 +17,7 @@ const mailDB = new MailDB("nullluvsu", process.env.NODE_ENV === "production" ? (
 		port: +auth.port,
 		user: auth.username,
 		password: auth.username,
+		database: auth.default_schema,
 	};
 })() : (() => { 
 	if (!env.DATABASE_HOST || !env.DATABASE_USERNAME || !env.DATABASE_PASSWORD)
@@ -30,7 +31,7 @@ const mailDB = new MailDB("nullluvsu", process.env.NODE_ENV === "production" ? (
 })());
 
 (async () => {
-	await mailDB.setup();
+	await mailDB.setup(process.env.NODE_ENV === "production");
 })();
 
 router.post("/mail", (req, res) => {
