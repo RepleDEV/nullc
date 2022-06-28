@@ -1,4 +1,4 @@
-@use "globals.scss";
+@use "globals";
 
 .footer {
 	width: 100%;
@@ -6,9 +6,8 @@
 
 	padding: 145px 0px 80px 0px;
 
-	display: flex;
-	flex-direction: row-reverse;
-
+	@include globals.flex-row-reverse;
+	
 	a:not(:last-child) {
 		margin-left: 1.5rem;
 	}

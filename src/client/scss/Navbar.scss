@@ -1,4 +1,4 @@
-@use "globals.scss";
+@use "globals";
 
 .navbar {
 	position: absolute;
@@ -28,8 +28,7 @@
 	.inner-login-container {
 		height: 28px;
 
-		display: flex;
-		flex-direction: row;
+		@include globals.flex-row;
 
 		span > a {
 			font-family: "Jost", sans-serif;
