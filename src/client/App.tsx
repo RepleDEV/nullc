@@ -46,9 +46,6 @@ class App extends Component<Record<string,unknown>, {
 
 	componentDidMount() {
 		this.handleCheckLogin();
-
-		// if (document.location.pathname == "/" && document.location.href.includes("login_callback=true"))
-		// 	window.close();
 	}
 
 	render(): React.ReactNode {

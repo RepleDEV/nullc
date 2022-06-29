@@ -138,7 +138,6 @@ router.get("/callback", async (req, res) => {
 	}
 
 	res.redirect("/");
-	// res.redirect("/?login_callback=true");
 });
 
 router.get("/login", (req, res) => {
