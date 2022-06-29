@@ -1,16 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-import { disableLink } from "../modules/tools";
-
 import "../scss/Navbar";
+import Heart from "./svg/Heart";
+import Twitter from "./svg/Twitter";
 
 interface NavbarProps {
 	logged_in: boolean;
 	is_mutuals: boolean;
 	username?: string;
-
-	onFinishedLogin?: () => void;
 }
 class Navbar extends Component<NavbarProps, Record<string, unknown>> {
 	constructor(props: NavbarProps) {
@@ -19,16 +17,16 @@ class Navbar extends Component<NavbarProps, Record<string, unknown>> {
 		this.handleLogin = this.handleLogin.bind(this);
 	}
 
-	async handleLogin() {
-		const loginWindow = window.open("/login", "", "width=800,height=600");
-		if (!loginWindow)
-			return;
+	handleLogin() {
+		window.open("/login", "_self");
 	}
 
 	render(): React.ReactNode {
 		let element = <></>;
 
-		if (!this.props.logged_in)
+		const { logged_in, is_mutuals, username } = this.props;
+
+		if (!logged_in)
 			element = (
 				<div className="login-container">
 					<div className="inner-login-container">
@@ -49,7 +47,19 @@ class Navbar extends Component<NavbarProps, Record<string, unknown>> {
 			);
 		else {
 			element = (
-				<></>
+				<div className="user-container">
+					<div className="icon-container">
+						{
+							is_mutuals ?
+							<Heart /> :
+							<Twitter />
+						}
+					</div>
+					<div className="username-container">
+						<span className="tag">@</span>
+						<span className="username">{ username }</span>
+					</div>
+				</div>
 			);
 		}
 

@@ -47,3 +47,38 @@
 		}
 	}
 }
+
+.navbar .user-container {
+	@include globals.flex-row;
+
+	height: 100%;
+
+	.icon-container {
+		width: 20px;
+		padding-right: 12px;
+
+		svg {
+			width: 100%;
+			fill: globals.$color-text-primary;
+		}
+	}
+
+	.icon-container,
+	.username-container {
+		display: flex;
+
+		align-items: center;
+	}
+
+	.tag {
+		font-size: 12px;
+		font-weight: globals.$font-weight__light;
+	}
+
+	.username {
+		font-size: 20px;
+		font-weight: globals.$font-weight__medium;
+
+		border-bottom: 2px solid globals.$color-accent-primary;
+	}
+}
