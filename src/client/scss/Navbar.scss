@@ -25,26 +25,14 @@
 		display: flex;
 		align-items: center;
 	}
-	.inner-login-container {
-		height: 28px;
 
-		@include globals.flex-row;
+	span > a {
+		font-family: inherit;
+		font-size: 20px;
+		color: inherit;
 
-		span > a {
-			font-family: "Jost", sans-serif;
-			font-size: 20px;
-			color: globals.$color-text-primary;
-
-			text-transform: lowercase;
-			text-decoration: none;
-		}
-
-		span.center-border {
-			margin: 0 14px;
-			width: 2px;
-
-			background-color: globals.$color-accent-primary;
-		}
+		text-transform: lowercase;
+		text-decoration: none;
 	}
 }
 

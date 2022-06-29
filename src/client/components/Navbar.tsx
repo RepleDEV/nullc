@@ -35,13 +35,6 @@ class Navbar extends Component<NavbarProps, Record<string, unknown>> {
 								log in
 							</Link>
 						</span>
-						<span className="center-border" />
-						<span className="signup-link-container">
-							<Link
-								to="/signup">
-								sign up
-							</Link>
-						</span>
 					</div>
 				</div>
 			);
