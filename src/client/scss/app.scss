@@ -1,4 +1,4 @@
-@use "globals.scss";
+@use "globals";
 
 body {
 	margin: 0;
@@ -7,12 +7,30 @@ body {
 	text-rendering: optimizeLegibility;
 
 	overflow-x: hidden;
+
+	color: globals.$color-text-primary;
+	font-family: "Jost", sans-serif;
 }
 
 .page {
+	box-sizing: border-box;
+
 	position: relative;
 	width: 100%;
 	height: 100%;
+}
+
+.page:not(.Home) {
+	padding: 115px 211px 0px 211px;
+
+	@include globals.flex-column;
+}
+
+@media only screen and (max-width: 600px) {
+	.page:not(.Home) {
+		padding: 0 8vw;
+		padding-top: 122px;
+	}
 }
 
 .page > .page-return-container {

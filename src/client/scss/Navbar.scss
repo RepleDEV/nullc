@@ -1,4 +1,4 @@
-@use "globals.scss";
+@use "globals";
 
 .navbar {
 	position: absolute;
@@ -25,26 +25,48 @@
 		display: flex;
 		align-items: center;
 	}
-	.inner-login-container {
-		height: 28px;
 
+	span > a {
+		font-family: inherit;
+		font-size: 20px;
+		color: inherit;
+
+		text-transform: lowercase;
+		text-decoration: none;
+	}
+}
+
+.navbar .user-container {
+	@include globals.flex-row;
+
+	height: 100%;
+
+	.icon-container {
+		width: 20px;
+		padding-right: 12px;
+
+		svg {
+			width: 100%;
+			fill: globals.$color-text-primary;
+		}
+	}
+
+	.icon-container,
+	.username-container {
 		display: flex;
-		flex-direction: row;
 
-		span > a {
-			font-family: "Jost", sans-serif;
-			font-size: 20px;
-			color: globals.$color-text-primary;
+		align-items: center;
+	}
 
-			text-transform: lowercase;
-			text-decoration: none;
-		}
+	.tag {
+		font-size: 12px;
+		font-weight: globals.$font-weight__light;
+	}
 
-		span.center-border {
-			margin: 0 14px;
-			width: 2px;
+	.username {
+		font-size: 20px;
+		font-weight: globals.$font-weight__medium;
 
-			background-color: globals.$color-accent-primary;
-		}
+		border-bottom: 2px solid globals.$color-accent-primary;
 	}
 }

@@ -1,0 +1,33 @@
+@use "globals";
+
+.popup {
+	position: absolute;
+	z-index: 500;
+
+	@include globals.flex-column;
+
+	width: 150px;
+	min-height: 40px;
+	max-height: 400px;
+	background-color: globals.$color-secondary;
+
+	margin: 5px;
+
+	border-radius: 8px;
+	overflow: hidden;
+
+	& > * {
+		flex: 1;
+	}
+}
+
+.popup .logout-button {
+	display: flex;
+
+	justify-content: center;
+	align-items: center;
+
+	&:hover {
+		cursor: pointer;
+	}
+}

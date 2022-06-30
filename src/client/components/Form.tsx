@@ -4,202 +4,214 @@ import axios from "axios";
 import PropTypes from "prop-types";
 
 interface FormInputProps {
-    type: React.HTMLInputTypeAttribute | "textarea";
-    onChange?: (value: string) => void;
-    defaultValue?: string;
-    required?: boolean;
-    inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
-    textareaProps?: React.TextareaHTMLAttributes<HTMLTextAreaElement>;
-    className?: string;
-    children?: string;
+	type: React.HTMLInputTypeAttribute | "textarea";
+	onChange?: (value: string) => void;
+	defaultValue?: string;
+	required?: boolean;
+	inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
+	textareaProps?: React.TextareaHTMLAttributes<HTMLTextAreaElement>;
+	className?: string;
+	children?: string;
 }
 class FormInput extends Component<FormInputProps, Record<string, unknown>> {
-    constructor(props: FormInputProps) {
-        super(props);
+	constructor(props: FormInputProps) {
+		super(props);
 
-        this.onChange = this.onChange.bind(this);
-    }
-    onChange(event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement> | string) {
-        if (this.props.onChange) {
-            if (typeof event == "string")
-                return this.props.onChange(event);
-            this.props.onChange(event.target.value);
-        }
-    }
-    render(): React.ReactNode {
-        const { type, children, inputProps, textareaProps } = this.props;
+		this.onChange = this.onChange.bind(this);
+	}
+	onChange(
+		event:
+			| React.ChangeEvent<HTMLInputElement>
+			| React.ChangeEvent<HTMLTextAreaElement>
+			| string
+	) {
+		if (this.props.onChange) {
+			if (typeof event == "string") return this.props.onChange(event);
+			this.props.onChange(event.target.value);
+		}
+	}
+	render(): React.ReactNode {
+		const { type, children, inputProps, textareaProps } = this.props;
 
-        return (
-            <div className={ [ "form-input", `${type}-input`].join(" ") }>
-                <span className="input-title">{ children }</span>
-                {
-                    type === "textarea" ?
-                        <textarea onChange={this.onChange} { ...textareaProps }></textarea> :
-                        <input type={type} onChange={this.onChange} onClick={
-                            type === "submit" ? 
-                            () => {
-                                this.onChange("Submit");
-                            } : (_ => _)
-                        }  { ...inputProps }/>
-                }
-            </div>
-        );
-    }
+		return (
+			<div className={["form-input", `${type}-input`].join(" ")}>
+				<span className="input-title">{children}</span>
+				{type === "textarea" ? (
+					<textarea
+						onChange={this.onChange}
+						{...textareaProps}></textarea>
+				) : (
+					<input
+						type={type}
+						onChange={this.onChange}
+						onClick={
+							type === "submit"
+								? () => {
+										this.onChange("Submit");
+								  }
+								: (_) => _
+						}
+						{...inputProps}
+					/>
+				)}
+			</div>
+		);
+	}
 }
 
 class FormShowStatus extends Component<{
-    status: "submitting" | "submitted";
+	status: "submitting" | "submitted";
 }> {
-    render(): React.ReactNode {
-        let text = "";
-        const { status } = this.props;
+	render(): React.ReactNode {
+		let text = "";
+		const { status } = this.props;
 
-        if (status === "submitting")
-            text = "Submitting, please wait.";
-        else
-            text = "Submitted Mail. Thank you!";
+		if (status === "submitting") text = "Submitting, please wait.";
+		else text = "Submitted Mail. Thank you!";
 
-        return (
-            <div className={ `form-status form-${status}` }>
-                {/* TODO: Add loading animation */}
-                <span className="status-text">{ text }</span>
-            </div>
-        );
-    }
+		return (
+			<div className={`form-status form-${status}`}>
+				{/* TODO: Add loading animation */}
+				<span className="status-text">{text}</span>
+			</div>
+		);
+	}
 }
 
 interface FormProps {
-    to: string;
-    children?: PropTypes.ReactNodeArray | PropTypes.ReactElementLike;
+	to: string;
+	children?: PropTypes.ReactNodeArray | PropTypes.ReactElementLike;
 }
 interface FormValueObject {
-    formName: string;
-    value: string;
+	formName: string;
+	value: string;
 }
 interface FormState {
-    formValues: ( FormValueObject | undefined )[];
-    showInvalid: string[];
-    submitState: "none" | "submitting" | "submitted";
+	formValues: (FormValueObject | undefined)[];
+	showInvalid: string[];
+	submitState: "none" | "submitting" | "submitted";
 }
 class Form extends Component<FormProps, FormState> {
-    constructor(props: FormProps) {
-        super(props);
+	constructor(props: FormProps) {
+		super(props);
 
-        this.state = {
-            formValues: [],
-            showInvalid: [],
-            submitState: "none",
-        };
+		this.state = {
+			formValues: [],
+			showInvalid: [],
+			submitState: "none",
+		};
 
-        this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);
-        this.submit = this.submit.bind(this);
-        this.getFormValueFromFormName = this.getFormValueFromFormName.bind(this);
-        this.changeFormValue = this.changeFormValue.bind(this);
-        this.getFormNameFromChild = this.getFormNameFromChild.bind(this);
-    }
-    handleInvalidSubmit(formName: string): void {
-        this.setState({ showInvalid: [...this.state.showInvalid, formName] });
-    }
-    async submit(): Promise<void> {
-        const formData: Record<string, string> = {};
+		this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);
+		this.submit = this.submit.bind(this);
+		this.getFormValueFromFormName =
+			this.getFormValueFromFormName.bind(this);
+		this.changeFormValue = this.changeFormValue.bind(this);
+		this.getFormNameFromChild = this.getFormNameFromChild.bind(this);
+	}
+	handleInvalidSubmit(formName: string): void {
+		this.setState({ showInvalid: [...this.state.showInvalid, formName] });
+	}
+	async submit(): Promise<void> {
+		const formData: Record<string, string> = {};
 
-        let invalidSubmit = false;
+		let invalidSubmit = false;
 
-        React.Children.map(this.props.children, (child) => {
-            if (React.isValidElement(child)) {
-                const formName = this.getFormNameFromChild(child);
+		React.Children.map(this.props.children, (child) => {
+			if (React.isValidElement(child)) {
+				const formName = this.getFormNameFromChild(child);
 
-                if (formName === "submit")
-                    return;
+				if (formName === "submit") return;
 
-                const formValue = this.getFormValueFromFormName(formName);
-                if (formValue === null && child.props.required === true) {
-                    invalidSubmit = true;
-                    this.handleInvalidSubmit(formName);
-                } else {
-                    formData[formName] = formValue || child.props.defaultValue || "";
-                }
-            }
-        });
+				const formValue = this.getFormValueFromFormName(formName);
+				if (formValue === null && child.props.required === true) {
+					invalidSubmit = true;
+					this.handleInvalidSubmit(formName);
+				} else {
+					formData[formName] =
+						formValue || child.props.defaultValue || "";
+				}
+			}
+		});
 
-        if (invalidSubmit)
-            return;
+		if (invalidSubmit) return;
 
-        this.setState({ submitState: "submitting" });
+		this.setState({ submitState: "submitting" });
 
-        const url = "/mail";
-        const res = await axios({
-            url,
-            method: "POST",
-            data: formData,
-            headers: {
-                "Accepts": "application/json",
-            },
-        });
+		const url = "/mail";
+		const res = await axios({
+			url,
+			method: "POST",
+			data: formData,
+			headers: {
+				Accepts: "application/json",
+			},
+		});
 
-        if (!res.data.error)
-            this.setState({ submitState: "submitted" });
-    }
-    getFormValueFromFormName(formName: string): string | null {
-        for (let i = 0;i < this.state.formValues.length;i++) {
-            const value = this.state.formValues[i];
+		if (!res.data.error) this.setState({ submitState: "submitted" });
+	}
+	getFormValueFromFormName(formName: string): string | null {
+		for (let i = 0; i < this.state.formValues.length; i++) {
+			const value = this.state.formValues[i];
 
-            if (value && value.formName === formName)
-                return value.value;
-        }
+			if (value && value.formName === formName) return value.value;
+		}
 
-        return null;
-    }
-    changeFormValue(i: number, formName: string, value: string): void {
-        if (formName === "submit" && value === "Submit") {
-            this.submit();
-            return;
-        }
+		return null;
+	}
+	changeFormValue(i: number, formName: string, value: string): void {
+		if (formName === "submit" && value === "Submit") {
+			this.submit();
+			return;
+		}
 
-        const formValues = [...this.state.formValues];
+		const formValues = [...this.state.formValues];
 
-        formValues[i] = {
-            formName,
-            value,
-        };
+		formValues[i] = {
+			formName,
+			value,
+		};
 
-        this.setState({ formValues });
-    }
-    getFormNameFromChild(child: React.ReactElement): string {
-        const elementProps = child.props.inputProps || child.props.textareaProps;
-        const formName = 
-            elementProps && elementProps.name ?
-                elementProps.name :
-                elementProps.children;
-        
-        return formName;
-    }
-    render(): React.ReactNode {
-        if (this.state.submitState !== "none")
-            return <FormShowStatus status={this.state.submitState}/>;
+		this.setState({ formValues });
+	}
+	getFormNameFromChild(child: React.ReactElement): string {
+		const elementProps =
+			child.props.inputProps || child.props.textareaProps;
+		const formName =
+			elementProps && elementProps.name
+				? elementProps.name
+				: elementProps.children;
 
-        return (
-            <div className="form-container">
-                {
-                    // Pass onChange prop
-                    React.Children.map(this.props.children, (child, i) => {
-                        if (React.isValidElement(child) && child.type === FormInput) {
-                            const formName = this.getFormNameFromChild(child);
+		return formName;
+	}
+	render(): React.ReactNode {
+		if (this.state.submitState !== "none")
+			return <FormShowStatus status={this.state.submitState} />;
 
-                            return React.cloneElement(child, {
-                                onChange: (value: string) => {
-                                    this.changeFormValue(i, formName, value);
-                                },
-                                key: i,
-                            });
-                        }
+		return (
+			<div className="form-container">
+				{
+					// Pass onChange prop
+					React.Children.map(this.props.children, (child, i) => {
+						if (
+							React.isValidElement(child) &&
+							child.type === FormInput
+						) {
+							const formName = this.getFormNameFromChild(child);
 
-                        return child;
-                    })
-                }
-            </div>
-        );
-    }
+							return React.cloneElement(child, {
+								onChange: (value: string) => {
+									this.changeFormValue(i, formName, value);
+								},
+								key: i,
+							});
+						}
+
+						return child;
+					})
+				}
+			</div>
+		);
+	}
 }
 
 export default Form;
