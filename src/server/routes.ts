@@ -10,20 +10,21 @@ import { TwitterApi } from "twitter-api-v2";
 
 const router = express.Router();
 
-const env = process.env as (NodeJS.ProcessEnv & envTypes);
+const env = process.env as NodeJS.ProcessEnv & envTypes;
 
-// TODO: Make this easier to READ NOT FIX U MORON
-const mailDB = new MailDB("nullluvsu", process.env.NODE_ENV === "production" ? (() => {
-	const auth = jawsGetAuth();
+function DBAuthFactory(node_env: string) {
+	if (node_env === "production") {
+		const auth = jawsGetAuth();
 
-	return {
-		host: auth.hostname,
-		port: +auth.port,
-		user: auth.username,
-		password: auth.password,
-		database: auth.default_schema,
-	};
-})() : (() => { 
+		return {
+			host: auth.hostname,
+			port: +auth.port,
+			user: auth.username,
+			password: auth.password,
+			database: auth.default_schema,
+		};
+	}
+
 	if (!env.DATABASE_HOST || !env.DATABASE_USERNAME || !env.DATABASE_PASSWORD)
 		throw "UNDEFINED / INCOMPLETE DATABASE AUTHORIZATION";
 
@@ -32,30 +33,35 @@ const mailDB = new MailDB("nullluvsu", process.env.NODE_ENV === "production" ? (
 		user: env.DATABASE_USERNAME,
 		password: env.DATABASE_PASSWORD,
 	};
-})());
+}
+
+const mailDB = new MailDB("nullluvsu", DBAuthFactory(env.NODE_ENV || ""));
 
 (async () => {
 	await mailDB.setup(process.env.NODE_ENV === "production");
 })();
 
-const getRedirectUri = () => `http${
-	process.env.NODE_ENV === "production" ?
-	"s://nullluvsu.herokuapp.com" :
-	`://localhost:3000`
-}/callback`;
+const getRedirectUri = () =>
+	`http${
+		process.env.NODE_ENV === "production"
+			? "s://nullluvsu.herokuapp.com"
+			: `://localhost:3000`
+	}/callback`;
 
 router.post("/mail", (req, res) => {
 	// Do shit
 	const { name, message } = req.body;
 	if (!name || !message)
 		return res.status(400).json({ error: "BAD FORM DATA" });
-	
-	mailDB.addMail(name, message).then(() => {
-		res.status(200).json({ message: "SUCCESS" });
-	}).catch(() => {
-		res.status(500).json({ error: "INTERNAL SERVER ERROR"});
-	});
 
+	mailDB
+		.addMail(name, message)
+		.then(() => {
+			res.status(200).json({ message: "SUCCESS" });
+		})
+		.catch(() => {
+			res.status(500).json({ error: "INTERNAL SERVER ERROR" });
+		});
 });
 
 router.get("/callback", async (req, res) => {
@@ -101,16 +107,22 @@ router.get("/callback", async (req, res) => {
 			const follower_count = me.public_metrics?.followers_count || 1000;
 
 			const params = {
-				max_results: follower_count > 1000 ? 1000 : follower_count
+				max_results: follower_count > 1000 ? 1000 : follower_count,
 			};
 
-			const { data: following } = await client.v2.followers(me.id, params);
-			const { data: followers } = await client.v2.following(me.id, params);
+			const { data: following } = await client.v2.followers(
+				me.id,
+				params
+			);
+			const { data: followers } = await client.v2.following(
+				me.id,
+				params
+			);
 
 			let isFollowing = false;
 			let isFollower = false;
 
-			for (let i = 0;i < following.length;i++) {
+			for (let i = 0; i < following.length; i++) {
 				const user = following[i];
 
 				if (user.username === "nullluvsu") {
@@ -119,7 +131,7 @@ router.get("/callback", async (req, res) => {
 				}
 			}
 
-			for (let i = 0;i < followers.length;i++) {
+			for (let i = 0; i < followers.length; i++) {
 				const user = followers[i];
 
 				if (user.username === "nullluvsu") {
@@ -172,14 +184,13 @@ router.post("/logout", (req, res) => {
 router.get("/account_info", (req, res) => {
 	if (req.session.logged_in !== true)
 		return res.status(403).json({ error: "Unauthorized" });
-	
+
 	const account_info: Record<string, unknown> = {
 		username: req.session.account_info?.username,
 		is_mutuals: req.session.account_info?.is_mutuals,
 	};
 
-	if (req.session.admin === true)
-		account_info["admin"] = true;
+	if (req.session.admin === true) account_info["admin"] = true;
 
 	res.status(200).json(account_info);
 });
