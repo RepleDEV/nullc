@@ -35,7 +35,7 @@ app.use(cookieParser());
 // CSRF SETUP
 const csrfProtection = csrf({ cookie: true });
 app.use(csrfProtection, (req, res, next) => {
-	res.cookie('XSRF-TOKEN', req.csrfToken());
+	res.cookie("XSRF-TOKEN", req.csrfToken());
 	next();
 });
 

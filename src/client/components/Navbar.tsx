@@ -42,24 +42,21 @@ class Navbar extends Component<NavbarProps, Record<string, unknown>> {
 			);
 		else {
 			element = (
-				<Popup element={
-					<div className="logout-button" onClick={this.props.on_log_out}>
-						<span className="logout-text">
-							log out
-						</span>
-					</div>
-				}>
+				<Popup
+					element={
+						<div
+							className="logout-button"
+							onClick={this.props.on_log_out}>
+							<span className="logout-text">log out</span>
+						</div>
+					}>
 					<div className="user-container">
 						<div className="icon-container">
-							{
-								is_mutuals ?
-								<Heart /> :
-								<Twitter />
-							}
+							{is_mutuals ? <Heart /> : <Twitter />}
 						</div>
 						<div className="username-container">
 							<span className="tag">@</span>
-							<span className="username">{ username }</span>
+							<span className="username">{username}</span>
 						</div>
 					</div>
 				</Popup>
@@ -68,7 +65,7 @@ class Navbar extends Component<NavbarProps, Record<string, unknown>> {
 
 		return (
 			<div className="navbar">
-				<div className="toolbar-container">{ element }</div>
+				<div className="toolbar-container">{element}</div>
 			</div>
 		);
 	}

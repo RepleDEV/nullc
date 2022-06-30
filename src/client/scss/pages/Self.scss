@@ -37,7 +37,8 @@
 			margin-bottom: 2px;
 		}
 
-		.left, .right {
+		.left,
+		.right {
 			@include globals.flex-column;
 		}
 

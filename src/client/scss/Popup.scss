@@ -1,33 +1,33 @@
 @use "globals";
 
 .popup {
-    position: absolute;
-    z-index: 500;
+	position: absolute;
+	z-index: 500;
 
-    @include globals.flex-column;
+	@include globals.flex-column;
 
-    width: 150px;
-    min-height: 40px;
-    max-height: 400px;
-    background-color: globals.$color-secondary;
+	width: 150px;
+	min-height: 40px;
+	max-height: 400px;
+	background-color: globals.$color-secondary;
 
-    margin: 5px;
+	margin: 5px;
 
-    border-radius: 8px;
-    overflow: hidden;
+	border-radius: 8px;
+	overflow: hidden;
 
-    & > * {
-        flex: 1;
-    }
+	& > * {
+		flex: 1;
+	}
 }
 
 .popup .logout-button {
-    display: flex;
+	display: flex;
 
-    justify-content: center;
-    align-items: center;
+	justify-content: center;
+	align-items: center;
 
-    &:hover {
-        cursor: pointer;
-    }
+	&:hover {
+		cursor: pointer;
+	}
 }
