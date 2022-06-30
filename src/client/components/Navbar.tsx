@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 import "../scss/Navbar";
+import Popup from "./Popup";
 import Heart from "./svg/Heart";
 import Twitter from "./svg/Twitter";
 
 interface NavbarProps {
 	logged_in: boolean;
 	is_mutuals: boolean;
+	on_log_out?: () => void;
 	username?: string;
 }
 class Navbar extends Component<NavbarProps, Record<string, unknown>> {
@@ -40,19 +42,27 @@ class Navbar extends Component<NavbarProps, Record<string, unknown>> {
 			);
 		else {
 			element = (
-				<div className="user-container">
-					<div className="icon-container">
-						{
-							is_mutuals ?
-							<Heart /> :
-							<Twitter />
-						}
+				<Popup element={
+					<div className="logout-button" onClick={this.props.on_log_out}>
+						<span className="logout-text">
+							log out
+						</span>
 					</div>
-					<div className="username-container">
-						<span className="tag">@</span>
-						<span className="username">{ username }</span>
+				}>
+					<div className="user-container">
+						<div className="icon-container">
+							{
+								is_mutuals ?
+								<Heart /> :
+								<Twitter />
+							}
+						</div>
+						<div className="username-container">
+							<span className="tag">@</span>
+							<span className="username">{ username }</span>
+						</div>
 					</div>
-				</div>
+				</Popup>
 			);
 		}
 

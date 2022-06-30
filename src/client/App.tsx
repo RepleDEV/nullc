@@ -27,7 +27,24 @@ class App extends Component<Record<string,unknown>, {
 			admin: false,
 		}
 
+		this.handleLogOut = this.handleLogOut.bind(this);
 		this.handleCheckLogin = this.handleCheckLogin.bind(this);
+	}
+
+	handleLogOut() {
+		axios({
+			method: "POST",
+			url: "/logout",
+		}).then(() => {
+			this.setState({
+				logged_in: false,
+				is_mutuals: false,
+				admin: false,
+				username: "",
+			});
+		}).catch(() => {
+			console.log("Logout unauthorized!");
+		});
 	}
 
 	handleCheckLogin() {
@@ -55,6 +72,7 @@ class App extends Component<Record<string,unknown>, {
 					logged_in={this.state.logged_in} 
 					is_mutuals={this.state.is_mutuals} 
 					username={this.state.username}
+					on_log_out={this.handleLogOut}
 					/>
 				<main>
 					<Routes>
@@ -62,9 +80,6 @@ class App extends Component<Record<string,unknown>, {
 						<Route path="/self" element={<Self />} />
 						<Route path="/thanks" element={<Thanks />} />
 						<Route path="/mail" element={<Mail />} />
-						{/* <Route path="/login" element={<Login loginSuccess={() => {
-
-						}}/>}/> */}
 					</Routes>
 				</main>
 			</>

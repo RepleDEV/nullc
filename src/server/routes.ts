@@ -159,6 +159,16 @@ router.get("/login", (req, res) => {
 	res.redirect("https://twitter.com/i/oauth2/authorize?" + urlParams);
 });
 
+router.post("/logout", (req, res) => {
+	if (req.session.logged_in !== true) {
+		res.status(403).json({ error: "Unauthorized." });
+		return;
+	}
+	req.session.destroy(() => 0);
+
+	res.status(200).json({ message: "Successfully logged out." });
+});
+
 router.get("/account_info", (req, res) => {
 	if (req.session.logged_in !== true)
 		return res.status(403).json({ error: "Unauthorized" });
