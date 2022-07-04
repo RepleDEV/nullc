@@ -1,17 +1,13 @@
 import React, { Component } from "react";
 
-import PropTypes from "prop-types";
-
 import PageReturn from "../components/PageReturn";
 import Footer from "../components/Footer";
 
 import "../scss/pages/Self.scss";
+import { EmptyComponentState } from "../types/Component";
+import { Self } from "../types/Pages";
 
-interface BulletRowProps {
-	bulletStyle?: "line" | "dot";
-	children: PropTypes.ReactNodeLike;
-}
-class BulletRow extends Component<BulletRowProps, Record<string, unknown>> {
+class BulletRow extends Component<Self.BulletRowProps, EmptyComponentState> {
 	render(): React.ReactNode {
 		const bulletStyle = this.props.bulletStyle || "line";
 

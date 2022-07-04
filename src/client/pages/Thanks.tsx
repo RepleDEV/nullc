@@ -6,13 +6,10 @@ import PageReturn from "../components/PageReturn";
 import Heart from "../components/svg/Heart";
 
 import "../scss/pages/Thanks";
+import { BasicComponentProps, EmptyComponentState } from "../types/Component";
+import * as Pages from "../types/Pages";
 
-interface MootsCellProps {
-	header: string;
-	icon: string;
-	username: string;
-}
-class MootsCell extends Component<MootsCellProps, Record<string, unknown>> {
+class MootsCell extends Component<Pages.Thanks.MootsCellProps, EmptyComponentState> {
 	render(): React.ReactNode {
 		const { header, icon, username } = this.props;
 		return (
@@ -32,10 +29,7 @@ class MootsCell extends Component<MootsCellProps, Record<string, unknown>> {
 	}
 }
 
-interface MootsListState {
-	mootsList: MutualInfo[];
-}
-class MootsList extends Component<Record<string, unknown>, MootsListState> {
+class MootsList extends Component<BasicComponentProps, Pages.Thanks.MootsListState> {
 	constructor(props: Record<string, unknown>) {
 		super(props);
 

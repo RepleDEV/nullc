@@ -2,18 +2,14 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 import "../scss/Navbar";
+import { EmptyComponentState } from "../types/Component";
+import { Navbar as NavbarTypes } from "../types/Components";
 import Popup from "./Popup";
 import Heart from "./svg/Heart";
 import Twitter from "./svg/Twitter";
 
-interface NavbarProps {
-	logged_in: boolean;
-	is_mutuals: boolean;
-	on_log_out?: () => void;
-	username?: string;
-}
-class Navbar extends Component<NavbarProps, Record<string, unknown>> {
-	constructor(props: NavbarProps) {
+class Navbar extends Component<NavbarTypes.NavbarProps, EmptyComponentState> {
+	constructor(props: NavbarTypes.NavbarProps) {
 		super(props);
 
 		this.handleLogin = this.handleLogin.bind(this);

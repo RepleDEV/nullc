@@ -9,18 +9,12 @@ import Self from "./pages/Self";
 import Thanks from "./pages/Thanks";
 import Mail from "./pages/Mail";
 import axios from "axios";
-// import Login from "./pages/Login";
 
-class App extends Component<
-	Record<string, unknown>,
-	{
-		username: string;
-		logged_in: boolean;
-		is_mutuals: boolean;
-		admin: boolean;
-	}
-> {
-	constructor(props: Record<string, unknown>) {
+import { BasicComponentProps } from "./types/Component";
+import { AppState } from "./types/App";
+
+class App extends Component<BasicComponentProps, AppState> {
+	constructor(props: BasicComponentProps) {
 		super(props);
 
 		this.state = {

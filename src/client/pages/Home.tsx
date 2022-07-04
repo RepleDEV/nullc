@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import Router, { Link } from "react-router-dom";
-
-import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 import GOL, { Cell } from "../scripts/gol";
 
@@ -11,7 +9,9 @@ import Circle from "../components/svg/Circle";
 import Mail from "../components/svg/Mail";
 
 import "../scss/pages/Home";
-import { disableLink } from "../modules/tools";
+
+import { EmptyComponentState } from "../types/Component";
+import { Home } from "../types/Pages";
 
 interface HomeBackgroundStates {
 	cells: Cell[];
@@ -91,14 +91,7 @@ class HomeBackground extends Component<
 	}
 }
 
-interface MainLinkProps {
-	to: Router.To;
-	icon: React.ReactNode;
-	className?: string;
-	onClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
-	children: PropTypes.ReactNodeLike;
-}
-class MainLink extends Component<MainLinkProps, Record<string, unknown>> {
+class MainLink extends Component<Home.MainLinkProps, EmptyComponentState> {
 	render(): React.ReactNode {
 		const { to, icon, className, onClick, children } = this.props;
 
