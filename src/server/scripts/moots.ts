@@ -5,6 +5,7 @@ import MootsList from "../../../public/moots_list.d";
 
 import { promises as fs } from "fs";
 import * as path from "path";
+import axios from "axios";
 
 const env = process.env as NodeJS.ProcessEnv & envTypes;
 const bearer_token = env.TWITTER_BEARER_TOKEN;
@@ -38,8 +39,18 @@ export async function refreshMutual(username: string): Promise<unknown> {
 	return usernameLookup.data;
 }
 
+async function check404(url: string): Promise<boolean> {
+	return new Promise((res) => {
+		axios(url).then(() => {
+			res(false);
+		}).catch(() => {
+			res(true);
+		});
+	});
+}
+
 interface RefreshMootsListConfig {
-	refresh: ("all" | "header")[];
+	refresh?: boolean;
 	// Maybe select PFP size
 }
 // eslint-disable-next-line
@@ -53,8 +64,21 @@ export async function refreshMootsList(config?: RefreshMootsListConfig) {
 	for (let i = 0; i < moots_list.length; i++) {
 		const moot = moots_list[i];
 
-		// New moot
-		if (moot.id == "-1") {
+		if (config && !config.refresh)
+			continue;
+		
+		let check = false;
+
+		if (moot.id === "-1") {
+			check = true
+		} else {
+			const changedProfilePicture = await check404(moot.icon);
+			const changedHeader = moot.header.length && await check404(moot.header);
+
+			check = changedProfilePicture || !!changedHeader;
+		}
+
+		if (check) {
 			const refreshedData = await refreshMutual(moot.username);
 
 			if (refreshedData) {
