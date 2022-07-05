@@ -75,7 +75,8 @@ app.use(router);
 const port = process.env.PORT || 3000;
 
 (async () => {
-	// await refreshMootsList();
+	if (process.env.NODE_ENV === "production")
+		await refreshMootsList();
 
 	app.listen(port, () => console.log(`Server listening on port: ${port}`));
 })();
