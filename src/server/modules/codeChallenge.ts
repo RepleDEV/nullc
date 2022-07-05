@@ -26,7 +26,7 @@ class CodeChallenge {
 		let res = "";
 
 		for (let i = 0; i < length; i++) {
-			const randInt = crypto.randomInt(CHARLEN);
+			const randInt = Math.floor(Math.random() * CHARLEN);
 
 			res += CHARACTER_LIST[randInt];
 		}
