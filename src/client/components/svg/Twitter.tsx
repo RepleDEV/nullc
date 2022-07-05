@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-export default function Twitter() {
+function Twitter() {
 	return (
 		<svg
 			version="1.1"
@@ -25,3 +25,5 @@ export default function Twitter() {
 		</svg>
 	);
 }
+
+export default Twitter;

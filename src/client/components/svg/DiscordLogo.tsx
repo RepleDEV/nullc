@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function DiscordLogo() {
+function DiscordLogo() {
 	return (
 		<svg
 			width="71"
@@ -22,3 +22,5 @@ export default function DiscordLogo() {
 		</svg>
 	);
 }
+
+export default DiscordLogo;

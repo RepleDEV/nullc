@@ -6,7 +6,7 @@ import GithubMark from "./svg/GithubMark";
 import { Link } from "react-router-dom";
 import { Footer as FooterTypes } from "../types/Components";
 
-export function LinkIcon(props: FooterTypes.LinkIconProps) {
+function LinkIcon(props: FooterTypes.LinkIconProps) {
 		const { to, className, children } = props;
 
 	return (
@@ -16,7 +16,7 @@ export function LinkIcon(props: FooterTypes.LinkIconProps) {
 	);
 }
 
-export default function Footer() {
+function Footer() {
 	return (
 		<div className="footer">
 			<LinkIcon to="#">
@@ -34,3 +34,6 @@ export default function Footer() {
 		</div>
 	);
 }
+
+export { LinkIcon };
+export default Footer;

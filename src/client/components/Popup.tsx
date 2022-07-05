@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Popup as PopupTypes } from "../types/Components";
 
-export default class Popup extends Component<
+class Popup extends Component<
 	PopupTypes.PopupProps,
 	{
 		is_visible: boolean;
@@ -102,3 +102,5 @@ export default class Popup extends Component<
 		);
 	}
 }
+
+export default Popup;

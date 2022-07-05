@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function GithubMark() {
+function GithubMark() {
 	return (
 		<>
 			{/* Generator: Adobe Illustrator 24.0.0, SVG Export Plug-In  */}
@@ -29,3 +29,5 @@ c6.47-2.16,11.13-8.26,11.13-15.45C32.58,7.29,25.29,0,16.29,0z"
 		</>
 	);
 }
+
+export default GithubMark;
