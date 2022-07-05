@@ -40,12 +40,17 @@ app.use(csrfProtection, (req, res, next) => {
 });
 
 // SETUP SESSION
+let session_secret = (process.env as NodeJS.ProcessEnv & envTypes).SESSION_SECRET;
+if (!session_secret)
+	if (process.env.NODE_ENV === "production")
+		// Prevent server from starting if there is no session secret
+		throw "NO SESSION SECRET. STOPPED SERVER.";
+	else
+		// Only set to keyboard cat (for whatever reason) only when not in production
+		session_secret = "keyboard_cat";
 app.use(
 	session({
-		// TODO: remove default value, add types to .env.d.ts for SESSION_SECRET
-		secret:
-			(process.env as NodeJS.ProcessEnv & envTypes).SESSION_SECRET ||
-			"keyboard cat",
+		secret: session_secret,
 		resave: true,
 		saveUninitialized: true,
 		cookie: {
