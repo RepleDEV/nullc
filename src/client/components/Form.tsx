@@ -45,23 +45,21 @@ class FormInput extends Component<FormTypes.FormInputProps, EmptyComponentState>
 	}
 }
 
-class FormShowStatus extends Component<{
+function FormShowStatus(props: {
 	status: "submitting" | "submitted";
-}, EmptyComponentState> {
-	render(): React.ReactNode {
-		let text = "";
-		const { status } = this.props;
+}) {
+	let text = "";
+	const { status } = props;
 
-		if (status === "submitting") text = "Submitting, please wait.";
-		else text = "Submitted Mail. Thank you!";
+	if (status === "submitting") text = "Submitting, please wait.";
+	else text = "Submitted Mail. Thank you!";
 
-		return (
-			<div className={`form-status form-${status}`}>
-				{/* TODO: Add loading animation */}
-				<span className="status-text">{text}</span>
-			</div>
-		);
-	}
+	return (
+		<div className={`form-status form-${status}`}>
+			{/* TODO: Add loading animation */}
+			<span className="status-text">{text}</span>
+		</div>
+	);
 }
 
 class Form extends Component<FormTypes.FormProps, FormTypes.FormState> {
