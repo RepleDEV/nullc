@@ -4,7 +4,10 @@ import axios from "axios";
 import { EmptyComponentState } from "../types/Component";
 import { Form as FormTypes } from "../types/Components";
 
-class FormInput extends Component<FormTypes.FormInputProps, EmptyComponentState> {
+class FormInput extends Component<
+	FormTypes.FormInputProps,
+	EmptyComponentState
+> {
 	constructor(props: FormTypes.FormInputProps) {
 		super(props);
 
@@ -36,7 +39,9 @@ class FormInput extends Component<FormTypes.FormInputProps, EmptyComponentState>
 						type={type}
 						onChange={this.onChange}
 						// onClick only if type is submit
-						onClick={ () => type === "submit" && this.onChange("Submit") }
+						onClick={() =>
+							type === "submit" && this.onChange("Submit")
+						}
 						{...inputProps}
 					/>
 				)}
@@ -45,9 +50,7 @@ class FormInput extends Component<FormTypes.FormInputProps, EmptyComponentState>
 	}
 }
 
-function FormShowStatus(props: {
-	status: "submitting" | "submitted";
-}) {
+function FormShowStatus(props: { status: "submitting" | "submitted" }) {
 	let text = "";
 	const { status } = props;
 

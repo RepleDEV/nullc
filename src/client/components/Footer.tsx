@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { Footer as FooterTypes } from "../types/Components";
 
 function LinkIcon(props: FooterTypes.LinkIconProps) {
-		const { to, className, children } = props;
+	const { to, className, children } = props;
 
 	return (
 		<Link to={to} className={`link-icon ${className || ""}`}>

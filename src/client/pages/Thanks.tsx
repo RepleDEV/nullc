@@ -9,7 +9,10 @@ import "../scss/pages/Thanks";
 import { BasicComponentProps, EmptyComponentState } from "../types/Component";
 import * as Pages from "../types/Pages";
 
-class MootsCell extends Component<Pages.Thanks.MootsCellProps, EmptyComponentState> {
+class MootsCell extends Component<
+	Pages.Thanks.MootsCellProps,
+	EmptyComponentState
+> {
 	render(): React.ReactNode {
 		const { header, icon, username } = this.props;
 		return (
@@ -29,7 +32,10 @@ class MootsCell extends Component<Pages.Thanks.MootsCellProps, EmptyComponentSta
 	}
 }
 
-class MootsList extends Component<BasicComponentProps, Pages.Thanks.MootsListState> {
+class MootsList extends Component<
+	BasicComponentProps,
+	Pages.Thanks.MootsListState
+> {
 	constructor(props: Record<string, unknown>) {
 		super(props);
 
