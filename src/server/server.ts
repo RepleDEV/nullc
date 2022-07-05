@@ -64,7 +64,6 @@ app.use(
 		next: express.NextFunction
 	) => {
 		if (err.code !== "EBADCSRFTOKEN") return next(err);
-		console.log(req.body, req.csrfToken());
 
 		res.status(403);
 		res.json({ error: "BAD CSRF TOKEN" });
