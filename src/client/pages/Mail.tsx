@@ -82,6 +82,7 @@ class Mail extends Component<MailTypes.MailProps> {
 							textareaProps={{
 								placeholder: "What's on your mind?",
 								name: "message",
+								maxLength: 500,
 							}}>
 							Message
 						</FormInput>
