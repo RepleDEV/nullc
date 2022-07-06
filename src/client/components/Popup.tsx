@@ -1,13 +1,8 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
+import { Popup as PopupTypes } from "../types/Components";
 
-interface PopupProps {
-	element: PropTypes.ReactNodeLike;
-	edgeMargin?: number;
-	children?: PropTypes.ReactNodeLike;
-}
-export default class Popup extends Component<
-	PopupProps,
+class Popup extends Component<
+	PopupTypes.PopupProps,
 	{
 		is_visible: boolean;
 		popup_style: React.CSSProperties;
@@ -16,7 +11,7 @@ export default class Popup extends Component<
 	container_ref?: HTMLDivElement;
 	popup_ref?: HTMLDivElement;
 
-	constructor(props: PopupProps) {
+	constructor(props: PopupTypes.PopupProps) {
 		super(props);
 
 		this.state = {
@@ -107,3 +102,5 @@ export default class Popup extends Component<
 		);
 	}
 }
+
+export default Popup;

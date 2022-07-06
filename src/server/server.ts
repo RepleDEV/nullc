@@ -40,12 +40,17 @@ app.use(csrfProtection, (req, res, next) => {
 });
 
 // SETUP SESSION
+let session_secret = (process.env as NodeJS.ProcessEnv & envTypes)
+	.SESSION_SECRET;
+if (!session_secret)
+	if (process.env.NODE_ENV === "production")
+		// Prevent server from starting if there is no session secret
+		throw "NO SESSION SECRET. STOPPED SERVER.";
+	// Only set to keyboard cat (for whatever reason) only when not in production
+	else session_secret = "keyboard_cat";
 app.use(
 	session({
-		// TODO: remove default value, add types to .env.d.ts for SESSION_SECRET
-		secret:
-			(process.env as NodeJS.ProcessEnv & envTypes).SESSION_SECRET ||
-			"keyboard cat",
+		secret: session_secret,
 		resave: true,
 		saveUninitialized: true,
 		cookie: {
@@ -64,7 +69,6 @@ app.use(
 		next: express.NextFunction
 	) => {
 		if (err.code !== "EBADCSRFTOKEN") return next(err);
-		console.log(req.body, req.csrfToken());
 
 		res.status(403);
 		res.json({ error: "BAD CSRF TOKEN" });
@@ -75,7 +79,7 @@ app.use(router);
 const port = process.env.PORT || 3000;
 
 (async () => {
-	await refreshMootsList();
+	if (process.env.NODE_ENV === "production") await refreshMootsList();
 
 	app.listen(port, () => console.log(`Server listening on port: ${port}`));
 })();

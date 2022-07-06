@@ -1,20 +1,14 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-import PropTypes from "prop-types";
+import { EmptyComponentState } from "../types/Component";
+import { Form as FormTypes } from "../types/Components";
 
-interface FormInputProps {
-	type: React.HTMLInputTypeAttribute | "textarea";
-	onChange?: (value: string) => void;
-	defaultValue?: string;
-	required?: boolean;
-	inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
-	textareaProps?: React.TextareaHTMLAttributes<HTMLTextAreaElement>;
-	className?: string;
-	children?: string;
-}
-class FormInput extends Component<FormInputProps, Record<string, unknown>> {
-	constructor(props: FormInputProps) {
+class FormInput extends Component<
+	FormTypes.FormInputProps,
+	EmptyComponentState
+> {
+	constructor(props: FormTypes.FormInputProps) {
 		super(props);
 
 		this.onChange = this.onChange.bind(this);
@@ -44,12 +38,9 @@ class FormInput extends Component<FormInputProps, Record<string, unknown>> {
 					<input
 						type={type}
 						onChange={this.onChange}
-						onClick={
-							type === "submit"
-								? () => {
-										this.onChange("Submit");
-								  }
-								: (_) => _
+						// onClick only if type is submit
+						onClick={() =>
+							type === "submit" && this.onChange("Submit")
 						}
 						{...inputProps}
 					/>
@@ -59,40 +50,23 @@ class FormInput extends Component<FormInputProps, Record<string, unknown>> {
 	}
 }
 
-class FormShowStatus extends Component<{
-	status: "submitting" | "submitted";
-}> {
-	render(): React.ReactNode {
-		let text = "";
-		const { status } = this.props;
+function FormShowStatus(props: { status: "submitting" | "submitted" }) {
+	let text = "";
+	const { status } = props;
 
-		if (status === "submitting") text = "Submitting, please wait.";
-		else text = "Submitted Mail. Thank you!";
+	if (status === "submitting") text = "Submitting, please wait.";
+	else text = "Submitted Mail. Thank you!";
 
-		return (
-			<div className={`form-status form-${status}`}>
-				{/* TODO: Add loading animation */}
-				<span className="status-text">{text}</span>
-			</div>
-		);
-	}
+	return (
+		<div className={`form-status form-${status}`}>
+			{/* TODO: Add loading animation */}
+			<span className="status-text">{text}</span>
+		</div>
+	);
 }
 
-interface FormProps {
-	to: string;
-	children?: PropTypes.ReactNodeArray | PropTypes.ReactElementLike;
-}
-interface FormValueObject {
-	formName: string;
-	value: string;
-}
-interface FormState {
-	formValues: (FormValueObject | undefined)[];
-	showInvalid: string[];
-	submitState: "none" | "submitting" | "submitted";
-}
-class Form extends Component<FormProps, FormState> {
-	constructor(props: FormProps) {
+class Form extends Component<FormTypes.FormProps, FormTypes.FormState> {
+	constructor(props: FormTypes.FormProps) {
 		super(props);
 
 		this.state = {
