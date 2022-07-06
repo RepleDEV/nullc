@@ -86,14 +86,15 @@ export class DataBase {
 		return await this.query(query);
 	}
 
-	async selectTable<T = Record<string, unknown>>(table_name: string, columns?: string[], distinct?: boolean, where?: string): Promise<T[]> {
+	async selectTable<T = Record<string, unknown>>(table_name: string, columns?: string[], distinct?: boolean, where?: string, order_by?: string): Promise<T[]> {
 		const selectQuery = ["SELECT"];
 		const columnsQuery = columns && columns.length ? columns?.join(", ") : "*";
 		if (distinct) selectQuery.push("DISTINCT");
 		selectQuery.push( columnsQuery, "FROM", table_name );
 	
 		if (where && where.length) selectQuery.push("WHERE", where);
-
+		if (order_by && order_by.length) selectQuery.push("ORDER BY", order_by);
+		
 		const selectQueryStr = selectQuery.join(" ") + ";";
 		const result = await this.query(selectQueryStr) as T[];
 		return result;
@@ -179,10 +180,10 @@ export default class MailDB extends DataBase {
 		let _where = where || "";
 		if (this.cachedIndex > 0)
 			_where = `${_where && " AND "}ID>${this.cachedIndex}`
-		const mailTableContents = await this.selectTable<mailDB.MailObject>("Mail", columns, false, _where);
+		const mailTableContents = await this.selectTable<mailDB.MailObject>("Mail", columns, false, _where, "ID ASC");
 
-		this.cachedData.unshift(...mailTableContents);
-		this.cachedIndex = this.cachedData[0].ID;
+		this.cachedData.push(...mailTableContents);
+		this.cachedIndex = this.cachedData[this.cachedData.length - 1].ID;
 
 		return this.cachedData;
 	}
