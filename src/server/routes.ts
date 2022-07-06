@@ -52,8 +52,9 @@ router.get("/mail_data", (req, res) => {
 	if (req.session.admin !== true) return res.status(403).json({ error: "UNAUTHORIZED." });
 	mailDB.getMail().then((mailContents) => {
 		res.status(200).json(mailContents);
-	}).catch(() => {
-		res.sendStatus(500);
+	}).catch((err) => {
+		res.status(500).json({ error: "INTERNAL SERVER ERROR." });
+		console.error(err);
 	});
 });
 

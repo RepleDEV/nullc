@@ -95,7 +95,7 @@ export class DataBase {
 		if (distinct) selectQuery.push("DISTINCT");
 		selectQuery.push( columnsQuery, "FROM", table_name );
 	
-		if (where && where.length) selectQuery.push(where);
+		if (where && where.length) selectQuery.push("WHERE", where);
 
 		const selectQueryStr = selectQuery.join(" ") + ";";
 		const result = await this.query(selectQueryStr) as T[];
@@ -179,13 +179,13 @@ export default class MailDB extends DataBase {
 		});
 	}
 	async getMail(columns?: string[], where?: string): Promise<mailDB.MailObjectArray> {
-		let _where = where;
+		let _where = where || "";
 		if (this.cachedIndex > 0)
-			_where += ` AND ID>${this.cachedIndex}`
+			_where = `${_where && " AND "}ID>${this.cachedIndex}`
 		const mailTableContents = await this.selectTable<mailDB.MailObject>("Mail", columns, false, _where);
 
 		this.cachedData.unshift(...mailTableContents);
-		this.cachedIndex = mailTableContents[0].ID;
+		this.cachedIndex = this.cachedData[0].ID;
 
 		return this.cachedData;
 	}
