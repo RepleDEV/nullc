@@ -1,6 +1,6 @@
 import * as mysql from "mysql";
 import { v4 as uuidv4 } from "uuid";
-import dayjs from "dayjs";
+import * as dayjs from "dayjs";
 
 import { mailDB } from "../types/modules";
 
@@ -160,6 +160,10 @@ export default class MailDB extends DataBase {
 				name: "message",
 				dataType: { name: "text" },
 			},
+			{
+				name: "timestamp",
+				dataType: { name: "datetime" },
+			}
 		]);
 	}
 
@@ -168,6 +172,7 @@ export default class MailDB extends DataBase {
 			uuid: `"${uuidv4()}"`,
 			author: `"${author}"`,
 			message: `"${message}"`,
+			timestamp: `"${dayjs().format("YYYY-MM-DD HH:mm:ss")}"`
 		});
 	}
 	async getMail(columns?: string[], where?: string): Promise<mailDB.MailObjectArray> {

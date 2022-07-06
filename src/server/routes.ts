@@ -68,8 +68,10 @@ router.post("/mail", (req, res) => {
 		.then(() => {
 			res.status(200).json({ message: "SUCCESS" });
 		})
-		.catch(() => {
+		.catch((err) => {
 			res.status(500).json({ error: "INTERNAL SERVER ERROR" });
+			console.error("AN ERROR HAS OCCURRED WHEN TRYING TO INSERT MAIL DATA.");
+			console.error(err);
 		});
 });
 
