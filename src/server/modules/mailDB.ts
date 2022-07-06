@@ -1,6 +1,8 @@
 import * as mysql from "mysql";
-
 import { v4 as uuidv4 } from "uuid";
+import dayjs from "dayjs";
+
+import { mailDB } from "../types/modules";
 
 interface SQLColumnDataType {
 	name: string;
@@ -84,7 +86,20 @@ export class DataBase {
 		return await this.query(query);
 	}
 
-	async insertInto(table_name: string, data: Record<string, unknown>) {
+	async selectTable<T = Record<string, unknown>>(table_name: string, columns?: string[], distinct?: boolean, where?: string): Promise<T[]> {
+		const selectQuery = ["SELECT"];
+		const columnsQuery = columns && columns.length ? columns?.join(", ") : "*";
+		if (distinct) selectQuery.push("DISTINCT");
+		selectQuery.push( columnsQuery, "FROM", table_name );
+	
+		if (where && where.length) selectQuery.push(where);
+
+		const selectQueryStr = selectQuery.join(" ") + ";";
+		const result = await this.query(selectQueryStr) as T[];
+		return result;
+	}
+
+	async insertInto<T = Record<string, unknown>>(table_name: string, data: Partial<T>) {
 		return await this.query(
 			`INSERT INTO ${table_name} ` +
 				`(${Object.keys(data).join(", ")}) ` +
@@ -106,11 +121,17 @@ export class DataBase {
 export default class MailDB extends DataBase {
 	databaseName: string;
 	tableName: string;
+	cachedData: mailDB.MailObjectArray;
+	cachedIndex: number;
+
 	constructor(databaseName: string, config: mysql.ConnectionConfig) {
 		super(config);
 
 		this.databaseName = databaseName;
 		this.tableName = "Mail";
+
+		this.cachedData = [];
+		this.cachedIndex = 0;
 	}
 
 	async setup(production = false) {
@@ -143,10 +164,21 @@ export default class MailDB extends DataBase {
 	}
 
 	async addMail(author: string, message: string) {
-		await super.insertInto(this.tableName, {
+		await super.insertInto<mailDB.MailObject>(this.tableName, {
 			uuid: `"${uuidv4()}"`,
 			author: `"${author}"`,
 			message: `"${message}"`,
 		});
+	}
+	async getMail(columns?: string[], where?: string): Promise<mailDB.MailObjectArray> {
+		let _where = where;
+		if (this.cachedIndex > 0)
+			_where += ` AND ID>${this.cachedIndex}`
+		const mailTableContents = await this.selectTable<mailDB.MailObject>("Mail", columns, false, _where);
+
+		this.cachedData.unshift(...mailTableContents);
+		this.cachedIndex = mailTableContents[0].ID;
+
+		return this.cachedData;
 	}
 }

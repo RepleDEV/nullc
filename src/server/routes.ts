@@ -48,6 +48,15 @@ const getRedirectUri = () =>
 			: `://localhost:3000`
 	}/callback`;
 
+router.get("/mail_data", (req, res) => {
+	if (req.session.admin !== true) return res.status(403).json({ error: "UNAUTHORIZED." });
+	mailDB.getMail().then((mailContents) => {
+		res.status(200).json(mailContents);
+	}).catch(() => {
+		res.sendStatus(500);
+	});
+});
+
 router.post("/mail", (req, res) => {
 	// Do shit
 	const { name, message } = req.body;
@@ -98,7 +107,9 @@ router.get("/callback", async (req, res) => {
 
 		req.session.logged_in = true;
 
-		if (me.username === "nullluvsu") {
+		// TODO: CHANGE THIS TO MY ID WTF ?!?!?!
+		// TODO: OR MOVE THIS CHECK TO .ENV
+		if (process.env.NODE_ENV !== "production" || me.username === "nullluvsu") {
 			req.session.admin = true;
 
 			req.session.account_info = {
