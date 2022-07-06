@@ -21,6 +21,8 @@ export namespace Mail {
 	}
 
 	export interface MailProps extends BasicComponentProps {
+		logged_in?: boolean;
+		username?: string;
 		admin?: boolean;
 	}
 }

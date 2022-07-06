@@ -71,6 +71,7 @@ class Mail extends Component<MailTypes.MailProps> {
 							inputProps={{
 								placeholder: "Anon",
 								name: "name",
+								value: this.props.username,
 							}}>
 							Name
 						</FormInput>

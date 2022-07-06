@@ -24,6 +24,12 @@ class FormInput extends Component<
 			this.props.onChange(event.target.value);
 		}
 	}
+	componentDidMount() {
+		// Call onChange() if initialValue is defined
+		const initialValue = (this.props.inputProps && this.props.inputProps.value) || (this.props.textareaProps && this.props.textareaProps.value);
+		if (initialValue && typeof initialValue !== "object") 
+			this.onChange(initialValue.toString());
+	}
 	render(): React.ReactNode {
 		const { type, children, inputProps, textareaProps } = this.props;
 
