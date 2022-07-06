@@ -30,9 +30,7 @@ class MailCard extends Component<mailDB.MailObject & BasicComponentProps, EmptyC
 	}
 }
 
-class MailAdmin extends Component<BasicComponentProps, {
-	mail_data: mailDB.MailObjectArray;
-}> {
+class MailAdmin extends Component<BasicComponentProps, MailTypes.MailAdminState> {
 	constructor(props: BasicComponentProps) {
 		super(props);
 

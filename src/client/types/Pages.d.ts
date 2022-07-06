@@ -1,5 +1,6 @@
 import { To } from "react-router-dom";
 import { BasicComponentProps } from "./Component";
+import { mailDB } from "../../server/types/modules";
 
 import { MutualInfo } from "../../../public/moots_list";
 
@@ -15,6 +16,10 @@ export namespace Home {
 }
 
 export namespace Mail {
+	export interface MailAdminState {
+		mail_data: mailDB.MailObjectArray;
+	}
+
 	export interface MailProps extends BasicComponentProps {
 		admin?: boolean;
 	}
