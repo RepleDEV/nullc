@@ -112,7 +112,7 @@ router.get("/callback", async (req, res) => {
 
 		// TODO: CHANGE THIS TO MY ID WTF ?!?!?!
 		// TODO: OR MOVE THIS CHECK TO .ENV
-		if (process.env.NODE_ENV !== "production" || me.username === "nullluvsu") {
+		if (process.env.NODE_ENV !== "production" || me.username === "hrtsforlin") {
 			req.session.admin = true;
 
 			req.session.account_info = {
