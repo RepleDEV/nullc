@@ -79,7 +79,7 @@ class App extends Component<BasicComponentProps, AppState> {
 						<Route path="/" element={<Home />} />
 						<Route path="/self" element={<Self />} />
 						<Route path="/thanks" element={<Thanks />} />
-						<Route path="/mail" element={<Mail admin={this.state.admin}/>} />
+						<Route path="/mail" element={<Mail logged_in={this.state.logged_in} username={this.state.username} admin={this.state.admin}/>} />
 					</Routes>
 				</main>
 			</>
