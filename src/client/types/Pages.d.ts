@@ -14,6 +14,12 @@ export namespace Home {
 	}
 }
 
+export namespace Mail {
+	export interface MailProps extends BasicComponentProps {
+		admin?: boolean;
+	}
+}
+
 export namespace Self {
 	export interface BulletRowProps extends BasicComponentProps {
 		bulletStyle?: "line" | "dot";

@@ -78,3 +78,37 @@
 		height: 220px;
 	}
 }
+
+.page.Mail .mail-admin-container {
+	@include globals.flex-column;
+	width: 100%;
+	height: 100%;
+
+	margin-top: 64px;
+
+	gap: 12px;
+}
+.page.Mail .mail-card {
+	@include globals.flex-column;
+	justify-content: center;
+	width: 100%;
+
+	border-radius: 8px;
+
+	background-color: globals.$color-secondary;
+
+	padding: 12px;
+
+	.message {
+		color: globals.$color-accent-primary;
+		font-size: 1.4rem;
+		font-weight: globals.$font-weight__medium;
+		line-height: 125%;
+
+		word-wrap: break-word;
+	}
+	.timestamp {
+		color: rgba(globals.$color-text-primary, 0.4);
+		font-weight: globals.$font-weight__light;
+	}
+}
