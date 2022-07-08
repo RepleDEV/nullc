@@ -56,6 +56,7 @@ if (!session_secret)
 		throw "NO SESSION SECRET. STOPPED SERVER.";
 	// Only set to keyboard cat (for whatever reason) only when not in production
 	else session_secret = "keyboard_cat";
+app.set("trust proxy", 1);
 app.use(
 	session({
 		store: new RedisClient({
