@@ -11,7 +11,10 @@ import router from "./routes";
 import { refreshMootsList } from "./scripts/moots";
 
 import { createClient } from "redis";
-let redisClient = createClient({ legacyMode: true });
+let redisClient = createClient({ 
+	legacyMode: true,
+	url: process.env.REDISCLOUD_URL || "",
+});
 redisClient.connect().catch(console.error)
 
 declare module "express-session" {
