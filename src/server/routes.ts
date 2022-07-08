@@ -172,7 +172,10 @@ router.get("/login", (req, res) => {
 		code_challenge_method: "S256",
 	};
 
+	console.log("Saving code verifier: %s", codeChallenge.verifier);
 	req.session.code_verifier = codeChallenge.verifier;
+	console.log("Code verifier saved, flushing session storage: ");
+	console.log(JSON.stringify(req.session, null, 4));
 
 	const urlParams = new URLSearchParams(params).toString();
 	res.redirect("https://twitter.com/i/oauth2/authorize?" + urlParams);
