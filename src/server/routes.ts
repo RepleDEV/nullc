@@ -67,6 +67,10 @@ router.post("/mail", (req, res) => {
 router.get("/callback", async (req, res) => {
 	const code = req.query.code as string | undefined;
 	if (req.query.code) {
+		const { code_verifier } = req.session;
+		if (!code_verifier) {
+			return res.redirect("/");
+		}
 		const response = await axios({
 			method: "POST",
 			url: "https://api.twitter.com/2/oauth2/token",

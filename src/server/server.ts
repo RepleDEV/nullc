@@ -2,12 +2,20 @@ import * as express from "express";
 import * as cookieParser from "cookie-parser";
 import * as bodyParser from "body-parser";
 import * as session from "express-session";
+import * as redisConnect from "connect-redis";
+const RedisClient = redisConnect(session);
 import * as csrf from "csurf";
 import * as dotenv from "dotenv";
 dotenv.config();
 import envTypes from "../../.env";
 import router from "./routes";
 import { refreshMootsList } from "./scripts/moots";
+
+import { createClient } from "redis";
+let redisClient = createClient({ 
+	legacyMode: true,
+	url: process.env.REDISCLOUD_URL || "",
+});
 
 declare module "express-session" {
 	export interface SessionData {
@@ -48,11 +56,13 @@ if (!session_secret)
 		throw "NO SESSION SECRET. STOPPED SERVER.";
 	// Only set to keyboard cat (for whatever reason) only when not in production
 	else session_secret = "keyboard_cat";
+app.set("trust proxy", 1);
 app.use(
 	session({
+		store: new RedisClient({ client: redisClient }),
 		secret: session_secret,
-		resave: true,
-		saveUninitialized: true,
+		resave: false,
+		saveUninitialized: false,
 		cookie: {
 			secure: process.env.NODE_ENV === "production",
 			maxAge: 1000 * 60 * 60 * 6, // 6 hrs
@@ -80,6 +90,7 @@ const port = process.env.PORT || 3000;
 
 (async () => {
 	if (process.env.NODE_ENV === "production") await refreshMootsList();
+	await redisClient.connect();
 
 	app.listen(port, () => console.log(`Server listening on port: ${port}`));
 })();
