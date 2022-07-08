@@ -135,12 +135,34 @@ export default class MailDB extends DataBase {
 		this.cachedIndex = 0;
 	}
 
+	async checkTableExists(): Promise<boolean> {
+		try {
+			await this.query(`DESCRIBE ${this.tableName};`);
+
+			return true;
+		} catch (e) {
+			return false;	
+		}
+	}
+
 	async setup(production = false) {
 		if (!production) {
 			await super.createDatabase(this.databaseName);
 			await super.useDatabase(this.databaseName);
 		}
-		await super.createTable(this.tableName, [
+
+		const tableExists = await this.checkTableExists();
+		if (tableExists) {
+			const queryRes = await this.query(`DESCRIBE ${this.tableName};`) as Record<string, unknown>[];
+
+			const isOldTable = queryRes.filter((v) => v.Field === "timestamp").length < 1;
+			if (isOldTable) 
+				await this.query(`ALTER TABLE ${this.tableName} ADD COLUMN timestamp datetime`);
+
+			return;
+		}
+
+		const columns = [
 			{
 				name: "ID",
 				dataType: { name: "int" },
@@ -165,7 +187,12 @@ export default class MailDB extends DataBase {
 				name: "timestamp",
 				dataType: { name: "datetime" },
 			}
-		]);
+		];
+
+		await super.createTable(this.tableName, columns);
+
+		// LOG
+		console.log(await this.query("DESCRIBE Mail;"));
 	}
 
 	async addMail(author: string, message: string) {
