@@ -2,12 +2,17 @@ import * as express from "express";
 import * as cookieParser from "cookie-parser";
 import * as bodyParser from "body-parser";
 import * as session from "express-session";
+import * as redisConnect from "connect-redis";
 import * as csrf from "csurf";
 import * as dotenv from "dotenv";
 dotenv.config();
 import envTypes from "../../.env";
 import router from "./routes";
 import { refreshMootsList } from "./scripts/moots";
+
+import { createClient } from "redis";
+let redisClient = createClient({ legacyMode: true });
+redisClient.connect().catch(console.error)
 
 declare module "express-session" {
 	export interface SessionData {
@@ -50,6 +55,7 @@ if (!session_secret)
 	else session_secret = "keyboard_cat";
 app.use(
 	session({
+		store: new (redisConnect(session))({ client: redisClient }),
 		secret: session_secret,
 		resave: true,
 		saveUninitialized: true,
