@@ -3,6 +3,7 @@ import * as cookieParser from "cookie-parser";
 import * as bodyParser from "body-parser";
 import * as session from "express-session";
 import * as redisConnect from "connect-redis";
+const RedisClient = redisConnect(session);
 import * as csrf from "csurf";
 import * as dotenv from "dotenv";
 dotenv.config();
@@ -58,10 +59,10 @@ if (!session_secret)
 	else session_secret = "keyboard_cat";
 app.use(
 	session({
-		store: new (redisConnect(session))({ client: redisClient }),
+		store: new RedisClient({ client: redisClient }),
 		secret: session_secret,
-		resave: true,
-		saveUninitialized: true,
+		resave: false,
+		saveUninitialized: false,
 		cookie: {
 			secure: process.env.NODE_ENV === "production",
 			maxAge: 1000 * 60 * 60 * 6, // 6 hrs

@@ -67,6 +67,13 @@ router.post("/mail", (req, res) => {
 router.get("/callback", async (req, res) => {
 	const code = req.query.code as string | undefined;
 	if (req.query.code) {
+		const { code_verifier } = req.session;
+		if (!code_verifier) {
+			console.error("No code verifier.");
+			console.error("Flushing session: ");
+			console.error(JSON.stringify(req.session, null, 4));
+			return res.redirect("/");
+		}
 		const response = await axios({
 			method: "POST",
 			url: "https://api.twitter.com/2/oauth2/token",
