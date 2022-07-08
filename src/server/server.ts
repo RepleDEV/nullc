@@ -13,7 +13,7 @@ import { refreshMootsList } from "./scripts/moots";
 
 import { createClient } from "redis";
 let redisClient = createClient({ 
-	url: process.env.REDISCLOUD_URL || "",
+	legacyMode: true,
 });
 
 declare module "express-session" {
@@ -57,7 +57,13 @@ if (!session_secret)
 	else session_secret = "keyboard_cat";
 app.use(
 	session({
-		store: new RedisClient({ client: redisClient }),
+		store: new RedisClient({
+			client: redisClient,
+			logErrors: (err) =>  {
+				console.log(err);
+			},
+			url: process.env.REDISCLOUD_URL || "",
+		}),
 		secret: session_secret,
 		resave: false,
 		saveUninitialized: false,
