@@ -190,9 +190,6 @@ export default class MailDB extends DataBase {
 		];
 
 		await super.createTable(this.tableName, columns);
-
-		// LOG
-		console.log(await this.query("DESCRIBE Mail;"));
 	}
 
 	async addMail(author: string, message: string) {
