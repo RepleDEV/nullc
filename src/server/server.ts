@@ -88,6 +88,7 @@ const port = process.env.PORT || 3000;
 
 (async () => {
 	if (process.env.NODE_ENV === "production") await refreshMootsList();
+	await redisClient.connect();
 
 	app.listen(port, () => console.log(`Server listening on port: ${port}`));
 })();
