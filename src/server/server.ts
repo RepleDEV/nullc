@@ -14,6 +14,7 @@ import { refreshMootsList } from "./scripts/moots";
 import { createClient } from "redis";
 let redisClient = createClient({ 
 	legacyMode: true,
+	url: process.env.REDISCLOUD_URL || "",
 });
 
 declare module "express-session" {
@@ -62,7 +63,6 @@ app.use(
 			logErrors: (err) =>  {
 				console.log(err);
 			},
-			url: process.env.REDISCLOUD_URL || "",
 		}),
 		secret: session_secret,
 		resave: false,
