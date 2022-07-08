@@ -59,12 +59,7 @@ if (!session_secret)
 app.set("trust proxy", 1);
 app.use(
 	session({
-		store: new RedisClient({
-			client: redisClient,
-			logErrors: (err) =>  {
-				console.log(err);
-			},
-		}),
+		store: new RedisClient({ client: redisClient }),
 		secret: session_secret,
 		resave: false,
 		saveUninitialized: false,

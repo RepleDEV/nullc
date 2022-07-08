@@ -69,9 +69,6 @@ router.get("/callback", async (req, res) => {
 	if (req.query.code) {
 		const { code_verifier } = req.session;
 		if (!code_verifier) {
-			console.error("No code verifier.");
-			console.error("Flushing session: ");
-			console.error(JSON.stringify(req.session, null, 4));
 			return res.redirect("/");
 		}
 		const response = await axios({
@@ -172,10 +169,7 @@ router.get("/login", (req, res) => {
 		code_challenge_method: "S256",
 	};
 
-	console.log("Saving code verifier: %s", codeChallenge.verifier);
 	req.session.code_verifier = codeChallenge.verifier;
-	console.log("Code verifier saved, flushing session storage: ");
-	console.log(JSON.stringify(req.session, null, 4));
 
 	const urlParams = new URLSearchParams(params).toString();
 	res.redirect("https://twitter.com/i/oauth2/authorize?" + urlParams);
