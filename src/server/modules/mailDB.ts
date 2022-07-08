@@ -157,7 +157,7 @@ export default class MailDB extends DataBase {
 
 			const isOldTable = queryRes.filter((v) => v.Field === "timestamp").length < 1;
 			if (isOldTable) 
-				await this.query(`ALTER TABLE ${this.tableName} ADD COLUMN timestamp datetime`);
+				await this.query(`ALTER TABLE ${this.tableName} ADD COLUMN timestamp datetime;`);
 
 			return;
 		}
