@@ -5,7 +5,7 @@ const devMode = process.env.NODE_ENV != "production";
 
 const serverConfig = {
 	mode: devMode ? "development" : "production",
-	entry: "./src/server/server.ts",
+	entry: "./src/server/server-starter.ts",
 	module: {
 		rules: [
 			{
@@ -19,7 +19,7 @@ const serverConfig = {
 		],
 	},
 	resolve: {
-		extensions: [".ts", ".js"],
+		extensions: [".ts"],
 	},
 	output: {
 		filename: "server.js",
