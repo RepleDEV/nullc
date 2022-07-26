@@ -25,15 +25,17 @@ interface SQLColumnType {
 }
 export class DataBase {
 	connection: mysql.Connection;
-	connected: boolean;
 
 	constructor(connectionConfig: mysql.ConnectionConfig) {
 		this.connection = mysql.createConnection(connectionConfig);
-		this.connected = false;
+	}
 
-		this.connection.connect((err) => {
-			if (err) throw err;
-			this.connected = true;
+	async connect() {
+		return new Promise<void>((resolve, reject) => {
+			this.connection.connect((err) => {
+				if (err) return reject(err);
+				resolve()
+			});
 		});
 	}
 

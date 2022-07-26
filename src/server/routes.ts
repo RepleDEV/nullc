@@ -37,10 +37,6 @@ function DBAuthFactory(node_env: string) {
 
 const mailDB = new MailDB("nullluvsu", DBAuthFactory(env.NODE_ENV || ""));
 
-(async () => {
-	await mailDB.setup(process.env.NODE_ENV === "production");
-})();
-
 const getRedirectUri = () =>
 	`http${
 		process.env.NODE_ENV === "production"
@@ -230,3 +226,4 @@ router.use((req, res) => {
 });
 
 export default router;
+export { router, mailDB };

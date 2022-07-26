@@ -3,6 +3,8 @@
 export default function jawsGetAuth() {
 	// Schema: mysql://username:password@hostname:port/default_schema
 	const JAWSDB_MARIA_URL = process.env.JAWSDB_MARIA_URL as string;
+	if (!JAWSDB_MARIA_URL)
+		throw "UNDEFINED / INCOMPLETE DATABASE AUTHORIZATION";
 
 	const split_url = JAWSDB_MARIA_URL.substring("mysql://".length).split("/");
 	const default_schema = split_url[1];

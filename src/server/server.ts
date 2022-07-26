@@ -9,7 +9,6 @@ import * as dotenv from "dotenv";
 dotenv.config();
 import envTypes from "../../.env";
 import router from "./routes";
-import { refreshMootsList } from "./scripts/moots";
 
 import { createClient } from "redis";
 let redisClient = createClient({ 
@@ -86,11 +85,6 @@ app.use(
 );
 app.use(router);
 
-const port = process.env.PORT || 3000;
-
-(async () => {
-	if (process.env.NODE_ENV === "production") await refreshMootsList();
-	await redisClient.connect();
-
-	app.listen(port, () => console.log(`Server listening on port: ${port}`));
-})();
+export default app;
+export { app, redisClient };
+export { mailDB } from "./routes";
