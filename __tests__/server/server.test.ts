@@ -1,5 +1,5 @@
 import { URL } from "url";
-import * as request from "supertest";
+import Session from "../modules/sessions";
 import app, { redisClient, mailDB } from "../../src/server/server";
 
 import "html-validate/jest";
@@ -8,11 +8,15 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 describe("Server test", () => {
+    let request: Session;
+
     // Connect session store hehehehehe
     beforeAll(async () => {
         await redisClient.connect();
         await mailDB.connect();
         await mailDB.setup();
+
+        request = new Session(app);
     });
 
     afterAll(async () => {
@@ -26,13 +30,13 @@ describe("Server test", () => {
     });
 
     test("root path should respond correctly", async () => {
-        const res = await request(app).get("/");
+        const res = await request.get("/");
 
         expect(res.statusCode).toEqual(200);
     });
 
     test("login redirect should be correct", async () => {
-        const res = await request(app).get("/login");
+        const res = await request.get("/login");
         const location = new URL(res.headers.location as string);
 
         expect(location.hostname).toBe("twitter.com");
@@ -47,18 +51,18 @@ describe("Server test", () => {
     });
 
     test("404 responses", async () => {
-        const res_json = await request(app).get("/theresnowaythisisavalidpath")
+        const res_json = await request.get("/theresnowaythisisavalidpath")
             .set({ "Accept": "application/json" });
 
         expect(res_json.statusCode).toBe(404);
         expect(res_json.body).toEqual({ error: "Not found" });
 
-        const res_plain = await request(app).get("/theresnowaythisisavalidpath")
+        const res_plain = await request.get("/theresnowaythisisavalidpath")
             .set({ "Accept": "text/plain" });
         expect(res_plain.statusCode).toBe(404);
         expect(res_plain.text).toBe("Not found");
 
-        const res_html = await request(app).get("/theresnowaythisisavalidpath");
+        const res_html = await request.get("/theresnowaythisisavalidpath");
         expect(res_html.statusCode).toBe(404);
         expect(res_html.text).toHTMLValidate();
     });
