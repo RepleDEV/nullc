@@ -1,6 +1,8 @@
 import { Router } from "express";
 import MailDB from "../modules/mailDB";
 
+import "../../../.env.d";
+
 const router = Router();
 
 import DBAuthFactory from "../modules/DBAuthFactory";
