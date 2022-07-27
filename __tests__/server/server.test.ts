@@ -59,6 +59,7 @@ describe("Server test", () => {
         expect(res_plain.text).toBe("Not found");
 
         const res_html = await request(app).get("/theresnowaythisisavalidpath");
+        expect(res_html.statusCode).toBe(404);
         expect(res_html.text).toHTMLValidate();
     });
 });
