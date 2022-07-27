@@ -7,32 +7,21 @@ import { URLSearchParams } from "url";
 import getRedirectUri from "../modules/getRedirectUri";
 
 import "../../../.env.d";
+import getAuthToken from "../modules/getAuthToken";
 
 const router = Router();
 
 router.get("/callback", async (req, res) => {
 	const code = req.query.code as string | undefined;
-	if (req.query.code) {
+	if (code) {
 		const { code_verifier } = req.session;
 		if (!code_verifier) {
 			return res.redirect("/");
 		}
-		const response = await axios({
-			method: "POST",
-			url: "https://api.twitter.com/2/oauth2/token",
-			params: {
-				code,
-				grant_type: "authorization_code",
-				client_id: process.env.TWITTER_CLIENT_ID || "",
-				redirect_uri: getRedirectUri(),
-				code_verifier: req.session.code_verifier || "",
-			},
-			headers: {
-				"Content-Type": "application/x-www-form-urlencoded",
-			},
-		});
 
-		const access_token = response.data.access_token as string;
+		const resAuthToken = await getAuthToken(code, process.env.TWITTER_CLIENT_ID || "", code_verifier);
+
+		const access_token = resAuthToken.data.access_token as string;
 		req.session.access_token = access_token;
 
 		const client = new TwitterApi(access_token);
