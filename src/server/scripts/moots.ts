@@ -1,5 +1,5 @@
 import TwitterApi, { ProfileBannerSizeV1, UserV2 } from "twitter-api-v2";
-import envTypes from "../../../.env";
+import "../../../.env.d";
 
 import MootsList from "../../../public/moots_list.d";
 
@@ -7,7 +7,7 @@ import { promises as fs } from "fs";
 import * as path from "path";
 import axios from "axios";
 
-const env = process.env as NodeJS.ProcessEnv & envTypes;
+const env = process.env;
 const bearer_token = env.TWITTER_BEARER_TOKEN;
 
 export async function refreshMutual(username: string): Promise<UserV2 | void>;

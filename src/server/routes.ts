@@ -2,7 +2,6 @@ import * as express from "express";
 import * as path from "path";
 import axios from "axios";
 import { URLSearchParams } from "url";
-import envTypes from "../../.env";
 import CodeChallenge from "./modules/codeChallenge";
 import jawsGetAuth from "./modules/jawsGetAuth";
 import MailDB from "./modules/mailDB";
@@ -10,7 +9,8 @@ import { TwitterApi } from "twitter-api-v2";
 
 const router = express.Router();
 
-const env = process.env as NodeJS.ProcessEnv & envTypes;
+import "../../.env.d";
+const env = process.env;
 
 function DBAuthFactory(node_env: string) {
 	if (node_env === "production") {

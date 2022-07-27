@@ -7,7 +7,6 @@ const RedisClient = redisConnect(session);
 import * as csrf from "csurf";
 import * as dotenv from "dotenv";
 dotenv.config();
-import envTypes from "../../.env";
 import router from "./routes";
 
 import { createClient } from "redis";
@@ -41,7 +40,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // SETUP SESSION
-let session_secret = (process.env as NodeJS.ProcessEnv & envTypes)
+let session_secret = process.env
 	.SESSION_SECRET;
 if (!session_secret)
 	if (process.env.NODE_ENV === "production")
