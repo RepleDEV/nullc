@@ -26,6 +26,7 @@ declare module "express-session" {
 			is_mutuals: boolean;
 		};
 		admin?: boolean;
+		csrfSecret?: string;
 	}
 }
 
@@ -38,13 +39,6 @@ app.use(express.static("public"));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-
-// CSRF SETUP
-const csrfProtection = csrf({ cookie: true });
-app.use(csrfProtection, (req, res, next) => {
-	res.cookie("XSRF-TOKEN", req.csrfToken());
-	next();
-});
 
 // SETUP SESSION
 let session_secret = (process.env as NodeJS.ProcessEnv & envTypes)
@@ -68,6 +62,14 @@ app.use(
 		},
 	})
 );
+
+// CSRF SETUP
+const csrfProtection = csrf({ cookie: false });
+app.use(csrfProtection);
+// app.use(csrfProtection, (req, res, next) => {
+// 	res.cookie("XSRF-TOKEN", req.csrfToken());
+// 	next();
+// });
 
 // HANDLE BAD CSRF TOKEN
 app.use(
