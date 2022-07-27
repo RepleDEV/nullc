@@ -3,8 +3,6 @@ import * as path from "path";
 import axios from "axios";
 import { URLSearchParams } from "url";
 import CodeChallenge from "./modules/codeChallenge";
-import jawsGetAuth from "./modules/jawsGetAuth";
-import MailDB from "./modules/mailDB";
 import { TwitterApi } from "twitter-api-v2";
 
 const router = express.Router();
@@ -12,30 +10,8 @@ const router = express.Router();
 import "../../.env.d";
 const env = process.env;
 
-function DBAuthFactory(node_env: string) {
-	if (node_env === "production") {
-		const auth = jawsGetAuth();
-
-		return {
-			host: auth.hostname,
-			port: +auth.port,
-			user: auth.username,
-			password: auth.password,
-			database: auth.default_schema,
-		};
-	}
-
-	if (!env.DATABASE_HOST || !env.DATABASE_USERNAME || !env.DATABASE_PASSWORD)
-		throw "UNDEFINED / INCOMPLETE DATABASE AUTHORIZATION";
-
-	return {
-		host: env.DATABASE_HOST,
-		user: env.DATABASE_USERNAME,
-		password: env.DATABASE_PASSWORD,
-	};
-}
-
-const mailDB = new MailDB("nullluvsu", DBAuthFactory(env.NODE_ENV || ""));
+import mail from "./routes/mail";
+router.use(mail);
 
 const getRedirectUri = () =>
 	`http${
@@ -43,34 +19,6 @@ const getRedirectUri = () =>
 			? "s://nullluvsu.herokuapp.com"
 			: `://localhost:3000`
 	}/callback`;
-
-router.get("/mail_data", (req, res) => {
-	if (req.session.admin !== true) return res.status(403).json({ error: "UNAUTHORIZED." });
-	mailDB.getMail().then((mailContents) => {
-		res.status(200).json(mailContents);
-	}).catch((err) => {
-		res.status(500).json({ error: "INTERNAL SERVER ERROR." });
-		console.error(err);
-	});
-});
-
-router.post("/mail", (req, res) => {
-	// Do shit
-	const { name, message } = req.body;
-	if (!name || !message)
-		return res.status(400).json({ error: "BAD FORM DATA" });
-
-	mailDB
-		.addMail(name, message)
-		.then(() => {
-			res.status(200).json({ message: "SUCCESS" });
-		})
-		.catch((err) => {
-			res.status(500).json({ error: "INTERNAL SERVER ERROR" });
-			console.error("AN ERROR HAS OCCURRED WHEN TRYING TO INSERT MAIL DATA.");
-			console.error(err);
-		});
-});
 
 router.get("/callback", async (req, res) => {
 	const code = req.query.code as string | undefined;
@@ -226,4 +174,5 @@ router.use((req, res) => {
 });
 
 export default router;
-export { router, mailDB };
+export { router };
+export { mailDB } from "./routes/mail";
