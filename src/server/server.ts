@@ -63,12 +63,16 @@ app.use(
 );
 
 // CSRF SETUP
-const csrfProtection = csrf({ cookie: false });
+const csrfProtection = csrf({
+	cookie: {
+		secure: process.env.NODE_ENV === "production",
+	},
+});
 app.use(csrfProtection);
-// app.use(csrfProtection, (req, res, next) => {
-// 	res.cookie("XSRF-TOKEN", req.csrfToken());
-// 	next();
-// });
+app.all("*", (req, res, next) => {
+	res.cookie("XSRF-TOKEN", req.csrfToken());
+	next();
+});
 
 // HANDLE BAD CSRF TOKEN
 app.use(

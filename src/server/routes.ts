@@ -173,7 +173,7 @@ router.get("/login", (req, res) => {
 		response_type: "code",
 		client_id: env.TWITTER_CLIENT_ID || "",
 		redirect_uri: getRedirectUri(),
-		state: req.session.csrfSecret || "",
+		state: req.csrfToken(),
 		scope: ["follows.read", "tweet.read", "users.read"].join(" "),
 		code_challenge: codeChallenge.hash,
 		code_challenge_method: "S256",
