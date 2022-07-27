@@ -211,12 +211,12 @@ router.get("/account_info", (req, res) => {
 
 // React router workaround
 router.use((req, res) => {
+	res.status(404);
 	if (req.accepts("html")) {
-		res.status(200).sendFile(path.resolve("public", "index.html"));
+		res.sendFile(path.resolve("public", "index.html"));
 		return;
 	}
 
-	res.status(404);
 	if (req.accepts("json")) {
 		res.json({ error: "Not found" });
 		return;
