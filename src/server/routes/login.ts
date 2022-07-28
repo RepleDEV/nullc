@@ -8,6 +8,7 @@ import getRedirectUri from "../modules/getRedirectUri";
 
 import "../../../.env.d";
 import getAuthToken from "../modules/getAuthToken";
+import isMutuals from "../modules/isMutuals";
 
 const router = Router();
 
@@ -43,45 +44,11 @@ router.get("/callback", async (req, res) => {
 				is_mutuals: true,
 			};
 		} else {
-			// TODO: This shit O(n) pls fix
-			// TODO: Along with 2 async requests huh
 			const follower_count = me.public_metrics?.followers_count || 1000;
 
-			const params = {
-				max_results: follower_count > 1000 ? 1000 : follower_count,
-			};
+			const max_results = follower_count > 1000 ? 1000 : follower_count;
 
-			const { data: following } = await client.v2.followers(
-				me.id,
-				params
-			);
-			const { data: followers } = await client.v2.following(
-				me.id,
-				params
-			);
-
-			let isFollowing = false;
-			let isFollower = false;
-
-			for (let i = 0; i < following.length; i++) {
-				const user = following[i];
-
-				if (user.username === "nullluvsu") {
-					isFollowing = true;
-					break;
-				}
-			}
-
-			for (let i = 0; i < followers.length; i++) {
-				const user = followers[i];
-
-				if (user.username === "nullluvsu") {
-					isFollower = true;
-					break;
-				}
-			}
-
-			is_mutuals = isFollowing && isFollower;
+			is_mutuals = await isMutuals(client, me.id, max_results);
 		}
 
 		req.session.account_info = {
