@@ -61,6 +61,20 @@ router.get("/callback", async (req, res) => {
 });
 
 router.get("/login", (req, res) => {
+	const testLogin = req.query.test === "true" && process.env.NODE_ENV === "test";
+	if (testLogin) {
+		req.session.logged_in = true;
+		req.session.account_info = {
+			is_mutuals: req.query.is_mutuals === "true",
+			username: req.query.username && typeof req.query.username === "string" ?
+				req.query.username : "testuser",
+		};
+
+		res.redirect("/");
+
+		return;
+	}
+
 	const codeChallenge = new CodeChallenge().generate();
 
 	const params = {
