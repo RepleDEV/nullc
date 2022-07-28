@@ -107,7 +107,6 @@ describe("Server test", () => {
             expect(_csrf).toBeDefined();
             expect(xsrf).toBeDefined();
 
-            if (!_csrf)return;
             if (!xsrf)return;
 
             const res_logout = await request.post("/logout")
