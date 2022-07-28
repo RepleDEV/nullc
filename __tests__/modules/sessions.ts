@@ -22,7 +22,7 @@ import { URL } from "url";
 import methods from "methods";
 
 type SessionOptions = supertest.AgentOptions & {
-    before?: () => void;
+    before?: (test: supertest.Test) => void;
     cookieAccess?: CookieAccess;
     destroy?: () => void;
     helpers?: any;
