@@ -9,3 +9,6 @@ dist/
 public/js/app.js
 
 .env
+
+# test coverage
+coverage/
