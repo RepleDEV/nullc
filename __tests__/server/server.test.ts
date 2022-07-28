@@ -10,13 +10,20 @@ dotenv.config();
 describe("Server test", () => {
     let request: Session;
 
+    beforeEach(() => {
+        request = new Session(app);
+    });
+
+    afterEach(() => {
+        request.destroy();
+        request.server.close();
+    });
+
     // Connect session store hehehehehe
     beforeAll(async () => {
         await redisClient.connect();
         await mailDB.connect();
         await mailDB.setup();
-
-        request = new Session(app);
     });
 
     afterAll(async () => {
