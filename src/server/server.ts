@@ -31,9 +31,6 @@ declare module "express-session" {
 
 const app = express();
 
-// SERVE STATIC FILES
-app.use(express.static("public"));
-
 // SETUP PARSERS
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -88,6 +85,9 @@ app.use(
 		res.json({ error: "BAD CSRF TOKEN" });
 	}
 );
+
+// SERVE STATIC FILES
+app.use(express.static("public"));
 app.use(router);
 
 export default app;
