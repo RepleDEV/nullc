@@ -5,6 +5,7 @@ import app, { redisClient, mailDB } from "../../src/server/server";
 import "html-validate/jest";
 
 import * as dotenv from "dotenv";
+import { mailDB as MailDB } from "../../src/server/types/modules";
 dotenv.config();
 
 describe("Server test", () => {
@@ -111,6 +112,66 @@ describe("Server test", () => {
 
             const res_logout = await request.post("/logout")
             expect(res_logout.statusCode).toBe(200);
+        });
+    });
+
+    describe("mail tests", () => {
+        beforeEach(async () => {
+            await request.get("/");
+        });
+        test("bad form data", async () => {
+            const res = await request.post("/mail");
+            expect(res.statusCode).toBe(400);
+            expect(res.body).toEqual({ error: "BAD FORM DATA" });
+
+            const res_name_only = await request.post("/mail").send({
+                name: "foo",
+            });
+            expect(res_name_only.statusCode).toBe(400);
+            expect(res_name_only.body).toEqual({ error: "BAD FORM DATA" });
+
+            const res_message_only = await request.post("/mail").send({
+                message: "bar",
+            });
+            expect(res_message_only.statusCode).toBe(400);
+            expect(res_message_only.body).toEqual({ error: "BAD FORM DATA" });
+
+        });
+        test("sending and receiving mail", async () => {
+            const messageBody = {
+                name: "Walter Hartwell White",
+                message:
+                    `My name is Walter Hartwell White.
+                    I live at 308 Negra Arroyo Lane, Albuquerque, New Mexico, 87104.
+                    To all law enforcement entities, this is not an admission of guilt.
+                    I am speaking to my family now. Skyler, you are the love of my life. I hope you know that.
+                    Walter Jr., you're my big man.
+                    There are going to be some things that you'll come to learn
+                    about me in the next few years.
+                    But just know that no matter how it may look, I only had you in my heart.
+                    Goodbye.`,
+            };
+
+            const res = await request.post("/mail").send(messageBody);
+            expect(res.statusCode).toBe(200);
+            expect(res.body).toEqual({ message: "SUCCESS" });
+
+            // Admin login
+            await request.get("/login").query({ test: true, admin: "true" });
+
+            const res_mail = await request.get("/mail_data");
+            expect(res_mail.statusCode).toBe(200);
+            const mail_data = res_mail.body as MailDB.MailObjectArray;
+            expect(mail_data.length >= 1).toBeTruthy();
+            const mail = mail_data[mail_data.length - 1];
+            expect(mail.author).toEqual(messageBody.name);
+            expect(mail.message).toEqual(messageBody.message);
+            expect(mail.uuid).toBeDefined();
+            expect(mail.uuid.length).toBe(36);
+            // TODO Maybe check the timestamp as well
+
+            // Clean up
+            await mailDB.query(`DELETE FROM ${mailDB.tableName} WHERE uuid='${mail.uuid}';`);
         });
     });
 });
