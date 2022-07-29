@@ -69,6 +69,7 @@ router.get("/login", (req, res) => {
 			username: req.query.username && typeof req.query.username === "string" ?
 				req.query.username : "testuser",
 		};
+		req.session.admin = req.query.admin === "true";
 
 		res.redirect("/");
 
