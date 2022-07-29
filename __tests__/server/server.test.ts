@@ -1,4 +1,4 @@
-import { URL, URLSearchParams } from "url";
+import { URL } from "url";
 import Session from "../modules/sessions";
 import app, { redisClient, mailDB } from "../../src/server/server";
 
