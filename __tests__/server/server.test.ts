@@ -177,4 +177,10 @@ describe("Server test", () => {
             await mailDB.query(`DELETE FROM ${mailDB.tableName} WHERE uuid='${mail.uuid}';`);
         });
     });
+
+    test("bad csrf error", async () => {
+        const res = await request.post("/mail");
+        expect(res.statusCode).toBe(403);
+        expect(res.body).toEqual({ error: "BAD CSRF TOKEN" });
+    });
 });
