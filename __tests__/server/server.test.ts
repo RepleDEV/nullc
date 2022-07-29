@@ -1,4 +1,5 @@
 import { URL } from "url";
+import { validate, version } from "uuid";
 import Session from "../modules/sessions";
 import app, { redisClient, mailDB } from "../../src/server/server";
 
@@ -168,6 +169,8 @@ describe("Server test", () => {
             expect(mail.message).toEqual(messageBody.message);
             expect(mail.uuid).toBeDefined();
             expect(mail.uuid.length).toBe(36);
+            expect(validate(mail.uuid)).toBeTruthy();
+            expect(version(mail.uuid)).toBe(4);
             // TODO Maybe check the timestamp as well
 
             // Clean up
