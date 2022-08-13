@@ -1,7 +1,7 @@
-$color-main: #000814;
-$color-secondary: #001d3d;
-$color-accent-primary: #ffd60a;
-$color-text-primary: #fefdfd;
+$color-background: #FEFDFD;
+$color-text-primary: #2E292B;
+$color-accent-primary: #8B3048;
+$color-accent-secondary: #92FFDA;
 
 // FONT WEIGHT CONSTANTS (Though most if not all fonts are variable weight)
 $font-weight__thin: 100;
@@ -13,6 +13,18 @@ $font-weight__semi-bold: 600;
 $font-weight__bold: 700;
 $font-weight__extra-bold: 800;
 $font-weight__black: 900;
+
+@mixin default_background {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+
+	background-color: $color-accent-secondary;
+	opacity: 10%;
+
+	backdrop-filter: blur(4px);
+}
 
 @mixin flex-column {
 	display: flex;

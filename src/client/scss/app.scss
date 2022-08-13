@@ -3,7 +3,7 @@
 body {
 	margin: 0;
 
-	background-color: globals.$color-main;
+	background-color: globals.$color-background;
 	text-rendering: optimizeLegibility;
 
 	overflow-x: hidden;
@@ -53,6 +53,6 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-	background-color: globals.$color-accent-primary;
+	background-color: globals.$color-accent-secondary;
 	border-radius: 12px;
 }
