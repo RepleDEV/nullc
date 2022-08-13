@@ -11,9 +11,7 @@
 	height: 46px;
 
 	display: flex;
-}
 
-.navbar::before {
 	@include globals.default_background;
 }
 

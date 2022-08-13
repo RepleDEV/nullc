@@ -15,13 +15,7 @@ $font-weight__extra-bold: 800;
 $font-weight__black: 900;
 
 @mixin default_background {
-	content: "";
-	position: absolute;
-	width: 100%;
-	height: 100%;
-
-	background-color: $color-accent-secondary;
-	opacity: 10%;
+	background-color: rgba($color-accent-secondary, 10%);
 
 	backdrop-filter: blur(4px);
 }
