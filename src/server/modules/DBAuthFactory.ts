@@ -1,7 +1,7 @@
 import jawsGetAuth from "../modules/jawsGetAuth";
 
 export default function DBAuthFactory() {
-    const { env } = process;
+	const { env } = process;
 	if (env.NODE_ENV === "production") {
 		const auth = jawsGetAuth();
 

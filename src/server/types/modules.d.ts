@@ -1,11 +1,11 @@
 export namespace mailDB {
-    export interface MailObject {
-        ID: number;
-        uuid: string;
-        author: string;
-        message: string;
-        timestamp: string;
-    }
+	export interface MailObject {
+		ID: number;
+		uuid: string;
+		author: string;
+		message: string;
+		timestamp: string;
+	}
 
-    export type MailObjectArray = MailObject[];
+	export type MailObjectArray = MailObject[];
 }

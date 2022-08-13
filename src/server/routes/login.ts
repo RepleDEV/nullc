@@ -20,7 +20,11 @@ router.get("/callback", async (req, res) => {
 			return res.redirect("/");
 		}
 
-		const resAuthToken = await getAuthToken(code, process.env.TWITTER_CLIENT_ID || "", code_verifier);
+		const resAuthToken = await getAuthToken(
+			code,
+			process.env.TWITTER_CLIENT_ID || "",
+			code_verifier
+		);
 
 		const access_token = resAuthToken.data.access_token as string;
 		req.session.access_token = access_token;
@@ -36,7 +40,10 @@ router.get("/callback", async (req, res) => {
 
 		// TODO: CHANGE THIS TO MY ID WTF ?!?!?!
 		// TODO: OR MOVE THIS CHECK TO .ENV
-		if (process.env.NODE_ENV !== "production" || me.username === "hrtsforlin") {
+		if (
+			process.env.NODE_ENV !== "production" ||
+			me.username === "hrtsforlin"
+		) {
 			req.session.admin = true;
 
 			req.session.account_info = {
@@ -61,13 +68,16 @@ router.get("/callback", async (req, res) => {
 });
 
 router.get("/login", (req, res) => {
-	const testLogin = req.query.test === "true" && process.env.NODE_ENV === "test";
+	const testLogin =
+		req.query.test === "true" && process.env.NODE_ENV === "test";
 	if (testLogin) {
 		req.session.logged_in = true;
 		req.session.account_info = {
 			is_mutuals: req.query.is_mutuals === "true",
-			username: req.query.username && typeof req.query.username === "string" ?
-				req.query.username : "testuser",
+			username:
+				req.query.username && typeof req.query.username === "string"
+					? req.query.username
+					: "testuser",
 		};
 		req.session.admin = req.query.admin === "true";
 

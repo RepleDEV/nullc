@@ -10,7 +10,7 @@ dotenv.config();
 import router from "./routes";
 
 import { createClient } from "redis";
-let redisClient = createClient({ 
+let redisClient = createClient({
 	legacyMode: true,
 	url: process.env.REDISCLOUD_URL || "",
 });
@@ -37,8 +37,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // SETUP SESSION
-let session_secret = process.env
-	.SESSION_SECRET;
+let session_secret = process.env.SESSION_SECRET;
 if (!session_secret)
 	if (process.env.NODE_ENV === "production")
 		// Prevent server from starting if there is no session secret

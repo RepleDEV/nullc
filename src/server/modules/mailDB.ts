@@ -34,7 +34,7 @@ export class DataBase {
 		return new Promise<void>((resolve, reject) => {
 			this.connection.connect((err) => {
 				if (err) return reject(err);
-				resolve()
+				resolve();
 			});
 		});
 	}
@@ -88,21 +88,31 @@ export class DataBase {
 		return await this.query(query);
 	}
 
-	async selectTable<T = Record<string, unknown>>(table_name: string, columns?: string[], distinct?: boolean, where?: string, order_by?: string): Promise<T[]> {
+	async selectTable<T = Record<string, unknown>>(
+		table_name: string,
+		columns?: string[],
+		distinct?: boolean,
+		where?: string,
+		order_by?: string
+	): Promise<T[]> {
 		const selectQuery = ["SELECT"];
-		const columnsQuery = columns && columns.length ? columns?.join(", ") : "*";
+		const columnsQuery =
+			columns && columns.length ? columns?.join(", ") : "*";
 		if (distinct) selectQuery.push("DISTINCT");
-		selectQuery.push( columnsQuery, "FROM", table_name );
-	
+		selectQuery.push(columnsQuery, "FROM", table_name);
+
 		if (where && where.length) selectQuery.push("WHERE", where);
 		if (order_by && order_by.length) selectQuery.push("ORDER BY", order_by);
-		
+
 		const selectQueryStr = selectQuery.join(" ") + ";";
-		const result = await this.query(selectQueryStr) as T[];
+		const result = (await this.query(selectQueryStr)) as T[];
 		return result;
 	}
 
-	async insertInto<T = Record<string, unknown>>(table_name: string, data: Partial<T>) {
+	async insertInto<T = Record<string, unknown>>(
+		table_name: string,
+		data: Partial<T>
+	) {
 		return await this.query(
 			`INSERT INTO ${table_name} ` +
 				`(${Object.keys(data).join(", ")}) ` +
@@ -143,7 +153,7 @@ export default class MailDB extends DataBase {
 
 			return true;
 		} catch (e) {
-			return false;	
+			return false;
 		}
 	}
 
@@ -155,11 +165,16 @@ export default class MailDB extends DataBase {
 
 		const tableExists = await this.checkTableExists();
 		if (tableExists) {
-			const queryRes = await this.query(`DESCRIBE ${this.tableName};`) as Record<string, unknown>[];
+			const queryRes = (await this.query(
+				`DESCRIBE ${this.tableName};`
+			)) as Record<string, unknown>[];
 
-			const isOldTable = queryRes.filter((v) => v.Field === "timestamp").length < 1;
-			if (isOldTable) 
-				await this.query(`ALTER TABLE ${this.tableName} ADD COLUMN timestamp datetime;`);
+			const isOldTable =
+				queryRes.filter((v) => v.Field === "timestamp").length < 1;
+			if (isOldTable)
+				await this.query(
+					`ALTER TABLE ${this.tableName} ADD COLUMN timestamp datetime;`
+				);
 
 			return;
 		}
@@ -188,7 +203,7 @@ export default class MailDB extends DataBase {
 			{
 				name: "timestamp",
 				dataType: { name: "datetime" },
-			}
+			},
 		];
 
 		await super.createTable(this.tableName, columns);
@@ -199,14 +214,23 @@ export default class MailDB extends DataBase {
 			uuid: `"${uuidv4()}"`,
 			author: `"${author}"`,
 			message: `"${message}"`,
-			timestamp: `"${dayjs().format("YYYY-MM-DD HH:mm:ss")}"`
+			timestamp: `"${dayjs().format("YYYY-MM-DD HH:mm:ss")}"`,
 		});
 	}
-	async getMail(columns?: string[], where?: string): Promise<mailDB.MailObjectArray> {
+	async getMail(
+		columns?: string[],
+		where?: string
+	): Promise<mailDB.MailObjectArray> {
 		let _where = where || "";
 		if (this.cachedIndex > 0)
-			_where = `${_where && " AND "}ID>${this.cachedIndex}`
-		const mailTableContents = await this.selectTable<mailDB.MailObject>("Mail", columns, false, _where, "ID ASC");
+			_where = `${_where && " AND "}ID>${this.cachedIndex}`;
+		const mailTableContents = await this.selectTable<mailDB.MailObject>(
+			"Mail",
+			columns,
+			false,
+			_where,
+			"ID ASC"
+		);
 
 		this.cachedData.push(...mailTableContents);
 		this.cachedIndex = this.cachedData[this.cachedData.length - 1].ID;

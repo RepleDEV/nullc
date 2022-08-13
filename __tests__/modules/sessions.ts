@@ -22,97 +22,94 @@ import { URL } from "url";
 import methods from "methods";
 
 type SessionOptions = supertest.AgentOptions & {
-    before?: (test: supertest.Test) => void;
-    cookieAccess?: CookieAccess;
-    destroy?: () => void;
-    helpers?: any;
+	before?: (test: supertest.Test) => void;
+	cookieAccess?: CookieAccess;
+	destroy?: () => void;
+	helpers?: any;
 } & Record<string, any>;
 class Session {
-    server: http.Server | https.Server;
-    options: SessionOptions;
-    agent: supertest.SuperAgentTest
-    url: URL;
-    cookieAccess: CookieAccess;
+	server: http.Server | https.Server;
+	options: SessionOptions;
+	agent: supertest.SuperAgentTest;
+	url: URL;
+	cookieAccess: CookieAccess;
 
-    constructor(app: any, options?: SessionOptions) {
-        this.options = options || {};
+	constructor(app: any, options?: SessionOptions) {
+		this.options = options || {};
 
-        this.agent = supertest.agent(this.server, this.options);
+		this.agent = supertest.agent(this.server, this.options);
 
-        this.server = http.createServer(app);
-        this.url = new URL(Session.getUrl(this.server));
-        
-        this.options = options || {};
+		this.server = http.createServer(app);
+		this.url = new URL(Session.getUrl(this.server));
 
-        this.reset();
+		this.options = options || {};
 
-        if (this.options.helpers instanceof Object) {
-            Object.assign(this, this.options.helpers);
-        }
-    }
+		this.reset();
 
-    get cookies() {
-        return this.agent.jar.getCookies(this.cookieAccess);
-    }
+		if (this.options.helpers instanceof Object) {
+			Object.assign(this, this.options.helpers);
+		}
+	}
 
-    reset() {
-        const agentOptions = Object.assign({}, this.options, {
-            before: undefined,
-            cookieAccess: undefined,
-            destroy: undefined,
-            helpers: undefined,
-        });
+	get cookies() {
+		return this.agent.jar.getCookies(this.cookieAccess);
+	}
 
-        this.agent = supertest.agent(this.server, agentOptions);
+	reset() {
+		const agentOptions = Object.assign({}, this.options, {
+			before: undefined,
+			cookieAccess: undefined,
+			destroy: undefined,
+			helpers: undefined,
+		});
 
-        const cookieAccessOptions = this.options.cookieAccess;
-        const { domain, path, secure, script } = cookieAccessOptions || {
-            domain: this.url.hostname,
-            path: this.url.pathname,
-            secure: "https:" === this.url.protocol,
-            script: false,
-        };
+		this.agent = supertest.agent(this.server, agentOptions);
 
-        this.cookieAccess = new CookieAccess(domain, path, secure, script);
-    }
+		const cookieAccessOptions = this.options.cookieAccess;
+		const { domain, path, secure, script } = cookieAccessOptions || {
+			domain: this.url.hostname,
+			path: this.url.pathname,
+			secure: "https:" === this.url.protocol,
+			script: false,
+		};
 
-    destroy() {
-        if (this.options.destroy)
-            this.options.destroy.call(this);
+		this.cookieAccess = new CookieAccess(domain, path, secure, script);
+	}
 
-        this.reset();
-    }
+	destroy() {
+		if (this.options.destroy) this.options.destroy.call(this);
 
-    static getUrl(app: http.Server | https.Server): string {
-        if (!app.listening) app.listen(0);
+		this.reset();
+	}
 
-        const addr = app.address();
-        if (!addr) return "";
+	static getUrl(app: http.Server | https.Server): string {
+		if (!app.listening) app.listen(0);
 
-        const port = typeof addr === "string" ? +addr : addr.port;
-        const protocol = app instanceof https.Server ? "https" : "http";
+		const addr = app.address();
+		if (!addr) return "";
 
-        return `${protocol}://127.0.0.1:${port}`;
-    }
+		const port = typeof addr === "string" ? +addr : addr.port;
+		const protocol = app instanceof https.Server ? "https" : "http";
 
-    // TODO: This is temp solution !! This isn't faithful to the original code.
-    get(route: string) {
-        const test = this.agent.get(route);
+		return `${protocol}://127.0.0.1:${port}`;
+	}
 
-        if (this.options.before)
-            this.options.before.call(this, test);
-        
-        return test;
-    }
+	// TODO: This is temp solution !! This isn't faithful to the original code.
+	get(route: string) {
+		const test = this.agent.get(route);
 
-    post(route: string) {
-        const test = this.agent.post(route);
+		if (this.options.before) this.options.before.call(this, test);
 
-        if (this.options.before)
-            this.options.before.call(this, test);
-        
-        return test;
-    }
+		return test;
+	}
+
+	post(route: string) {
+		const test = this.agent.post(route);
+
+		if (this.options.before) this.options.before.call(this, test);
+
+		return test;
+	}
 }
 
 export default Session;

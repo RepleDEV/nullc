@@ -41,11 +41,13 @@ export async function refreshMutual(username: string): Promise<unknown> {
 
 async function check404(url: string): Promise<boolean> {
 	return new Promise((res) => {
-		axios(url).then(() => {
-			res(false);
-		}).catch(() => {
-			res(true);
-		});
+		axios(url)
+			.then(() => {
+				res(false);
+			})
+			.catch(() => {
+				res(true);
+			});
 	});
 }
 
@@ -64,16 +66,16 @@ export async function refreshMootsList(config?: RefreshMootsListConfig) {
 	for (let i = 0; i < moots_list.length; i++) {
 		const moot = moots_list[i];
 
-		if (config && !config.refresh)
-			continue;
-		
+		if (config && !config.refresh) continue;
+
 		let check = false;
 
 		if (moot.id === "-1") {
-			check = true
+			check = true;
 		} else {
 			const changedProfilePicture = await check404(moot.icon);
-			const changedHeader = moot.header.length && await check404(moot.header);
+			const changedHeader =
+				moot.header.length && (await check404(moot.header));
 
 			check = changedProfilePicture || !!changedHeader;
 		}

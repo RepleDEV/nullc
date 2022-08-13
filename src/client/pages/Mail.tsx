@@ -13,24 +13,30 @@ import { mailDB } from "../../server/types/modules";
 import "../scss/pages/Mail.scss";
 import { BasicComponentProps, EmptyComponentState } from "../types/Component";
 
-class MailCard extends Component<mailDB.MailObject & BasicComponentProps, EmptyComponentState> {
+class MailCard extends Component<
+	mailDB.MailObject & BasicComponentProps,
+	EmptyComponentState
+> {
 	render(): React.ReactNode {
 		const { author, message, timestamp } = this.props;
 		return (
 			<div className="mail-card">
-				<div className="author">{ author }</div>
-				<div className="message">{ message }</div>
-				<div className="timestamp">{
-					dayjs( timestamp )
-						.tz(dayjs.tz.guess()) 
-						.format("HH:mm dddd, DD MMM YYYY")
-				}</div>
+				<div className="author">{author}</div>
+				<div className="message">{message}</div>
+				<div className="timestamp">
+					{dayjs(timestamp)
+						.tz(dayjs.tz.guess())
+						.format("HH:mm dddd, DD MMM YYYY")}
+				</div>
 			</div>
 		);
 	}
 }
 
-class MailAdmin extends Component<BasicComponentProps, MailTypes.MailAdminState> {
+class MailAdmin extends Component<
+	BasicComponentProps,
+	MailTypes.MailAdminState
+> {
 	constructor(props: BasicComponentProps) {
 		super(props);
 
@@ -39,18 +45,18 @@ class MailAdmin extends Component<BasicComponentProps, MailTypes.MailAdminState>
 		};
 	}
 	async componentDidMount() {
-		const mail_data = await (await fetch("/mail_data")).json() as mailDB.MailObjectArray;
-		
+		const mail_data = (await (
+			await fetch("/mail_data")
+		).json()) as mailDB.MailObjectArray;
+
 		this.setState({ mail_data });
 	}
 	render(): React.ReactNode {
 		return (
 			<div className="mail-admin-container">
-				{
-					[...this.state.mail_data].map((mail) => {
-						return <MailCard {...mail} key={mail.uuid}/>;
-					})
-				}
+				{[...this.state.mail_data].map((mail) => {
+					return <MailCard {...mail} key={mail.uuid} />;
+				})}
 			</div>
 		);
 	}
@@ -61,9 +67,9 @@ class Mail extends Component<MailTypes.MailProps> {
 		return (
 			<div className="page Mail">
 				<PageReturn />
-				{
-					this.props.admin ?
-					<MailAdmin /> :
+				{this.props.admin ? (
+					<MailAdmin />
+				) : (
 					<Form to="/">
 						<FormInput
 							type="text"
@@ -92,7 +98,7 @@ class Mail extends Component<MailTypes.MailProps> {
 								name: "submit",
 							}}></FormInput>
 					</Form>
-				}
+				)}
 			</div>
 		);
 	}
