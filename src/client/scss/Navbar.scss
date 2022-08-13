@@ -8,32 +8,37 @@
 	z-index: 100;
 
 	width: 100vw;
-	height: 62px;
+	height: 46px;
 
 	display: flex;
+}
+
+.navbar::before {
+	@include globals.default_background;
+}
+
+.navbar > div, .login-container {
+	height: 100%;
+
+	display: flex;
+	align-items: center;
+
+	padding: 0 17px;
+}
+.navbar > div a {
+	font-family: inherit;
+	font-size: 18px;
+	font-weight: globals.$font-weight__semi_bold;
+	color: globals.$color-accent-primary;
+
+	text-transform: uppercase;
+	text-decoration: none;
 }
 
 .navbar > .toolbar-container {
 	// STICK RIGHT
 	margin-left: auto;
 	box-sizing: border-box;
-	padding-right: 21px;
-
-	.login-container {
-		height: 100%;
-
-		display: flex;
-		align-items: center;
-	}
-
-	span > a {
-		font-family: inherit;
-		font-size: 20px;
-		color: inherit;
-
-		text-transform: lowercase;
-		text-decoration: none;
-	}
 }
 
 .navbar .user-container {

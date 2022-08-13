@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, To } from "react-router-dom";
 
 import "../scss/Navbar";
 import { EmptyComponentState } from "../types/Component";
@@ -7,6 +7,16 @@ import { Navbar as NavbarTypes } from "../types/Components";
 import Popup from "./Popup";
 import Heart from "./svg/Heart";
 import Twitter from "./svg/Twitter";
+
+class NavLink extends Component<{to: To}> {
+	render(): React.ReactNode {
+		return (
+			<div className="nav-link">
+				<Link to={this.props.to}>{this.props.children}</Link>
+			</div>
+		);
+	}
+}
 
 class Navbar extends Component<NavbarTypes.NavbarProps, EmptyComponentState> {
 	constructor(props: NavbarTypes.NavbarProps) {
@@ -61,6 +71,9 @@ class Navbar extends Component<NavbarTypes.NavbarProps, EmptyComponentState> {
 
 		return (
 			<div className="navbar">
+				<NavLink to="/home">home</NavLink>
+				<NavLink to="/repo">tweet repo</NavLink>
+				<NavLink to="/mail">mail</NavLink>
 				<div className="toolbar-container">{element}</div>
 			</div>
 		);

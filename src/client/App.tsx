@@ -4,10 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 
 // Pages
-import Home from "./pages/Home";
-import Self from "./pages/Self";
-import Thanks from "./pages/Thanks";
-import Mail from "./pages/Mail";
+import Home from "./pages/Home_2.0";
 import axios from "axios";
 
 import { BasicComponentProps } from "./types/Component";
@@ -77,18 +74,6 @@ class App extends Component<BasicComponentProps, AppState> {
 				<main>
 					<Routes>
 						<Route path="/" element={<Home />} />
-						<Route path="/self" element={<Self />} />
-						<Route path="/thanks" element={<Thanks />} />
-						<Route
-							path="/mail"
-							element={
-								<Mail
-									logged_in={this.state.logged_in}
-									username={this.state.username}
-									admin={this.state.admin}
-								/>
-							}
-						/>
 					</Routes>
 				</main>
 			</>
