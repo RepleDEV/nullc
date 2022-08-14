@@ -3,6 +3,8 @@ $color-text-primary: #2E292B;
 $color-accent-primary: #8B3048;
 $color-accent-secondary: #92FFDA;
 
+$color-shadow-default: rgba($color-text-primary, 33%);
+
 // FONT WEIGHT CONSTANTS (Though most if not all fonts are variable weight)
 $font-weight__thin: 100;
 $font-weight__extra-light: 200;

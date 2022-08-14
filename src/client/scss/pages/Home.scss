@@ -16,7 +16,7 @@
         border-radius: 11px;
         overflow: hidden;
 
-        box-shadow: -3px 3px 6px rgba(globals.$color-text-primary, 33%);
+        box-shadow: -3px 3px 6px globals.$color-shadow-default;
     }
 
     .name {
