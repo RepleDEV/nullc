@@ -83,6 +83,14 @@ img {
 		flex-direction: column;
 		justify-content: space-between;
 	}
+
+	.left {
+		text-align: left;
+	}
+
+	.right {
+		text-align: right;
+	}
 }
 
 // Custom scrollbar
