@@ -27,3 +27,43 @@
         text-transform: uppercase;
     }
 }
+
+.bullet-points {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    .bullet-point {
+        display: flex;
+        flex-direction: row;
+    align-items: center;
+
+        gap: 40px;
+
+        .line-container {
+            width: 25px;
+            height: 5px;
+
+            background-color: globals.$color-accent-primary;
+        }
+
+        .text {
+            font-size: 26px;   
+            font-weight: globals.$font-weight__medium;
+        }
+    }
+}
+
+.corner-links {
+    height: 32px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 22px;
+
+    svg {
+        fill: globals.$color-accent-primary;
+    }
+}
