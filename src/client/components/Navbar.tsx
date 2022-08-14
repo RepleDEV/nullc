@@ -71,7 +71,7 @@ class Navbar extends Component<NavbarTypes.NavbarProps, EmptyComponentState> {
 
 		return (
 			<div className="navbar">
-				<NavLink to="/home">home</NavLink>
+				<NavLink to="/">home</NavLink>
 				<NavLink to="/repo">tweet repo</NavLink>
 				<NavLink to="/mail">mail</NavLink>
 				<div className="toolbar-container">{element}</div>
