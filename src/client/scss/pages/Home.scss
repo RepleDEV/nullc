@@ -1,0 +1,29 @@
+@use "../globals";
+
+.name-card {
+    width: fit-content;
+    height: 130px;
+
+    display: flex;
+    flex-direction: row;
+    gap: 27px;
+
+    align-items: center;
+
+    .profile-picture-container {
+        height: 116px;
+
+        border-radius: 11px;
+        overflow: hidden;
+
+        box-shadow: -3px 3px 6px rgba(globals.$color-text-primary, 33%);
+    }
+
+    .name {
+        color: globals.$color-text-primary;
+        font-weight: globals.$font-weight__medium;
+        font-size: 90px;
+
+        text-transform: uppercase;
+    }
+}
