@@ -4,7 +4,18 @@ import { BasicComponentProps } from "../types/Component";
 import { CSSTransition, TransitionStatus } from "react-transition-group";
 
 const MESSAGES = [
-    "ninily"
+    "ninily",
+    "qiqi",
+    "slay", // this by ryann
+    // nobody else wanted to add messages dhmu
+    "smells",
+    "like",
+    "teen",
+    "spirit",
+    "ILY3000",
+    "blur",
+    "sugar",
+    "radiohead",
 ];
 
 interface MessageObject {
