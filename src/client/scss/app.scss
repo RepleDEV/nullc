@@ -18,6 +18,35 @@ img {
 	height: 100%;
 }
 
+// Aurebesh font
+@font-face {
+	font-family: "Aurebesh";
+	src: url(fonts/Aurebesh.otf) format("opentype");
+}
+
+.background {
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+
+	z-index: -1000;
+
+	overflow: hidden;
+
+	.message {
+		position: absolute;
+
+		display: block;
+
+		font-family: "Aurebesh";
+		font-size: 32px;
+		color: globals.$color-accent-secondary;
+
+		writing-mode: vertical-lr;
+		text-orientation: upright;
+	}
+}
+
 .page {
 	box-sizing: border-box;
 

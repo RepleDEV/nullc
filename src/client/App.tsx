@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
+import Background from "./components/Background";
 
 // Pages
 import Home from "./pages/Home_2.0";
@@ -75,6 +76,7 @@ class App extends Component<BasicComponentProps, AppState> {
 					<Routes>
 						<Route path="/" element={<Home />} />
 					</Routes>
+					<Background />
 				</main>
 			</>
 		);
