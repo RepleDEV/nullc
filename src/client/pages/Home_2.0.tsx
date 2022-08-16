@@ -26,14 +26,14 @@ class Leaderboards extends Component<BasicComponentProps, {
         super(props);
 
         this.state = {
-            users: ["nini", ...Array(9).fill(() => "")],
+            users: ["nini", ...Array(9).fill("")],
         };
 
         this.usersMapFunction = this.usersMapFunction.bind(this);
     }
     usersMapFunction(user: string, i: number) {
         return (
-            <LeaderboardEntry number={i + 1}>{user}</LeaderboardEntry>   
+            <LeaderboardEntry number={i + 1} key={`${user}-${i}`}>{user}</LeaderboardEntry>   
         );
     }
     componentDidMount() {
