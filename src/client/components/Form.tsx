@@ -34,10 +34,10 @@ class FormInput extends Component<
 			this.onChange(initialValue.toString());
 	}
 	render(): React.ReactNode {
-		const { type, children, inputProps, textareaProps } = this.props;
+		const { type, children, inputProps, textareaProps, className } = this.props;
 
 		return (
-			<div className={["form-input", `${type}-input`].join(" ")}>
+			<div className={["form-input", `${type}-input`, className].join(" ")}>
 				<span className="input-title">{children}</span>
 				{type === "textarea" ? (
 					<textarea
