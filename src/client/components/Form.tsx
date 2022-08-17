@@ -1,59 +1,45 @@
-import React, { Component } from "react";
+import React, { Component, FormHTMLAttributes } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 
-import { EmptyComponentState } from "../types/Component";
+import { BasicComponentProps, EmptyComponentState } from "../types/Component";
 import { Form as FormTypes } from "../types/Components";
 
-class FormInput extends Component<
-	FormTypes.FormInputProps,
-	EmptyComponentState
-> {
-	constructor(props: FormTypes.FormInputProps) {
+interface FormInputProps {
+	onChange?: (value: string) => void;
+	name: string;
+	defaultValue?: string | number;
+	required?: boolean;
+	className?: string;
+	children: (onChange: (element: string | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void) => React.ReactNode;
+}
+class FormInput extends Component<FormInputProps> {
+	constructor(props: FormInputProps) {
 		super(props);
 
 		this.onChange = this.onChange.bind(this);
 	}
-	onChange(
-		event:
-			| React.ChangeEvent<HTMLInputElement>
-			| React.ChangeEvent<HTMLTextAreaElement>
-			| string
-	) {
+
+	componentDidMount() {
+		if (this.props.defaultValue)
+			this.onChange(this.props.defaultValue.toString());
+	}
+	
+	onChange(element: string | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
 		if (this.props.onChange) {
-			if (typeof event == "string") return this.props.onChange(event);
-			this.props.onChange(event.target.value);
+			if (typeof element == "string") return this.props.onChange(element);
+			this.props.onChange(element.target.value);
 		}
 	}
-	componentDidMount() {
-		// Call onChange() if initialValue is defined
-		const initialValue =
-			(this.props.inputProps && this.props.inputProps.value) ||
-			(this.props.textareaProps && this.props.textareaProps.value);
-		if (initialValue && typeof initialValue !== "object")
-			this.onChange(initialValue.toString());
-	}
+
 	render(): React.ReactNode {
-		const { type, children, inputProps, textareaProps, className } = this.props;
+		const { className, children } = this.props;
 
 		return (
-			<div className={["form-input", `${type}-input`, className].join(" ")}>
-				<span className="input-title">{children}</span>
-				{type === "textarea" ? (
-					<textarea
-						onChange={this.onChange}
-						{...textareaProps}></textarea>
-				) : (
-					<input
-						type={type}
-						onChange={this.onChange}
-						// onClick only if type is submit
-						onClick={() =>
-							type === "submit" && this.onChange("Submit")
-						}
-						{...inputProps}
-					/>
-				)}
+			<div className={`form-input ${className}`}>
+				{
+					typeof children === "function" ? children(this.onChange) : children
+				}
 			</div>
 		);
 	}
@@ -157,14 +143,7 @@ class Form extends Component<FormTypes.FormProps, FormTypes.FormState> {
 		this.setState({ formValues });
 	}
 	getFormNameFromChild(child: React.ReactElement): string {
-		const elementProps =
-			child.props.inputProps || child.props.textareaProps;
-		const formName =
-			elementProps && elementProps.name
-				? elementProps.name
-				: elementProps.children;
-
-		return formName;
+		return child.props.name as string;
 	}
 	// What the fuck typescript
 	passOnChange(nodeArray: PropTypes.ReactNodeArray | PropTypes.ReactNodeLike): any {
