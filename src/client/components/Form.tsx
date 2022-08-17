@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import axios from "axios";
 
 import { EmptyComponentState } from "../types/Component";
@@ -165,32 +166,37 @@ class Form extends Component<FormTypes.FormProps, FormTypes.FormState> {
 
 		return formName;
 	}
+	// What the fuck typescript
+	passOnChange(nodeArray: PropTypes.ReactNodeArray | PropTypes.ReactNodeLike): any {
+		// Pass onChange prop
+		return React.Children.map<React.ReactNode, React.ReactNode>(nodeArray, (child, i) => {
+			if (React.isValidElement(child)) {
+				if (child.type === FormInput) {
+					const formName = this.getFormNameFromChild(child);
+
+					return React.cloneElement(child, {
+						onChange: (value: string) => {
+							this.changeFormValue(i, formName, value);
+						},
+						key: i,
+					});
+				// Recursive !! idk abt the performance though
+				} else if (child.props.children)
+					return React.cloneElement(child, {
+						children: this.passOnChange(child.props.children),
+					});
+			}
+
+			return child;
+		});
+	}
 	render(): React.ReactNode {
 		if (this.state.submitState !== "none")
 			return <FormShowStatus status={this.state.submitState} />;
 
 		return (
 			<div className="form-container">
-				{
-					// Pass onChange prop
-					React.Children.map(this.props.children, (child, i) => {
-						if (
-							React.isValidElement(child) &&
-							child.type === FormInput
-						) {
-							const formName = this.getFormNameFromChild(child);
-
-							return React.cloneElement(child, {
-								onChange: (value: string) => {
-									this.changeFormValue(i, formName, value);
-								},
-								key: i,
-							});
-						}
-
-						return child;
-					})
-				}
+				{this.passOnChange(this.props.children)}
 			</div>
 		);
 	}
