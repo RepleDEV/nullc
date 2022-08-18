@@ -6,6 +6,8 @@ import Background from "./components/Background";
 
 // Pages
 import Home from "./pages/Home_2.0";
+import Mail from "./pages/Mail_2.0";
+
 import axios from "axios";
 
 import { BasicComponentProps } from "./types/Component";
@@ -75,6 +77,7 @@ class App extends Component<BasicComponentProps, AppState> {
 				<main>
 					<Routes>
 						<Route path="/" element={<Home />} />
+						<Route path="/mail" element={<Mail />} />
 					</Routes>
 					<Background />
 				</main>

@@ -1,0 +1,178 @@
+@use "../globals";
+
+.page.Mail {
+    width: 60vw;
+    height: 60vh;
+}
+
+.form-container {
+    height: 100%;
+    width: 100%;
+
+    font-weight: globals.$font-weight__medium;
+    font-size: 17px;
+}
+
+.form-container input {
+    // Clear background and outline
+    background: none;
+    outline: none;
+
+    padding: 0 8px;
+
+    font-family: inherit;
+    font-size: inherit;
+
+    &::placeholder {
+        color: rgba(globals.$color-text-primary, 0.5);
+    }
+}
+
+.nameInput input, .tweet-field-container,
+.warning-container, .messageInput {
+    width: 88%;
+}
+.nameInput input, .tweet-field-container {
+    border: 2px solid globals.$color-accent-primary;
+    border-radius: 6px;
+}
+
+.nameInput input {
+    height: 42px;
+}
+
+.tweet-field-container {
+    height: 119px;
+
+    box-sizing: border-box;
+    padding: 4px 8px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.radios {
+    flex: 1 0 50%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.radio-container {
+    display: flex;
+    align-items: center;
+
+    cursor: pointer;
+
+    height: 48px;
+    width: 47%;
+
+    padding: 0px 12px;
+
+    color: globals.$color-text-primary;
+
+    box-sizing: border-box;
+    box-shadow: 0px 3px 6px globals.$color-shadow-default;
+    border-radius: 4px;
+
+    user-select: none;
+
+    input {
+        cursor: pointer;
+
+        position: absolute;
+        height: 0;
+        width: 0;
+    }
+
+    .checkmark {
+        height: 18px;
+        width: 18px;
+
+        position: relative;
+
+        box-sizing: border-box;
+        border: 1px solid globals.$color-accent-primary;
+        border-radius: 4px;
+    }
+
+    .text {
+        flex: 1 0;
+        text-align: right;
+    }
+
+    .checkmark::before {
+        content: "";
+        position: absolute;
+        opacity: 0;
+
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        width: 12px;
+        height: 12px;
+
+        border-radius: 3px;
+        background-color: globals.$color-accent-primary;
+
+        transition: opacity 120ms ease-in-out;
+    }
+
+    input:checked ~ .checkmark::before{
+        opacity: 1;
+    }
+}
+
+.warning-container {
+    text-overflow: ellipsis;
+
+    opacity: 80%;
+    font-size: 12px;
+}
+
+.messageInput {
+    height: 83%;
+}
+.messageInput textarea {
+    height: 100%;
+    width: 100%;
+
+    background: none;
+    outline: none;
+    border: 2px solid globals.$color-accent-primary;
+    border-radius: 6px;
+
+    box-sizing: border-box;
+    padding: 8px 12px;
+
+    font-size: 13px;
+    font-family: inherit;
+    font-weight: inherit;
+
+    resize: none;
+}
+
+.submit {
+    width: 78px;
+    height: 34px;
+
+    background: none;
+    outline: none;
+
+    border: 1px solid globals.$color-accent-secondary;
+    border-radius: 5px;
+
+    font-size: 16px;
+    font-family: inherit;
+    font-weight: inherit;
+
+    text-transform: uppercase;
+
+    transition: background-color 180ms ease-in;
+}
+
+.submit:hover {
+    background-color: globals.$color-accent-secondary;
+}
