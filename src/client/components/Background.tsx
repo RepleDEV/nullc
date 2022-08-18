@@ -16,6 +16,8 @@ const MESSAGES = [
     "blur",
     "sugar",
     "radiohead",
+    "ur gay /j",
+    // -shan
 ];
 
 interface MessageObject {
