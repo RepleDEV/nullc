@@ -127,7 +127,7 @@ class Form extends Component<FormTypes.FormProps, FormTypes.FormState> {
 
 		return null;
 	}
-	changeFormValue(i: number, formName: string, value: string): void {
+	changeFormValue(formName: string, value: string): void {
 		if (formName === "submit" && value === "Submit") {
 			this.submit();
 			return;
@@ -135,10 +135,20 @@ class Form extends Component<FormTypes.FormProps, FormTypes.FormState> {
 
 		const formValues = [...this.state.formValues];
 
-		formValues[i] = {
-			formName,
-			value,
-		};
+		let changedFormValue = false;
+
+		for (let i = 0;i < formValues.length;i++)
+			if (formValues[i]?.formName === formName) {
+				formValues[i] = {
+					formName,
+					value,
+				};
+				changedFormValue = true;
+				break;
+			}
+
+		if (!changedFormValue)
+			formValues.push({ formName, value });
 
 		this.setState({ formValues });
 	}
@@ -155,9 +165,9 @@ class Form extends Component<FormTypes.FormProps, FormTypes.FormState> {
 
 					return React.cloneElement(child, {
 						onChange: (value: string) => {
-							this.changeFormValue(i, formName, value);
+							this.changeFormValue(formName, value);
 						},
-						key: i,
+						key: `${formName}/${i}`,
 					});
 				// Recursive !! idk abt the performance though
 				} else if (child.props.children)
