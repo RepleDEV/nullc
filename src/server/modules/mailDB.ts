@@ -4,6 +4,8 @@ import * as dayjs from "dayjs";
 
 import { mailDB } from "../types/modules";
 
+const stringify = (s: string) => `'${s}'`;
+
 interface SQLColumnDataType {
 	name: string;
 	size?: number;
@@ -113,10 +115,19 @@ export class DataBase {
 		table_name: string,
 		data: Partial<T>
 	) {
+		function dataMapHandler(v: unknown) {
+			const type = typeof v;
+			if (type === "string")
+				return stringify(v as string);
+			else if (type === "boolean")
+				return +(v as boolean);
+			return v;
+		}
+
 		return await this.query(
 			`INSERT INTO ${table_name} ` +
 				`(${Object.keys(data).join(", ")}) ` +
-				`VALUES (${Object.values(data).join(", ")});`
+				`VALUES (${Object.values(data).map(dataMapHandler).join(", ")});`
 		);
 	}
 
@@ -216,13 +227,11 @@ export default class MailDB extends DataBase {
 
 	async addMail(author: string, message: string, tweet?: boolean) {
 		await super.insertInto<mailDB.MailObject>(this.tableName, {
-			uuid: `"${uuidv4()}"`,
-			author: `"${author}"`,
-			message: `"${message}"`,
-			timestamp: `"${dayjs().format("YYYY-MM-DD HH:mm:ss")}"`,
-			// I could've done +tweet if not for typescript
-			// type errors
-			tweet: tweet ? 1 : 0,
+			uuid: uuidv4(),
+			author,
+			message,
+			timestamp: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+			tweet,
 		});
 	}
 	async getMail(

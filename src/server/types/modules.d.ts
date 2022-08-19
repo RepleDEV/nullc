@@ -5,7 +5,7 @@ export namespace mailDB {
 		author: string;
 		message: string;
 		timestamp: string;
-		tweet: 0 | 1;
+		tweet: boolean;
 	}
 
 	export type MailObjectArray = MailObject[];
