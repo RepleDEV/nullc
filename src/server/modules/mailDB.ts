@@ -170,10 +170,10 @@ export default class MailDB extends DataBase {
 			)) as Record<string, unknown>[];
 
 			const isOldTable =
-				queryRes.filter((v) => v.Field === "timestamp").length < 1;
+				queryRes.filter((v) => v.Field === "tweet").length < 1;
 			if (isOldTable)
 				await this.query(
-					`ALTER TABLE ${this.tableName} ADD COLUMN timestamp datetime;`
+					`ALTER TABLE ${this.tableName} ADD COLUMN tweet BOOL DEFAULT 0;`
 				);
 
 			return;
@@ -204,17 +204,25 @@ export default class MailDB extends DataBase {
 				name: "timestamp",
 				dataType: { name: "datetime" },
 			},
+			{
+				name: "tweet",
+				dataType: { name: "BOOL" },
+				default: "0",
+			},
 		];
 
 		await super.createTable(this.tableName, columns);
 	}
 
-	async addMail(author: string, message: string) {
+	async addMail(author: string, message: string, tweet?: boolean) {
 		await super.insertInto<mailDB.MailObject>(this.tableName, {
 			uuid: `"${uuidv4()}"`,
 			author: `"${author}"`,
 			message: `"${message}"`,
 			timestamp: `"${dayjs().format("YYYY-MM-DD HH:mm:ss")}"`,
+			// I could've done +tweet if not for typescript
+			// type errors
+			tweet: tweet ? 1 : 0,
 		});
 	}
 	async getMail(

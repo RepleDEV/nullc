@@ -24,12 +24,12 @@ router.get("/mail_data", (req, res) => {
 
 router.post("/mail", (req, res) => {
 	// Do shit
-	const { name, message } = req.body;
+	const { name, message, tweet } = req.body;
 	if (!name || !message)
 		return res.status(400).json({ error: "BAD FORM DATA" });
 
 	mailDB
-		.addMail(name, message)
+		.addMail(name, message, tweet === "yes")
 		.then(() => {
 			res.status(200).json({ message: "SUCCESS" });
 		})
