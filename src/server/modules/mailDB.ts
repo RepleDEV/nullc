@@ -111,6 +111,16 @@ export class DataBase {
 		return result;
 	}
 
+	cleanApostrophes(v: any) {
+		if (typeof v === "string")
+			return v.split("").map((s, i, arr) => {
+				if (s === "'" && arr[i - 1] !== "\\")
+					return "\\'";
+				return s;
+			}).join("");
+		return v;
+	}
+
 	async insertInto<T = Record<string, unknown>>(
 		table_name: string,
 		data: Partial<T>
@@ -127,7 +137,7 @@ export class DataBase {
 		return await this.query(
 			`INSERT INTO ${table_name} ` +
 				`(${Object.keys(data).join(", ")}) ` +
-				`VALUES (${Object.values(data).map(dataMapHandler).join(", ")});`
+				`VALUES (${Object.values(data).map(this.cleanApostrophes).map(dataMapHandler).join(", ")});`
 		);
 	}
 
