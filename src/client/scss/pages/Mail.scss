@@ -176,3 +176,29 @@
 .submit:hover {
     background-color: globals.$color-accent-secondary;
 }
+
+.submitting-background {
+    position: absolute;
+    z-index: 500;
+
+    width: 100vw;
+    height: 100vh;
+
+    background-color: rgba(globals.$color-text-primary, 0.02);
+    backdrop-filter: blur(2px);
+}
+
+.submitting-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 40vw;
+    height: 36vh;
+
+    span {
+        font-size: 31px;
+        font-weight: globals.$font-weight__semi-bold;
+    }
+}

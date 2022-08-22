@@ -4,11 +4,64 @@ import Form, { FormInput } from "../components/Form";
 import "../scss/pages/Mail"
 import { BasicComponentProps } from "../types/Component";
 
+interface SubmittingProps extends BasicComponentProps {
+    data: any;
+    catch?: () => void;
+    finally?: () => void;
+}
+class Submitting extends Component<SubmittingProps, {
+    message: string;
+    sent: boolean;
+}> {
+    constructor(props: SubmittingProps) {
+        super(props);
+
+        this.state = {
+            message: "",
+            sent: false,
+        }
+    }
+    async componentDidMount() {
+        this.setState({ message: "mail is sending! please wait" });
+
+		const url = "/mail";
+		const res = await axios({
+			url,
+			method: "POST",
+			data: this.props.data,
+			headers: {
+				Accepts: "application/json",
+			},
+		});
+
+        this.setState({ sent: true });
+
+        if (res.data.error) {
+            this.setState({ message: "something went wrong!\nbut do not fret, it wasn't your fault" });
+            this.props.catch && this.props.catch();
+            return;
+        }
+        
+        this.setState({ message: "mail has been sent! thank you!" });
+    }
+    render(): React.ReactNode {
+        return (
+            <div className="submitting-background" onClick={this.state.sent ? this.props.finally : () => {}}>
+                <div className="page submitting-container" onClick={(e) => e.stopPropagation()}>
+                    <span>{ this.state.message }</span>
+                </div>
+            </div>
+        );
+    }
+}
+
 class Mail extends Component<BasicComponentProps, {
     form: Record<string, {
         value: string;
         default?: string;
     }>;
+    data: Record<string, string>;
+    submitting: boolean;
 }> {
     constructor(props: BasicComponentProps) {
         super(props);
@@ -22,6 +75,8 @@ class Mail extends Component<BasicComponentProps, {
                     value: "no",
                 },
             },
+            data: {},
+            submitting: false,
         },
 
         this.submit = this.submit.bind(this);
@@ -38,18 +93,16 @@ class Mail extends Component<BasicComponentProps, {
 
         this.setState({ form });
     }
-    async submit(event: React.FormEvent<HTMLFormElement>) {
+    submit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-		// const url = "/mail";
-		// await axios({
-		// 	url,
-		// 	method: "POST",
-		// 	data: this.state.form,
-		// 	headers: {
-		// 		Accepts: "application/json",
-		// 	},
-		// });
+        const data: Record<string, string> = {};
+        for (const key in this.state.form) {
+            const { value } = this.state.form[key];
+            data[key] = value;
+        }
+
+        this.setState({ data, submitting: true });
     }
     onInvalid(event: React.FormEvent<HTMLFormElement>) {
         // TODO create custom message or sth 
@@ -67,6 +120,12 @@ class Mail extends Component<BasicComponentProps, {
 	}
     render(): React.ReactNode {
         return (
+            <>
+            { this.state.submitting && (
+                <Submitting data={this.state.data} finally={() => {
+                    this.setState({ submitting: false });
+                }}/>
+            )}
             <div className="page Mail">
                 <form  className="form-container" onSubmit={this.submit} onInvalid={this.onInvalid}>
                     <div className="twin-columns">
@@ -124,6 +183,7 @@ class Mail extends Component<BasicComponentProps, {
                     </div>
                 </form>
             </div>
+            </>
         );
     }
 }
