@@ -54,10 +54,6 @@ const clientConfig = {
 				test: /\.scss$/,
 				use: ["style-loader", "css-loader", "sass-loader"],
 			},
-			{
-				test: /\.otf$/,
-				loader: "file-loader",
-			},
 		],
 	},
 	resolve: {
