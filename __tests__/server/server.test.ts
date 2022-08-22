@@ -164,6 +164,7 @@ describe("Server test", () => {
                     about me in the next few years.
                     But just know that no matter how it may look, I only had you in my heart.
                     Goodbye.`,
+				tweet: "yes",
 			};
 
 			const res = await request.post("/mail").send(messageBody);
@@ -180,6 +181,7 @@ describe("Server test", () => {
 			const mail = mail_data[mail_data.length - 1];
 			expect(mail.author).toEqual(messageBody.name);
 			expect(mail.message).toEqual(messageBody.message);
+			expect(mail.tweet).toBeTruthy();
 			expect(mail.uuid).toBeDefined();
 			expect(mail.uuid.length).toBe(36);
 			expect(validate(mail.uuid)).toBeTruthy();
