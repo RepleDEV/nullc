@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "./scss/app";
 // import "./scss/Footer";
-// import "./scss/Popup";
+import "./scss/Popup";
 
 const container = document.getElementById("root");
 if (container) {

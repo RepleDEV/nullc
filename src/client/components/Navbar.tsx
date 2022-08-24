@@ -39,7 +39,7 @@ class Navbar extends Component<NavbarTypes.NavbarProps, EmptyComponentState> {
 				<div className="login-container">
 					<div className="inner-login-container">
 						<span className="login-link-container">
-							<Link to="#" onClick={this.handleLogin}>
+							<Link to="/login" onClick={this.handleLogin}>
 								log in
 							</Link>
 						</span>

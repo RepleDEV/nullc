@@ -80,7 +80,7 @@ class Popup extends Component<
 			<>
 				{is_visible ? (
 					<div
-						className="popup"
+						className="floating-panel popup"
 						style={popup_style}
 						ref={(ref) => {
 							if (ref) this.popup_ref = ref;

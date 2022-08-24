@@ -52,7 +52,7 @@
 
 		svg {
 			width: 100%;
-			fill: globals.$color-text-primary;
+			fill: globals.$color-accent-primary;
 		}
 	}
 
@@ -64,8 +64,8 @@
 	}
 
 	.tag {
-		font-size: 12px;
-		font-weight: globals.$font-weight__light;
+		font-size: 14px;
+		font-weight: globals.$font-weight__regular;
 	}
 
 	.username {
