@@ -131,19 +131,19 @@ class Mail extends Component<BasicComponentProps, {
                     <div className="twin-columns">
                         <div className="column left">
                             <div className="form-input nameInput">
-                                <input type="text" placeholder="Name" name="name" onChange={this.onChange}/>
+                                <input type="text" placeholder="Name" name="name" onChange={this.onChange} disabled={this.state.submitting}/>
                             </div>
                             <div className="form-input">
                                 <div className="tweet-field-container">
                                     <span className="label">Can I tweet this?</span>
                                     <div className="radios">
                                         <label className="radio-container">
-                                            <input type="radio" name="tweet" value="yes" onChange={this.onChange}/>
+                                            <input type="radio" name="tweet" value="yes" onChange={this.onChange} disabled={this.state.submitting}/>
                                             <span className="checkmark" />
                                             <span className="text">yes</span>
                                         </label>
                                         <label className="radio-container">
-                                            <input type="radio" name="tweet" value="no" onChange={this.onChange}/>
+                                            <input type="radio" name="tweet" value="no" onChange={this.onChange} disabled={this.state.submitting}/>
                                             <span className="checkmark" />
                                             <span className="text">no</span>
                                         </label>
@@ -176,9 +176,9 @@ class Mail extends Component<BasicComponentProps, {
                                     "so please use your words responsibly.\n" +
                                     "\n" +
                                     "With all of that said, happy writing <3"
-                                } maxLength={1000} required/>
+                                } maxLength={1000} required disabled={this.state.submitting}/>
                             </div>
-                            <button className="submit">submit</button>
+                            <button className="submit" disabled={this.state.submitting}>submit</button>
                         </div>
                     </div>
                 </form>
