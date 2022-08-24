@@ -19,11 +19,25 @@ class Popup extends Component<
 			popup_style: {},
 		};
 
+		this.clickOutsideHandler = this.clickOutsideHandler.bind(this);
 		this.toggleVisible = this.toggleVisible.bind(this);
 	}
 
+	clickOutsideHandler(e: MouseEvent) {
+		e.stopPropagation();
+
+		if (this.container_ref && !this.container_ref.contains(e.target as Node))
+			this.toggleVisible();
+	}
+
 	toggleVisible() {
-		this.setState({ is_visible: !this.state.is_visible });
+		this.setState({ is_visible: !this.state.is_visible }, () => {
+			if (this.state.is_visible) {
+				document.addEventListener("click", this.clickOutsideHandler);
+			} else {
+				document.removeEventListener("click", this.clickOutsideHandler);
+			}
+		});
 	}
 
 	componentDidUpdate() {
