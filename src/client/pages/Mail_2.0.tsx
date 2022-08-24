@@ -47,7 +47,7 @@ class Submitting extends Component<SubmittingProps, {
     render(): React.ReactNode {
         return (
             <div className="submitting-background" onClick={this.state.sent ? this.props.finally : () => {}}>
-                <div className="page submitting-container" onClick={(e) => e.stopPropagation()}>
+                <div className="floating-panel submitting-container" onClick={(e) => e.stopPropagation()}>
                     <span>{ this.state.message }</span>
                 </div>
             </div>
