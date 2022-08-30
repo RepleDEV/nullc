@@ -16,7 +16,14 @@
     align-items: center;
 
     .profile-picture-container {
-        height: 116px;
+        height: fit-content;
+    }
+
+    .profile-picture-container img {
+        object-fit: contain;
+        width: 100%;
+        max-width: 116px;
+        max-height: 116px;
 
         border-radius: 11px;
         overflow: hidden;
@@ -71,6 +78,11 @@
     svg {
         fill: globals.$color-accent-primary;
     }
+}
+
+// Hide mobile only corner links
+.column.right .corner-links {
+    display: none;
 }
 
 .interests, .leaderboards {
@@ -138,5 +150,79 @@
     span {
         text-align: left;
         font-weight: globals.$font-weight__semi_bold;
+    }
+}
+
+@media only screen and (max-width: globals.$mobile-max-width) {
+    .page.Home {
+        width: 100vw;
+        height: 100vh;
+
+        padding: 90px 17px 0px 17px;
+
+        overflow: initial;
+
+        backdrop-filter: none;
+        background: none;
+        box-shadow: none;
+
+    }
+
+    .page.Home > .twin-columns,
+    .page.Home > .twin-columns > .column.right {
+        gap: 66px;
+    }
+
+    .page.Home > .twin-columns > .column {
+        height: max-content;
+        flex: content;
+
+        box-sizing: border-box;
+    }
+
+    .page.Home > .twin-columns > .column.left {
+        gap: 56px;
+    }
+
+    .page.Home > .twin-columns > .column.left,
+    .interests, .leaderboards {
+        justify-content: start !important;
+
+        @include globals.default_background;
+        box-shadow: 0px 3px 14px globals.$color-shadow-default;
+        border-radius: 22px;
+
+        box-sizing: border-box;
+
+        padding: 20px 24px;
+    }
+    .column.left .corner-links {
+        display: none;
+    }
+    .name-card {
+        gap: 16px;
+    }
+
+    .interests {
+        width: 100%;
+        height: fit-content;
+        min-width: 0px;
+    }
+
+    .leaderboards {
+        width: 100%;
+        min-width: 0px;
+    }
+
+    .top-text {
+        text-align: center;
+    }
+
+    .column.right .corner-links {
+        display: flex;
+
+        width: 100%;
+        height: 108px;
+        justify-content: center;
     }
 }

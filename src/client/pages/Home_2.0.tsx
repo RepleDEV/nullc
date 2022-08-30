@@ -77,6 +77,16 @@ class BulletPoint extends Component {
     }
 }
 
+class CornerLinks extends Component {
+    render(): React.ReactNode {
+        return (
+            <div className="corner-links">
+                <a href="https://github.com/repledev/" target="_blank"><Github /></a>
+            </div>
+        );
+    }
+}
+
 class Home extends Component {
     render(): React.ReactNode {
         return (
@@ -99,9 +109,7 @@ class Home extends Component {
                             <BulletPoint>eng/id</BulletPoint>
                             <BulletPoint>'07 liner</BulletPoint>
                         </div>
-                        <div className="corner-links">
-                            <a href="https://github.com/repledev/" target="_blank"><Github /></a>
-                        </div>
+                        <CornerLinks/>
                     </div>
                     <div className="column right">
                         <div className="interests">
@@ -126,6 +134,7 @@ class Home extends Component {
                                 <Leaderboards />
                             </div>
                         </div>
+                        <CornerLinks/>
                     </div>
                 </div>
             </div>
