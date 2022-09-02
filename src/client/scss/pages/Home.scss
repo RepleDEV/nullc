@@ -154,23 +154,27 @@
 }
 
 @media only screen and (max-width: globals.$mobile-max-width) {
+    $column-gap: 66px;
+
     .page.Home {
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
 
         padding: 90px 17px 0px 17px;
 
-        overflow: initial;
+        overflow: scroll;
 
         backdrop-filter: none;
         background: none;
         box-shadow: none;
-
     }
 
-    .page.Home > .twin-columns,
+    .page.Home > .twin-columns {
+        // height: 100%;
+        gap: $column-gap;
+    }
     .page.Home > .twin-columns > .column.right {
-        gap: 66px;
+        gap: $column-gap;
     }
 
     .page.Home > .twin-columns > .column {
