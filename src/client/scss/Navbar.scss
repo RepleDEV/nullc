@@ -11,10 +11,20 @@
 	height: 46px;
 
 	display: flex;
+	align-items: center;
 
 	@include globals.default_background;
 
 	box-shadow: 0px 3px 8px globals.$color-shadow-default;
+}
+
+.navbar > .bars-container {
+	display: none;
+
+	height: fit-content;
+	svg {
+		fill: globals.$color-accent-primary;
+	}
 }
 
 .navbar > div, .login-container {
@@ -73,5 +83,26 @@
 		font-weight: globals.$font-weight__medium;
 
 		border-bottom: 2px solid globals.$color-accent-primary;
+	}
+}
+
+@media only screen and (max-width: globals.$mobile-max-width) {
+	.navbar {
+		height: 63px;
+	}
+
+	.navbar > div a {
+		font-size: 23px;
+	}
+
+	.login-container {
+		padding: 0px;
+	}
+
+	.navbar > .bars-container {
+		display: block;
+	}
+	.navbar > *:not(.bars-container):not(.toolbar-container) {
+		display: none;
 	}
 }
