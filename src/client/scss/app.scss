@@ -65,27 +65,8 @@ img {
 }
 
 .page {
-	// top: 50%;
-	// left: 50%;
-	// transform: translate(-50%, -50%);
-	// z-index: 50;
-
 	padding: 50px 38px;
 }
-
-// TODO: This should be unnecessary
-// .page:not(.Home) {
-// 	padding: 115px 211px 0px 211px;
-
-// 	@include globals.flex-column;
-// }
-
-// @media only screen and (max-width: 600px) {
-// 	.page:not(.Home) {
-// 		padding: 0 8vw;
-// 		padding-top: 122px;
-// 	}
-// }
 
 .page > .page-return-container {
 	width: 100%;
@@ -139,4 +120,23 @@ img {
 ::-webkit-scrollbar-thumb {
 	background-color: globals.$color-accent-secondary;
 	border-radius: 12px;
+}
+
+@media only screen and (max-width: globals.$mobile-max-width) {
+    $column-gap: 66px;
+
+    .page {
+        padding: 90px 17px 0px 17px;
+
+        overflow: scroll;
+
+        backdrop-filter: none;
+        background: none;
+        box-shadow: none;
+    }
+
+    .page > .twin-columns,
+	.page > .twin-columns > .column {
+        gap: $column-gap;
+    }
 }
