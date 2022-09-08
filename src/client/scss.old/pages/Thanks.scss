@@ -1,0 +1,126 @@
+@use "../globals";
+
+.page.Thanks {
+	.page-return-container {
+		position: absolute;
+		z-index: 100;
+
+		width: auto;
+	}
+
+	.row-container {
+		display: flex;
+		align-items: center;
+	}
+
+	.thank-you-container {
+		svg {
+			width: auto;
+			height: 38px;
+		}
+
+		span {
+			margin-top: 1rem;
+		}
+
+		flex-direction: column;
+	}
+
+	.moots-list {
+		margin-top: 104px;
+
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 59px;
+	}
+
+	.moots-cell {
+		width: 405;
+		height: 177;
+
+		position: relative;
+
+		@include globals.flex-column;
+
+		border-radius: 21px;
+		overflow: hidden;
+
+		background-color: globals.$color-secondary;
+
+		.icon-container {
+			width: 83px;
+			height: 83px;
+
+			// Make it circular
+			border-radius: 50%;
+			overflow: hidden;
+
+			position: absolute;
+			z-index: 50;
+
+			left: 25px;
+			top: 81px;
+		}
+
+		.header-container,
+		.icon-container {
+			box-shadow: 0 5px 8px 8px rgba(globals.$color-main, 0.2);
+		}
+
+		.header-container {
+			height: 135px;
+		}
+
+		img {
+			height: 100%;
+			width: 100%;
+			object-fit: contain;
+		}
+
+		.username-container {
+			display: flex;
+			align-items: center;
+
+			flex: 1;
+
+			padding-left: 113px;
+		}
+
+		.username-tag {
+			font-size: 15px;
+		}
+	}
+
+	.moots-cell.no-header {
+		flex-direction: row;
+		align-items: center;
+
+		width: 300;
+		height: 105;
+
+		.header-container {
+			display: none;
+		}
+
+		.icon-container {
+			position: static;
+
+			margin: 0 0.8rem;
+		}
+
+		.username-container {
+			padding-left: 0;
+		}
+	}
+
+	.row-container:last-child {
+		padding-bottom: 140px;
+	}
+
+	@media only screen and (max-width: 600px) {
+		.moots-list {
+			justify-content: center;
+		}
+	}
+}

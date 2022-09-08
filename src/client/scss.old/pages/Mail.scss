@@ -1,0 +1,114 @@
+@use "../globals";
+
+.page.Mail {
+	.form-input.text-input,
+	.form-input.textarea-input {
+		.input-title {
+			font-size: 1.5rem;
+			font-weight: globals.$font-weight__medium;
+
+			text-shadow: -1px 1px 10px rgba(globals.$color-text-primary, 0.3);
+		}
+
+		input,
+		textarea {
+			background: none;
+			border: none;
+			outline: none;
+			padding: 8px 0;
+
+			font-size: 1.2rem;
+
+			border-bottom: 2px solid globals.$color-accent-primary;
+			color: globals.$color-text-primary;
+			font-family: inherit;
+		}
+
+		textarea {
+			height: 120px;
+			resize: none;
+		}
+	}
+
+	.form-input.submit-input input {
+		width: 85px;
+		height: 40px;
+
+		background: none;
+		border: none;
+		outline: none;
+
+		background-color: globals.$color-secondary;
+		color: globals.$color-accent-primary;
+
+		font-family: inherit;
+		font-size: 1.12rem;
+		font-weight: globals.$font-weight__medium;
+
+		border-radius: 6px;
+
+		transition: background-color 125ms ease-in-out, color 125ms ease-in-out;
+
+		&:hover {
+			background-color: globals.$color-accent-primary;
+			color: globals.$color-main;
+		}
+	}
+
+	.form-container {
+		margin-top: 42px;
+	}
+	.form-container .form-input {
+		display: flex;
+		flex-direction: column;
+	}
+	.form-container .form-input:not(:first-child) {
+		margin-top: 24px;
+	}
+
+	.form-status {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		font-size: 1.4rem;
+		font-weight: globals.$font-weight__medium;
+		letter-spacing: 1.6px;
+
+		height: 220px;
+	}
+}
+
+.page.Mail .mail-admin-container {
+	@include globals.flex-column;
+	width: 100%;
+	height: 100%;
+
+	margin-top: 64px;
+
+	gap: 12px;
+}
+.page.Mail .mail-card {
+	@include globals.flex-column;
+	justify-content: center;
+	width: 100%;
+
+	border-radius: 8px;
+
+	background-color: globals.$color-secondary;
+
+	padding: 12px;
+
+	.message {
+		color: globals.$color-accent-primary;
+		font-size: 1.4rem;
+		font-weight: globals.$font-weight__medium;
+		line-height: 125%;
+
+		word-wrap: break-word;
+	}
+	.timestamp {
+		color: rgba(globals.$color-text-primary, 0.4);
+		font-weight: globals.$font-weight__light;
+	}
+}
