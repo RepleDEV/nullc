@@ -29,10 +29,6 @@ img {
 
 .background {
 	position: absolute;
-	top: 0;
-	right: 0;
-	left: 0;
-	bottom: 0;
 
 	width: 100vw;
 	height: 100vh;
@@ -129,15 +125,6 @@ img {
 
 @media only screen and (max-width: globals.$mobile-max-width) {
     $column-gap: 66px;
-
-	main {
-		height: auto;
-	}
-
-	.background {
-		// position: sticky;
-		height: 100%;
-	}	
 	
     .page {
         padding: 90px 17px 0px 17px;
