@@ -125,7 +125,11 @@ img {
 
 @media only screen and (max-width: globals.$mobile-max-width) {
     $column-gap: 66px;
-	
+
+	main {
+		height: max-content;
+	}
+
     .page {
         padding: 90px 17px 0px 17px;
 
@@ -137,7 +141,9 @@ img {
     }
 
     .page > .twin-columns,
-	.page > .twin-columns > .column {
+	.page > .twin-columns > .column,
+	.form-container > .twin-columns,
+	.form-container > .twin-columns > .column {
         gap: $column-gap;
     }
 }
