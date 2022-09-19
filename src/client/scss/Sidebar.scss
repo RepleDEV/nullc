@@ -62,7 +62,11 @@
         user-select: all;
     }
     // Disable scroll when shown
-    .mobile-sidebar.shown ~ main > .page.Home {
+    .mobile-sidebar.shown ~ main {
+        height: 100%;
         overflow: hidden;
+    }
+    .mobile-sidebar.shown ~ main > .page {
+        height: 100%;
     }
 }
