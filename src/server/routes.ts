@@ -1,5 +1,4 @@
 import * as express from "express";
-import * as path from "path";
 
 const router = express.Router();
 
@@ -8,6 +7,8 @@ router.use(mail);
 
 import login from "./routes/login";
 router.use(login);
+
+import leaderboards from "./routes/leaderboards";
 
 router.get("/account_info", (req, res) => {
 	if (req.session.logged_in !== true)
@@ -23,22 +24,9 @@ router.get("/account_info", (req, res) => {
 	res.status(200).json(account_info);
 });
 
-// React router workaround
-router.use((req, res) => {
-	res.status(404);
-	if (req.accepts("html")) {
-		res.sendFile(path.resolve("public", "index.html"));
-		return;
-	}
+export default (redisClient: any) => {
+	router.use(leaderboards(redisClient));
 
-	if (req.accepts("json")) {
-		res.json({ error: "Not found" });
-		return;
-	}
-
-	res.type("txt").send("Not found");
-});
-
-export default router;
-export { router };
+	return router;
+};
 export { mailDB } from "./routes/mail";

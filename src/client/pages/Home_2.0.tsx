@@ -26,7 +26,7 @@ class Leaderboards extends Component<BasicComponentProps, {
         super(props);
 
         this.state = {
-            users: ["nini", ...Array(9).fill("")],
+            users: [...Array(10).fill("")],
         };
 
         this.usersMapFunction = this.usersMapFunction.bind(this);
@@ -36,8 +36,11 @@ class Leaderboards extends Component<BasicComponentProps, {
             <LeaderboardEntry number={i + 1} key={`${user}-${i}`}>{user}</LeaderboardEntry>   
         );
     }
-    componentDidMount() {
-        // TODO: Get data for leaderboards
+    async componentDidMount() {
+        const leaderboard_data = await (await fetch("/leaderboard")).json() as any[];
+        const data = leaderboard_data.map((v) => v.username);
+        if (data.length)
+            this.setState({ users: data });
     }
     render(): React.ReactNode {
         const { users } = this.state;

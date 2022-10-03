@@ -8,10 +8,10 @@ import * as csrf from "csurf";
 import * as dotenv from "dotenv";
 dotenv.config();
 import router from "./routes";
+import * as path from "path";
 
 import { createClient } from "redis";
 let redisClient = createClient({
-	legacyMode: true,
 	url: process.env.REDISCLOUD_URL || "",
 });
 
@@ -87,7 +87,23 @@ app.use(
 
 // SERVE STATIC FILES
 app.use(express.static("public"));
-app.use(router);
+app.use(router(redisClient));
+
+// React router workaround
+app.use((req, res) => {
+	res.status(404);
+	if (req.accepts("html")) {
+		res.sendFile(path.resolve("public", "index.html"));
+		return;
+	}
+
+	if (req.accepts("json")) {
+		res.json({ error: "Not found" });
+		return;
+	}
+
+	res.type("txt").send("Not found");
+});
 
 export default app;
 export { app, redisClient };
