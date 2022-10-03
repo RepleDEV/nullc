@@ -5,6 +5,8 @@ declare namespace NodeJS {
 
 		TWITTER_BEARER_TOKEN?: string;
 
+		TWITTER_ADMIN_ID?: string;
+
 		SESSION_SECRET?: string;
 
 		DATABASE_HOST?: string;
