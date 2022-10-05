@@ -99,7 +99,7 @@ class Home extends Component {
                         <div className="name-card">
                             <div className="profile-picture-container">
                                 <img
-                                    src="https://cdn.discordapp.com/avatars/246789625715228672/8441bcb570405a341717dead19458801.png?size=4096"
+                                    src="/profile_image.jpg"
                                     alt="Profile Image" 
                                 />
                             </div>
