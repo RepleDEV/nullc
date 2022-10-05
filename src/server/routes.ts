@@ -2,11 +2,11 @@ import * as express from "express";
 
 const router = express.Router();
 
-import mail from "./routes/mail";
-router.use(mail);
+// import mail from "./routes/mail";
+// router.use(mail);
 
-import login from "./routes/login";
-router.use(login);
+// import login from "./routes/login";
+// router.use(login);
 
 import leaderboards from "./routes/leaderboards";
 

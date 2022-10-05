@@ -25,8 +25,8 @@ function Links({ onClick }: { onClick?: () => void }) {
 	return (
 		<>
 			<NavLink to="/" onClick={onClick}>home</NavLink>
-			<NavLink to="/repo" onClick={onClick}>tweet repo</NavLink>
-			<NavLink to="/mail" onClick={onClick}>mail</NavLink>
+			{/* <NavLink to="/repo" onClick={onClick}>tweet repo</NavLink>
+			<NavLink to="/mail" onClick={onClick}>mail</NavLink> */}
 		</>
 	);
 }
@@ -106,7 +106,7 @@ class Navbar extends Component<NavbarTypes.NavbarProps, {
 						<Bars/>
 					</div>
 					<Links/>
-					<div className="toolbar-container">{element}</div>
+					{/* <div className="toolbar-container">{element}</div> */}
 				</div>
 			</>
 		);

@@ -77,7 +77,7 @@ class App extends Component<BasicComponentProps, AppState> {
 				<main>
 					<Routes>
 						<Route path="/" element={<Home />} />
-						<Route path="/mail" element={<Mail />} />
+						{/* <Route path="/mail" element={<Mail />} /> */}
 					</Routes>
 					<Background />
 				</main>
