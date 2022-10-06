@@ -4,17 +4,9 @@ import { Router } from "express";
 import { TwitterApi } from "twitter-api-v2";
 
 import "../../../.env.d";
+import { leaderboards } from "../types/routes.d";
 
-type LeaderboardDataArray = {
-    id: string;
-    username: string;
-}[];
-interface LeaderboardData {
-    data: LeaderboardDataArray;
-    expires: number;
-}
-
-async function getLeaderboardData(): Promise<LeaderboardDataArray> {
+async function getLeaderboardData(): Promise<leaderboards.LeaderboardDataArray> {
     const { TWITTER_BEARER_TOKEN, TWITTER_ADMIN_ID } = process.env;
     if (!TWITTER_BEARER_TOKEN) 
         throw new Error("Bearer token not provided");
@@ -73,7 +65,7 @@ export default function leaderboards(client: RedisClientType) {
 
     router.get("/leaderboard", async (req, res) => {
         const data = await client.get("leaderboard_data");
-        let parsed_data = data && JSON.parse(data) as LeaderboardData;
+        let parsed_data = data && JSON.parse(data) as leaderboards.LeaderboardData;
 
         if (!parsed_data || !parsed_data.data.length || parsed_data.expires < Date.now()) {
             try {
