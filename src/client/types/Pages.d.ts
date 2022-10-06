@@ -16,6 +16,26 @@ export namespace Home {
 }
 
 export namespace Mail {
+	export interface SubmittingProps extends BasicComponentProps {
+		data: any;
+		catch?: () => void;
+		finally?: () => void;
+	}
+
+	export interface SubmittingState {
+		message: string;
+		sent: boolean;
+	}
+	
+	export interface MailState {
+		form: Record<string, {
+			value: string;
+			default?: string;
+		}>;
+		data: Record<string, string>;
+		submitting: boolean;
+	}
+
 	export interface MailAdminState {
 		mail_data: mailDB.MailObjectArray;
 	}

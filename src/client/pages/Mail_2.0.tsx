@@ -3,17 +3,10 @@ import React, { Component } from "react";
 import Form, { FormInput } from "../components/Form";
 import "../scss/pages/Mail"
 import { BasicComponentProps } from "../types/Component";
+import { Mail as MailTypes } from "../types/Pages";
 
-interface SubmittingProps extends BasicComponentProps {
-    data: any;
-    catch?: () => void;
-    finally?: () => void;
-}
-class Submitting extends Component<SubmittingProps, {
-    message: string;
-    sent: boolean;
-}> {
-    constructor(props: SubmittingProps) {
+class Submitting extends Component<MailTypes.SubmittingProps, MailTypes.SubmittingState> {
+    constructor(props: MailTypes.SubmittingProps) {
         super(props);
 
         this.state = {
@@ -55,14 +48,7 @@ class Submitting extends Component<SubmittingProps, {
     }
 }
 
-class Mail extends Component<BasicComponentProps, {
-    form: Record<string, {
-        value: string;
-        default?: string;
-    }>;
-    data: Record<string, string>;
-    submitting: boolean;
-}> {
+class Mail extends Component<BasicComponentProps, MailTypes.MailState> {
     constructor(props: BasicComponentProps) {
         super(props);
 
